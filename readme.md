@@ -1,0 +1,16 @@
+## ToDo Später
+- Decimal/Money 
+    - Direkt eigene Decimal Validation hinzufügen
+    - GUI Handling fixen
+- Inputs
+    - Alle: Mögliche Beschränkungen prüfen (Min, Max, Step)
+- Erweiterbare Inputs
+    - Remote Select nur als Erweiterung
+- JS Handling
+    - eigene JS Klasse
+    - eigene Blade Directive
+- Inputs
+    - improve multiple support
+- Post Handling
+	- Validation: Support for array validation rules
+- Tests
