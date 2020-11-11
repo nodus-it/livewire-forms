@@ -177,6 +177,13 @@
             return 'OK';
         }
 
+        /**
+         * Mutates the attributes in preparation for validation
+         *
+         * @param array $attributes
+         *
+         * @return array
+         */
         public function prepareForValidation($attributes)
         {
             $attributes['values'] = $this->applyPreValidationMutators($attributes['values']);

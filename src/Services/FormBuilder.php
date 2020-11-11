@@ -23,47 +23,113 @@
      */
     trait FormBuilder
     {
+        /**
+         * Adds an text input
+         *
+         * @param string      $name
+         * @param string|null $label
+         *
+         * @return Text
+         */
         protected function addText(string $name, string $label = null)
         {
             return $this->addInput(Text::class, $name, $label);
         }
 
+        /**
+         * Adds an color input
+         *
+         * @param string      $name
+         * @param string|null $label
+         *
+         * @return Color
+         */
         protected function addColor(string $name, string $label = null)
         {
             return $this->addInput(Color::class, $name, $label);
         }
 
+        /**
+         * Adds an password input
+         *
+         * @param string      $name
+         * @param string|null $label
+         *
+         * @return Password
+         */
         protected function addPassword(string $name, string $label = null)
         {
             return $this->addInput(Password::class, $name, $label);
         }
 
+        /**
+         * Adds an file input
+         *
+         * @param string      $name
+         * @param string|null $label
+         *
+         * @return File
+         */
         protected function addFile(string $name, string $label = null)
         {
             return $this->addInput(File::class, $name, $label);
         }
 
+        /**
+         * Adds an number input
+         *
+         * @param string      $name
+         * @param string|null $label
+         *
+         * @return Number
+         */
         protected function addNumber(string $name, string $label = null)
         {
             return $this->addInput(Number::class, $name, $label);
         }
 
+        /**
+         * Adds an textarea input
+         *
+         * @param string      $name
+         * @param string|null $label
+         *
+         * @return Textarea
+         */
         protected function addTextarea(string $name, string $label = null)
         {
             return $this->addInput(Textarea::class, $name, $label);
         }
 
+        /**
+         * Adds an date input
+         *
+         * @param string      $name
+         * @param string|null $label
+         *
+         * @return Date
+         */
         protected function addDate(string $name, string $label = null)
         {
             return $this->addInput(Date::class, $name, $label);
         }
 
+        /**
+         * Adds an time input
+         *
+         * @param string      $name
+         * @param string|null $label
+         *
+         * @return Time
+         */
         protected function addTime(string $name, string $label = null)
         {
             return $this->addInput(Time::class, $name, $label);
         }
 
         /**
+         * Adds an decimal input
+         *
          * @param string      $name
          * @param string|null $label
          *
@@ -75,6 +141,8 @@
         }
 
         /**
+         * Adds an select input
+         *
          * @param string      $name
          * @param string|null $label
          *
@@ -86,6 +154,8 @@
         }
 
         /**
+         * Adds an checkbox input
+         *
          * @param string      $name
          * @param string|null $label
          *
@@ -109,6 +179,14 @@
             return $this->addInput(RichTextarea::class, $name, $label);
         }
 
+        /**
+         * Adds an hidden input
+         *
+         * @param string $name
+         * @param string $value
+         *
+         * @return Hidden
+         */
         protected function addHidden(string $name, string $value)
         {
             $input = new Hidden($name, $value);
@@ -117,5 +195,4 @@
 
             return $input;
         }
-
     }

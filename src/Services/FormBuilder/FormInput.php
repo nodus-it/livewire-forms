@@ -108,7 +108,7 @@
          */
         public function getLabel()
         {
-            return $this->label;
+            return trans($this->label);
         }
 
         /**
