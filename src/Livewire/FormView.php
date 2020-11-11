@@ -2,6 +2,7 @@
 
     namespace Nodus\Packages\LivewireForms\Livewire;
 
+    use Illuminate\Database\Eloquent\Collection;
     use Illuminate\Database\Eloquent\Model;
     use Illuminate\Support\Str;
     use Illuminate\Validation\ValidationException;
@@ -69,6 +70,8 @@
          */
         public string $postMode = 'create';
 
+        protected ?string $translationPrefix = null;
+
         /**
          * On component mount handler
          *
@@ -86,16 +89,40 @@
             $this->postMode = $postMode;
 
             if ($modelOrArray instanceof Model) {
-                $this->model = get_class($modelOrArray);
-                $this->values = $modelOrArray->getAttributes(); // todo nur notwendige values
-
-                if ($modelOrArray->exists) {
-                    $this->modelId = $modelOrArray->id;
-                }
+                $this->loadValuesByModel($modelOrArray);
             } elseif (is_array($modelOrArray)) {
                 $this->values = $modelOrArray;
             } else {
                 throw new \Exception('Invalid value for $modelOrArray');
+            }
+        }
+
+        /**
+         * Loads the form values by the given model
+         *
+         * @param Model $model
+         *
+         * @return void
+         */
+        protected function loadValuesByModel(Model $model)
+        {
+            $this->model = get_class($model);
+            $this->values = $model->getAttributes();
+
+            // load relation collections as ID arrays for multiple selects
+            foreach ($model->getRelations() as $key => $relation) {
+                if (!$relation instanceof Collection) {
+                    continue;
+                }
+
+                $this->values[ $key ] = $relation->pluck('id')->toArray();
+            }
+
+            // todo nur notwendige values
+            $this->values = array_merge($this->values, $model->getAttributes());
+
+            if ($model->exists) {
+                $this->modelId = $model->id;
             }
         }
 
@@ -206,6 +233,34 @@
         }
 
         /**
+         * Sets the translation prefix
+         *
+         * @param string|null $prefix
+         *
+         * @return $this
+         */
+        protected function setTranslationPrefix(?string $prefix)
+        {
+            $this->translationPrefix = $prefix;
+
+            return $this;
+        }
+
+        /**
+         * Returns the translation prefix
+         *
+         * @return string
+         */
+        protected function getTranslationPrefix()
+        {
+            if ($this->translationPrefix === null) {
+                return Str::plural(Str::lower(Str::afterLast($this->model, '\\'))) . '.fields';
+            }
+
+            return $this->translationPrefix;
+        }
+
+        /**
          * Generates a default translation string, based on model and column name
          *
          * @param string $lang Column name
@@ -214,7 +269,7 @@
          */
         protected function getTranslationStringByModel(string $lang)
         {
-            return Str::plural(Str::lower(Str::afterLast($this->model, '\\'))) . '.' . $lang;
+            return $this->getTranslationPrefix() . '.' . $lang;
         }
 
         /**
@@ -229,7 +284,7 @@
         private function addInput(string $class, string $name, ?string $label = null)
         {
             if ($label === null) {
-                $label = $this->getTranslationStringByModel('fields.' . $name);
+                $label = $this->getTranslationStringByModel($name);
             }
 
             return $this->addFormInput(new $class($name, $label));

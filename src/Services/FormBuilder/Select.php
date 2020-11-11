@@ -2,6 +2,7 @@
 
 namespace Nodus\Packages\LivewireForms\Services\FormBuilder;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDefaultValue;
@@ -20,7 +21,6 @@ class Select extends FormInput
     use SupportsSize;
     use SupportsDefaultValue {
         getDefaultValue as parentGetDefaultValue;
-        getValue as parentGetValue;
     }
     use SupportsValidations;
 
@@ -138,25 +138,12 @@ class Select extends FormInput
     }
 
     /**
-     * Gibt den Wert eines Attribut des angegebenen Models zurück falls dieses existiert
+     * Pre render mutator handler
+     * 
+     * @param $options
      *
-     * @param Model|null $model Model Objekt
-     *
-     * @return mixed|string
+     * @return array|int|string|null
      */
-    public function getValue($model = null)
-    {
-        if ($model instanceof Model && $model->exists === true && optional($model)->{$this->getName()} === null) {
-            if ($model->isFillable($this->getName())) {
-                return Select::NULL_OPTION;
-            } else {
-                logger('Field ' . $this->getName() . ' existiert nicht in Model ' . get_class($model));
-            }
-        }
-
-        return $this->parentGetValue($model);
-    }
-
     public function preRenderMutator($options)
     {
         if ($this->getMultiple()) {

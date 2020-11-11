@@ -7,10 +7,10 @@
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Date;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Decimal;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\File;
-    use Nodus\Packages\LivewireForms\Services\FormBuilder\FormInput;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Hidden;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Number;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Password;
+    use Nodus\Packages\LivewireForms\Services\FormBuilder\RichTextarea;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Select;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Text;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Textarea;
@@ -94,6 +94,19 @@
         protected function addCheckbox(string $name, string $label = null)
         {
             return $this->addInput(Checkbox::class, $name, $label);
+        }
+
+        /**
+         * Adds an rich textarea input
+         *
+         * @param string      $name
+         * @param string|null $label
+         *
+         * @return mixed
+         */
+        protected function addRichTextarea(string $name, string $label = null)
+        {
+            return $this->addInput(RichTextarea::class, $name, $label);
         }
 
         protected function addHidden(string $name, string $value)
