@@ -2,6 +2,7 @@
 
     namespace Nodus\Packages\LivewireForms\Livewire;
 
+    use Carbon\Carbon;
     use Illuminate\Database\Eloquent\Collection;
     use Illuminate\Database\Eloquent\Model;
     use Illuminate\Support\Str;
@@ -336,6 +337,13 @@
 
                 if (in_array(SupportsDefaultValue::class, class_uses($input))) {
                     $this->values[ $input->getId() ] = $input->getValue($this->values[ $input->getId() ]);
+                }
+
+                // Todo einmal in schön?
+                if($input instanceof FormBuilder\DateTime) {
+                    $this->values[ $input->getDateId() ] = $input->getDateValue($this->values[ $input->getDateId() ] ?? $this->values[ $input->getId() ] ?? null);
+                    $this->values[ $input->getTimeId() ] = $input->getTimeValue($this->values[ $input->getTimeId() ] ?? $this->values[ $input->getId() ] ?? null);
+                    $this->values[ $input->getId() ] = $this->values[ $input->getDateId() ] . ' ' . $this->values[ $input->getTimeId() ];
                 }
             }
 
