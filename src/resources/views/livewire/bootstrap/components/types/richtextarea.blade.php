@@ -1,6 +1,8 @@
-<div class="nodus-form-control" wire:ignore>
-    <div id="{{ $input->getId() }}">
-        {!! $this->values[$input->getId()] !!}
+<div class="nodus-form-control" >
+    <div wire:ignore>
+        <div id="{{ $input->getId() }}">
+            {!! $this->values[$input->getId()] !!}
+        </div>
     </div>
     <input type="hidden"
            value="{!! $this->values[$input->getId()] !!}"

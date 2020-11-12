@@ -172,7 +172,7 @@
          * @param string      $name
          * @param string|null $label
          *
-         * @return mixed
+         * @return RichTextarea
          */
         protected function addRichTextarea(string $name, string $label = null)
         {
