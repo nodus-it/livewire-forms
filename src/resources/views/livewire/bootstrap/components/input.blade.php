@@ -1,4 +1,4 @@
-<div class="nodus-form-control">
+<div class="nodus-form-control" id="{{ $input->getId() }}_container">
     <input type="{{$input->getType()}}"
            name="{{ $input->getName() }}"
            class="form-control @if($errors->has($input->getViewId())) is-invalid @endif"

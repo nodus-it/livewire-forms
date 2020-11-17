@@ -1,4 +1,4 @@
-<div class="nodus-form-control">
+<div class="nodus-form-control" id="{{ $input->getId() }}_container">
     <input type="text"
            id="{{ $input->getId() }}"
            name="{{ $input->getName() }}"
