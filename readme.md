@@ -2,13 +2,8 @@
 _An awesome package for easy dynamic forms with livewire._
 
 ## ToDo
-- Translations 
-    - Bootstrap select
-        - via [default settings](https://developer.snapappointments.com/bootstrap-select/options/#default-settings) or attributes?
-    - quill (RichText)
 - New DateTime input
     - first implementation is in extra branch
-- Dynamic forms fix (id on the container)
 - Return route?
 
 ## ToDo Später
