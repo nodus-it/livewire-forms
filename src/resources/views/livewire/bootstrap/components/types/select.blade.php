@@ -1,4 +1,4 @@
-<div class="nodus-form-control" wire:ignore>
+<div class="nodus-form-control" id="{{ $input->getId() }}_container" wire:ignore>
     <select name="{{ $input->getName() }}"
             class="form-control selectpicker @if($errors->has($input->getViewId())) is-invalid @endif"
             @if($input->getMultiple()) multiple @endif

@@ -1,4 +1,4 @@
-<div class="nodus-form-control" >
+<div class="nodus-form-control" id="{{ $input->getId() }}_container">
     <div wire:ignore>
         <div id="{{ $input->getId() }}">
             {!! $this->values[$input->getId()] !!}
