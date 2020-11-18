@@ -137,9 +137,23 @@
         {
             $this->prepareInputs();
 
-            //$values = $this->applyPreValidationMutators($this->values);
+            $this->validateOnly($propertyName, null, [], $this->getCustomValidationAttributes());
+        }
 
-            $this->validateOnly($propertyName);
+        /**
+         * Returns the array with custom validation attributes
+         *
+         * @return array
+         */
+        public function getCustomValidationAttributes()
+        {
+            $customAttributes = [];
+
+            foreach ($this->inputs as $input) {
+                $customAttributes[ 'values.' . $input->getId() ] = $input->getLabel();
+            }
+
+            return $customAttributes;
         }
 
         /**
@@ -153,8 +167,9 @@
             $this->prepareInputs();
 
             // Validations & mutators
+            // todo the pre validation mutators are basically called twice due to the prepareForValidation method
             $values = $this->applyPreValidationMutators($this->values);
-            $this->validate(null, [], $values);
+            $this->validate(null, [], $this->getCustomValidationAttributes());
             $values = $this->applyPostValidationMutators($values);
 
             // Custom post handling
