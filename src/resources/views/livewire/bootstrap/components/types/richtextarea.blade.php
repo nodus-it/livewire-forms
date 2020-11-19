@@ -4,12 +4,11 @@
             {!! $this->values[$input->getId()] !!}
         </div>
     </div>
-    <input type="hidden"
-           value="{!! $this->values[$input->getId()] !!}"
-           name="{{ $input->getId() }}"
-           id="{{ $input->getId() }}_text"
-           wire:model.defer="{{ $input->getViewId() }}"
-    >
+    <textarea name="{{ $input->getId() }}"
+              id="{{ $input->getId() }}_text"
+              class="d-none"
+              wire:model.defer="{{ $input->getViewId() }}"
+    >{!! $this->values[$input->getId()] !!}</textarea>
     @include('nodus.packages.livewire-forms::livewire.'.config('livewire-forms.theme').'.components.validation')
 </div>
 
