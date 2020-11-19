@@ -15,3 +15,17 @@
     </select>
     @include('nodus.packages.livewire-forms::livewire.'.config('livewire-forms.theme').'.components.validation')
 </div>
+
+<script>
+    (function(){
+        function init() {
+            $('#{{ $input->getId() }}_container').find('.selectpicker').selectpicker();
+        }
+
+        @if($initialRender===true)
+            document.addEventListener('livewire:load', init);
+        @else
+            init();
+        @endif
+    }());
+</script>

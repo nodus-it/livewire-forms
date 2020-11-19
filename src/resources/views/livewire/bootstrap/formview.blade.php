@@ -6,7 +6,7 @@
             @else
                 <div class="col-{{ $input->getSize() }}">
                     <label for="{{ $input->getId() }}">{{ $input->getLabel() }}</label>
-                    {!! $input->render() !!}
+                    {!! $input->render($initialRender) !!}
                 </div>
             @endif
         @endforeach

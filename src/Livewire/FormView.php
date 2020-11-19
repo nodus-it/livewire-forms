@@ -72,6 +72,8 @@
 
         protected ?string $translationPrefix = null;
 
+        protected bool $initialRender = false;
+
         /**
          * On component mount handler
          *
@@ -95,6 +97,8 @@
             } else {
                 throw new \Exception('Invalid value for $modelOrArray');
             }
+
+            $this->initialRender = true;
         }
 
         /**
@@ -393,6 +397,6 @@
                 $this->view = 'nodus.packages.livewire-forms::livewire.' . config('livewire-forms.theme') . '.formview';
             }
 
-            return view($this->view);
+            return view($this->view, ['initialRender' => $this->initialRender]);
         }
     }
