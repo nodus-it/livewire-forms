@@ -343,7 +343,7 @@
                 if($input instanceof FormBuilder\DateTime) {
                     $this->values[ $input->getDateId() ] = $input->getDateValue($this->values[ $input->getDateId() ] ?? $this->values[ $input->getId() ] ?? null);
                     $this->values[ $input->getTimeId() ] = $input->getTimeValue($this->values[ $input->getTimeId() ] ?? $this->values[ $input->getId() ] ?? null);
-                    $this->values[ $input->getId() ] = $this->values[ $input->getDateId() ] . ' ' . $this->values[ $input->getTimeId() ];
+                    $this->values[ $input->getId() ] = trim($this->values[ $input->getDateId() ] . ' ' . $this->values[ $input->getTimeId() ]);
                 }
             }
 
