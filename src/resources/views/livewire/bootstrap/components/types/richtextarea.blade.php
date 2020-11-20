@@ -9,6 +9,7 @@
               class="d-none"
               wire:model.defer="{{ $input->getViewId() }}"
     >{!! $this->values[$input->getId()] !!}</textarea>
+    @include('nodus.packages.livewire-forms::livewire.'.config('livewire-forms.theme').'.components.hint')
     @include('nodus.packages.livewire-forms::livewire.'.config('livewire-forms.theme').'.components.validation')
 </div>
 
