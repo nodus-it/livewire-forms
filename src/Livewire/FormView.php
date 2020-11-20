@@ -308,7 +308,7 @@
          *
          * @return FormInput
          */
-        private function addInput(string $class, string $name, ?string $label = null)
+        protected function addInput(string $class, string $name, ?string $label = null)
         {
             if ($label === null) {
                 $label = $this->getTranslationStringByModel($name);

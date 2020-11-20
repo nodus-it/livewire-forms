@@ -3,6 +3,7 @@
 namespace Nodus\Packages\LivewireForms\Services\FormBuilder;
 
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDefaultValue;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsHint;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsSize;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsValidations;
 
@@ -16,6 +17,7 @@ class Checkbox extends FormInput
     use SupportsSize;
     use SupportsDefaultValue;
     use SupportsValidations;
+    use SupportsHint;
 
     /**
      * Checkbox constructor
