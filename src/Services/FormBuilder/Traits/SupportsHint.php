@@ -18,6 +18,10 @@ trait SupportsHint
      */
     public function getHint()
     {
+        if ($this->hint != null) {
+            return trans($this->hint);
+        }
+
         return $this->hint;
     }
 
