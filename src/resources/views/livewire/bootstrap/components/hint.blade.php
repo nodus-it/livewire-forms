@@ -1,3 +1,3 @@
 @if(method_exists($input,'getHint') && $input->getHint() != null)
-    <span class="feedback text-muted">&nbsp;{{$input->getHint()}}</span>
+    <span class="nodus-hint text-muted">{{$input->getHint()}}</span>
 @endif

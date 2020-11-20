@@ -9,20 +9,25 @@ namespace Nodus\Packages\LivewireForms\Services\FormBuilder\Traits;
  */
 trait SupportsHint
 {
-    private $hint = null;
+    /**
+     * Input hint
+     *
+     * @var string|null
+     */
+    private ?string $hint = null;
 
     /**
      * Returns the input hint
      *
-     * @return int
+     * @return string|null
      */
     public function getHint()
     {
-        if ($this->hint != null) {
-            return trans($this->hint);
+        if ($this->hint === null) {
+            return null;
         }
 
-        return $this->hint;
+        return trans($this->hint);
     }
 
     /**
@@ -35,5 +40,7 @@ trait SupportsHint
     public function setHint(string $hint)
     {
         $this->hint = $hint;
+
+        return $this;
     }
 }
