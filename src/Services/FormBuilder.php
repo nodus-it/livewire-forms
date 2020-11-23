@@ -5,6 +5,7 @@
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Checkbox;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Color;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Date;
+    use Nodus\Packages\LivewireForms\Services\FormBuilder\DateTime;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Decimal;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\File;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Hidden;
@@ -128,6 +129,19 @@
         }
 
         /**
+         * Adds an date time input
+         *
+         * @param string      $name
+         * @param string|null $label
+         *
+         * @return Date
+         */
+        protected function addDateTime(string $name, string $label = null)
+        {
+            return $this->addInput(DateTime::class, $name, $label);
+        }
+
+        /**
          * Adds an decimal input
          *
          * @param string      $name
@@ -172,7 +186,7 @@
          * @param string      $name
          * @param string|null $label
          *
-         * @return mixed
+         * @return RichTextarea
          */
         protected function addRichTextarea(string $name, string $label = null)
         {

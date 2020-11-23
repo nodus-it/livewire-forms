@@ -2,6 +2,7 @@
 
     namespace Nodus\Packages\LivewireForms\Livewire;
 
+    use Carbon\Carbon;
     use Illuminate\Database\Eloquent\Collection;
     use Illuminate\Database\Eloquent\Model;
     use Illuminate\Support\Str;
@@ -72,6 +73,8 @@
 
         protected ?string $translationPrefix = null;
 
+        protected bool $initialRender = false;
+
         /**
          * On component mount handler
          *
@@ -95,6 +98,8 @@
             } else {
                 throw new \Exception('Invalid value for $modelOrArray');
             }
+
+            $this->initialRender = true;
         }
 
         /**
@@ -137,9 +142,23 @@
         {
             $this->prepareInputs();
 
-            //$values = $this->applyPreValidationMutators($this->values);
+            $this->validateOnly($propertyName, null, [], $this->getCustomValidationAttributes());
+        }
 
-            $this->validateOnly($propertyName);
+        /**
+         * Returns the array with custom validation attributes
+         *
+         * @return array
+         */
+        public function getCustomValidationAttributes()
+        {
+            $customAttributes = [];
+
+            foreach ($this->inputs as $input) {
+                $customAttributes[ 'values.' . $input->getId() ] = $input->getLabel();
+            }
+
+            return $customAttributes;
         }
 
         /**
@@ -153,8 +172,9 @@
             $this->prepareInputs();
 
             // Validations & mutators
+            // todo the pre validation mutators are basically called twice due to the prepareForValidation method
             $values = $this->applyPreValidationMutators($this->values);
-            $this->validate(null, [], $values);
+            $this->validate(null, [], $this->getCustomValidationAttributes());
             $values = $this->applyPostValidationMutators($values);
 
             // Custom post handling
@@ -288,7 +308,7 @@
          *
          * @return FormInput
          */
-        private function addInput(string $class, string $name, ?string $label = null)
+        protected function addInput(string $class, string $name, ?string $label = null)
         {
             if ($label === null) {
                 $label = $this->getTranslationStringByModel($name);
@@ -337,6 +357,13 @@
                 if (in_array(SupportsDefaultValue::class, class_uses($input))) {
                     $this->values[ $input->getId() ] = $input->getValue($this->values[ $input->getId() ]);
                 }
+
+                // Todo einmal in schön?
+                if($input instanceof FormBuilder\DateTime) {
+                    $this->values[ $input->getDateId() ] = $input->getDateValue($this->values[ $input->getDateId() ] ?? $this->values[ $input->getId() ] ?? null);
+                    $this->values[ $input->getTimeId() ] = $input->getTimeValue($this->values[ $input->getTimeId() ] ?? $this->values[ $input->getId() ] ?? null);
+                    $this->values[ $input->getId() ] = trim($this->values[ $input->getDateId() ] . ' ' . $this->values[ $input->getTimeId() ]);
+                }
             }
 
             $this->applyPreRenderMutators();
@@ -378,6 +405,6 @@
                 $this->view = 'nodus.packages.livewire-forms::livewire.' . config('livewire-forms.theme') . '.formview';
             }
 
-            return view($this->view);
+            return view($this->view, ['initialRender' => $this->initialRender]);
         }
     }

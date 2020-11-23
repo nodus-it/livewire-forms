@@ -2,6 +2,7 @@
 
 namespace Nodus\Packages\LivewireForms\Services\FormBuilder;
 
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsHint;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsMultiple;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsSize;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsValidations;
@@ -16,4 +17,5 @@ class File extends FormInput
     use SupportsMultiple;
     use SupportsValidations;
     use SupportsSize;
+    use SupportsHint;
 }

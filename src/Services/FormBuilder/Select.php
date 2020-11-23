@@ -6,12 +6,13 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDefaultValue;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsHint;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsMultiple;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsSize;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsValidations;
 
 /**
- * TODO Select input class
+ * Select input class
  *
  * @package Nodus\Packages\LivewireForms\Services\FormBuilder
  */
@@ -23,6 +24,7 @@ class Select extends FormInput
         getDefaultValue as parentGetDefaultValue;
     }
     use SupportsValidations;
+    use SupportsHint;
 
     /**
      * Spezial Option Value Konstante
@@ -46,23 +48,16 @@ class Select extends FormInput
     protected bool $forceOption = false;
 
     /**
-     * Castet null Options zu einem speziellen Value
+     * Translations array
      *
-     * @param array $options
-     *
-     * @return array
+     * @var array|string[]
      */
-    public static function castNullSelectOptions(array $options)
-    {
-        foreach ($options as $key => $option) {
-            if ($key === "") {
-                unset($options[ $key ]);
-                $options[ Select::NULL_OPTION ] = $option;
-            }
-        }
-
-        return $options;
-    }
+    protected array $translations = [
+        'deselect_all'  => 'nodus.packages.livewire-forms::forms.bootstrap_select.deselect_all',
+        'select_all'    => 'nodus.packages.livewire-forms::forms.bootstrap_select.select_all',
+        'none_selected' => 'nodus.packages.livewire-forms::forms.bootstrap_select.none_selected',
+        'none_results'  => 'nodus.packages.livewire-forms::forms.bootstrap_select.none_results',
+    ];
 
     /**
      * Sets the option values
@@ -114,16 +109,6 @@ class Select extends FormInput
     }
 
     /**
-     * Gibt das Force Option Flag zurück
-     *
-     * @return bool
-     */
-    public function getForceOption()
-    {
-        return $this->forceOption;
-    }
-
-    /**
      * Sets the force option flag
      *
      * @param bool $forceOption
@@ -135,6 +120,112 @@ class Select extends FormInput
         $this->forceOption = $forceOption;
 
         return $this;
+    }
+
+    /**
+     * Gibt das Force Option Flag zurück
+     *
+     * @return bool
+     */
+    public function getForceOption()
+    {
+        return $this->forceOption;
+    }
+
+    /**
+     * Sets the none selected text translation
+     *
+     * @param string $translation
+     *
+     * @return $this
+     */
+    public function setNoneSelectedText(string $translation)
+    {
+        $this->translations[ 'none_selected' ] = $translation;
+
+        return $this;
+    }
+
+    /**
+     * Returns the none selected text
+     *
+     * @return string
+     */
+    public function getNoneSelectedText()
+    {
+        return trans($this->translations[ 'none_selected' ]);
+    }
+
+    /**
+     * Sets the none results text translation
+     *
+     * @param string $translation
+     *
+     * @return $this
+     */
+    public function setNoneResultsText(string $translation)
+    {
+        $this->translations[ 'none_results' ] = $translation;
+
+        return $this;
+    }
+
+    /**
+     * Returns the none results text
+     *
+     * @return string
+     */
+    public function getNoneResultsText()
+    {
+        return trans($this->translations[ 'none_results' ]);
+    }
+
+    /**
+     * Sets the select all text translation
+     *
+     * @param string $translation
+     *
+     * @return $this
+     */
+    public function setSelectAllText(string $translation)
+    {
+        $this->translations[ 'select_all' ] = $translation;
+
+        return $this;
+    }
+
+    /**
+     * Returns the select all text
+     *
+     * @return string
+     */
+    public function getSelectAllText()
+    {
+        return trans($this->translations[ 'select_all' ]);
+    }
+
+    /**
+     * Sets the deselect all text translation
+     *
+     * @param string $translation
+     *
+     * @return $this
+     */
+    public function setDeselectAllText(string $translation)
+    {
+        $this->translations[ 'deselect_all' ] = $translation;
+
+        return $this;
+    }
+
+    /**
+     * Returns the deselect all text
+     *
+     * @return string
+     */
+    public function getDeselectAllText()
+    {
+        return trans($this->translations[ 'deselect_all' ]);
     }
 
     /**
@@ -150,6 +241,26 @@ class Select extends FormInput
             return Arr::wrap($options);
         } elseif (empty($options)) {
             return array_key_first($this->getValues());
+        }
+
+        return $options;
+    }
+
+
+    /**
+     * Castet null Options zu einem speziellen Value
+     *
+     * @param array $options
+     *
+     * @return array
+     */
+    public static function castNullSelectOptions(array $options)
+    {
+        foreach ($options as $key => $option) {
+            if ($key === "") {
+                unset($options[ $key ]);
+                $options[ Select::NULL_OPTION ] = $option;
+            }
         }
 
         return $options;

@@ -9,11 +9,11 @@
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsValidations;
 
     /**
-     * Date input class
+     * Date Time input class
      *
      * @package  Nodus\Packages\LivewireForms\Services\FormBuilder
      */
-    class Date extends FormInput
+    class DateTime extends FormInput
     {
         use SupportsDefaultValue;
         use SupportsValidations;
@@ -36,12 +36,35 @@
             return Carbon::parse($date);
         }
 
-        public function preRenderMutator($date)
+        public function getDateValue($value = null)
         {
-            if (empty($date)) {
+            $value = $this->getValue($value);
+
+            if($value === null) {
                 return null;
             }
 
-            return Carbon::parse($date)->format('Y-m-d');
+            return Carbon::parse($value)->format('Y-m-d');
+        }
+
+        public function getTimeValue($value = null)
+        {
+            $value = $this->getValue($value);
+
+            if($value === null) {
+                return null;
+            }
+
+            return Carbon::parse($value)->format('H:i:s');
+        }
+
+        public function getDateId()
+        {
+            return $this->getId() . '_date';
+        }
+
+        public function getTimeId()
+        {
+            return $this->getId() . '_time';
         }
     }

@@ -67,10 +67,11 @@
         /**
          * Renders the form input
          *
-         * @throws \Throwable
+         * @param bool $initialRender
+         *
          * @return  string
          */
-        public function render()
+        public function render(bool $initialRender = false)
         {
             $view = 'nodus.packages.livewire-forms::livewire.' . config('livewire-forms.theme') . '.components.types.' . $this->getType();
 
@@ -78,7 +79,7 @@
                 $view = 'nodus.packages.livewire-forms::livewire.' . config('livewire-forms.theme') . '.components.input';
             }
 
-            return view($view, ['input' => $this])->render();
+            return view($view, ['input' => $this, 'initialRender' => $initialRender])->render();
         }
 
         /**
