@@ -2,6 +2,7 @@
 
     namespace Nodus\Packages\LivewireForms\Services\FormBuilder;
 
+    use NumberFormatter;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDefaultValue;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsHint;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsSize;
@@ -19,9 +20,6 @@
         use SupportsSize;
         use SupportsHint;
 
-        // Todo direkt eigene Decimal Validation hinzufügen
-        // Todo GUI Handling fixen
-
         /**
          * Number of decimals to be shown of the decimal value
          *
@@ -34,7 +32,7 @@
          *
          * @var string|null
          */
-        protected ?string $unit = null;
+        protected string $unit = 'EUR';
 
         /**
          * Decimal constructor.
@@ -88,13 +86,49 @@
         }
 
         /**
-         * Returns the unit to be shown after the decimal value
+         * Returns the unit code to be used after the decimal value
          *
          * @return string|null
          */
         public function getUnit()
         {
             return $this->unit;
+        }
+
+        /**
+         * Returns a currency NumberFormatter instance for the given locale
+         *
+         * @param string $locale
+         *
+         * @return false|NumberFormatter
+         */
+        public function getNumberFormatter($locale = 'de_DE')
+        {
+            $format = NumberFormatter::create($locale, NumberFormatter::CURRENCY);
+
+            $format->setAttribute(NumberFormatter::MIN_FRACTION_DIGITS, $this->getDecimals());
+            $format->setAttribute(NumberFormatter::MAX_FRACTION_DIGITS, $this->getDecimals());
+
+            return $format;
+        }
+
+        /**
+         * Pre render mutator handler
+         *
+         * @param $value
+         *
+         * @return string|null
+         */
+        public function preRenderMutator($value)
+        {
+            if (empty($value)) {
+                $value = 0;
+            }
+
+            return $this->getNumberFormatter()->formatCurrency(
+                static::parseValue( $value ),
+                $this->getUnit()
+            );
         }
 
         /**

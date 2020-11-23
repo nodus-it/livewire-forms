@@ -18,7 +18,8 @@
     }
   ],
   "require": {
-    "livewire/livewire": "^2.3"
+    "livewire/livewire": "^2.3",
+    "ext-intl": "*"
   },
   "autoload": {
     "psr-4": {
