@@ -7,31 +7,28 @@ _An awesome package for easy dynamic forms with livewire._
 
 ## Roadmap
 ### Near term
-- New DateTime input
+- DateTime input improvements
 - Return route?
+- Unit tests
 
 ### Future
-- Inputs
-    - Decimal/Money 
-        - add decimal validation rule
-        - fix GUI handling
-    - All
-        - improve multiple support
-        - check if we should support more properties
-            - min
-            - max
-            - step
-            - placeholder
-            - pattern
-            - required
-            - spellcheck
-            - size
-            - maxlength
-            - minlength
-            - readonly 
-            - disabled
-            - ...
-        - custom property system
+- All Inputs
+    - improve multiple support
+    - check if we should support more properties
+        - min
+        - max
+        - step
+        - placeholder
+        - pattern
+        - required
+        - spellcheck
+        - size
+        - maxlength
+        - minlength
+        - readonly 
+        - disabled
+        - ...
+    - custom property system
 - Extensibility
     - override default classes (class overload)
     - external extensions
@@ -42,4 +39,3 @@ _An awesome package for easy dynamic forms with livewire._
     - own blade directive
 - Post Handling
 	- Validation: add support for array validation rules
-- Unit tests

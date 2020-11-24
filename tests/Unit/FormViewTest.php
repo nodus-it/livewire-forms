@@ -9,10 +9,9 @@
     use Livewire\Livewire;
     use Nodus\Packages\LivewireForms\Livewire\FormView;
 
-    class BaseTest extends TestCase
+    class FormViewTest extends TestCase
     {
-        /** @test */
-        public function validate_values_initialization()
+        public function testValueInitialization()
         {
             $component = Livewire::test(ForValidation::class);
 
@@ -25,8 +24,7 @@
             $this->assertArrayNotHasKey('select_input2', $component->payload['serverMemo']['data']['values']);
         }
 
-        /** @test */
-        public function validate_default_values()
+        public function testDefaultValues()
         {
             Livewire::test(ForValidation::class)
                 ->runAction('render')
@@ -35,15 +33,19 @@
                 ->assertPayloadSet('values.default_input', 'Thats the default');
         }
 
-        /** @test */
-        public function validate_validation_messages()
+        public function testValidationMessages()
         {
             Livewire::test(ForValidation::class)
                 ->runAction('render')
                 ->set('values.required_input', '')
                 ->assertHasErrors(['values.required_input' => 'required'])
                 ->set('values.required_input', 'test')
-                ->assertHasNoErrors(['values.required_input' => 'required']);
+                ->assertHasNoErrors(['values.required_input' => 'required'])
+
+                ->set('values.min_input', 'test')
+                ->assertHasErrors(['values.min_input' => 'min'])
+                ->set('values.min_input', 'test123')
+                ->assertHasNoErrors(['values.min_input' => 'min']);
         }
     }
 
