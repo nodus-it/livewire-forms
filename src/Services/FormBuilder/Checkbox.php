@@ -22,10 +22,10 @@ class Checkbox extends FormInput
     /**
      * Checkbox constructor
      *
-     * @param string $label
-     * @param string $name
+     * @param string      $name
+     * @param string|null $label
      */
-    public function __construct(string $name, string $label)
+    public function __construct(string $name, ?string $label = null)
     {
         $this->setDefaultValue(false);
 

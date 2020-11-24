@@ -1,4 +1,5 @@
 .idea
 vendor
+coverage
 composer.lock
 .phpunit.result.cache

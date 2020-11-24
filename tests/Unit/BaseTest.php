@@ -35,7 +35,6 @@
                 ->assertPayloadSet('values.default_input', 'Thats the default');
         }
 
-
         /** @test */
         public function validate_validation_messages()
         {
@@ -43,10 +42,8 @@
                 ->runAction('render')
                 ->set('values.required_input', '')
                 ->assertHasErrors(['values.required_input' => 'required'])
-                ->assertSeeHtml('The values.required input field is required')
                 ->set('values.required_input', 'test')
-                ->assertHasNoErrors(['values.required_input' => 'required'])
-                ->assertDontSeeHtml('The values.required input field is required');
+                ->assertHasNoErrors(['values.required_input' => 'required']);
         }
     }
 
