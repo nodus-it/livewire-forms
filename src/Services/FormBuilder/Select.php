@@ -2,19 +2,28 @@
 
 namespace Nodus\Packages\LivewireForms\Services\FormBuilder;
 
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDefaultValue;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsHint;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsMultiple;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsSize;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsTranslations;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsValidations;
 
 /**
  * Select input class
  *
  * @package Nodus\Packages\LivewireForms\Services\FormBuilder
+ *
+ * @method Select setNoneSelectedText(string $translation)
+ * @method string getNoneSelectedText()
+ * @method Select setNoneResultsText(string $translation)
+ * @method string getNoneResultsText()
+ * @method Select setSelectAllText(string $translation)
+ * @method string getSelectAllText()
+ * @method Select setDeselectAllText(string $translation)
+ * @method string getDeselectAllText()
  */
 class Select extends FormInput
 {
@@ -25,6 +34,7 @@ class Select extends FormInput
     }
     use SupportsValidations;
     use SupportsHint;
+    use SupportsTranslations;
 
     /**
      * Special option value constants
@@ -64,9 +74,35 @@ class Select extends FormInput
      *
      * @param array $values
      *
+     * @deprecated
+     *
      * @return $this
      */
     public function setValues(array $values)
+    {
+        return $this->setOptions($values);
+    }
+
+    /**
+     * Returns the select options array
+     *
+     * @deprecated
+     *
+     * @return array
+     */
+    public function getValues()
+    {
+        return $this->getOptions();
+    }
+
+    /**
+     * Sets the option values
+     *
+     * @param array $values
+     *
+     * @return $this
+     */
+    public function setOptions(array $values)
     {
         $this->values = Select::castNullSelectOptions($values);
 
@@ -78,7 +114,7 @@ class Select extends FormInput
      *
      * @return array
      */
-    public function getValues()
+    public function getOptions()
     {
         if ($this->forceOption === true) {
             return [
@@ -130,102 +166,6 @@ class Select extends FormInput
     public function getForceOption()
     {
         return $this->forceOption;
-    }
-
-    /**
-     * Sets the none selected text translation
-     *
-     * @param string $translation
-     *
-     * @return $this
-     */
-    public function setNoneSelectedText(string $translation)
-    {
-        $this->translations[ 'none_selected' ] = $translation;
-
-        return $this;
-    }
-
-    /**
-     * Returns the none selected text
-     *
-     * @return string
-     */
-    public function getNoneSelectedText()
-    {
-        return trans($this->translations[ 'none_selected' ]);
-    }
-
-    /**
-     * Sets the none results text translation
-     *
-     * @param string $translation
-     *
-     * @return $this
-     */
-    public function setNoneResultsText(string $translation)
-    {
-        $this->translations[ 'none_results' ] = $translation;
-
-        return $this;
-    }
-
-    /**
-     * Returns the none results text
-     *
-     * @return string
-     */
-    public function getNoneResultsText()
-    {
-        return trans($this->translations[ 'none_results' ]);
-    }
-
-    /**
-     * Sets the select all text translation
-     *
-     * @param string $translation
-     *
-     * @return $this
-     */
-    public function setSelectAllText(string $translation)
-    {
-        $this->translations[ 'select_all' ] = $translation;
-
-        return $this;
-    }
-
-    /**
-     * Returns the select all text
-     *
-     * @return string
-     */
-    public function getSelectAllText()
-    {
-        return trans($this->translations[ 'select_all' ]);
-    }
-
-    /**
-     * Sets the deselect all text translation
-     *
-     * @param string $translation
-     *
-     * @return $this
-     */
-    public function setDeselectAllText(string $translation)
-    {
-        $this->translations[ 'deselect_all' ] = $translation;
-
-        return $this;
-    }
-
-    /**
-     * Returns the deselect all text
-     *
-     * @return string
-     */
-    public function getDeselectAllText()
-    {
-        return trans($this->translations[ 'deselect_all' ]);
     }
 
     /**

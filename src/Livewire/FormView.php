@@ -23,6 +23,12 @@
         use FormBuilder;
 
         /**
+         * Post mode constants
+         */
+        public const POST_MODE_CREATE = 'create';
+        public const POST_MODE_UPDATE = 'update';
+
+        /**
          * Array of input values
          *
          * @var array
@@ -69,7 +75,7 @@
          *
          * @var string
          */
-        public string $postMode = 'create';
+        public string $postMode = self::POST_MODE_CREATE;
 
         /**
          * Custom translation prefix
@@ -92,24 +98,45 @@
          * @param string           $postMode
          *
          * @throws Exception
+         * @return void
          */
-        public function mount($modelOrArray = null, string $postMode = 'create')
+        public function mount($modelOrArray = null, string $postMode = self::POST_MODE_CREATE)
+        {
+            $this->initialRender = true;
+            $this->postMode = $postMode;
+
+            $this->loadValuesByModelOrArray($modelOrArray);
+        }
+
+        /**
+         * Loads the form values by the given model
+         *
+         * @param Model|array|null $modelOrArray
+         *
+         * @throws Exception
+         * @return void
+         */
+        protected function loadValuesByModelOrArray($modelOrArray)
         {
             if ($modelOrArray === null) {
+                $this->postMode = self::POST_MODE_CREATE;
+
                 return;
             }
 
-            $this->postMode = $postMode;
-
             if ($modelOrArray instanceof Model) {
                 $this->loadValuesByModel($modelOrArray);
-            } elseif (is_array($modelOrArray)) {
-                $this->values = $modelOrArray;
-            } else {
-                throw new \Exception('Invalid value for $modelOrArray');
+
+                return;
             }
 
-            $this->initialRender = true;
+            if (is_array($modelOrArray)) {
+                $this->values = $modelOrArray;
+
+                return;
+            }
+
+            throw new Exception('Invalid value for $modelOrArray');
         }
 
         /**
@@ -193,11 +220,25 @@
             }
 
             // Default post handling
+            return $this->defaultSubmit($values);
+        }
+
+        /**
+         * Default model submit handling
+         *
+         * @param array $values
+         *
+         * @throws Exception
+         * @return string
+         */
+        protected function defaultSubmit(array $values)
+        {
             if ( !is_a($this->model, Model::class, true)) {
                 throw new Exception('You need to use either the custom post handling or use a model for initializing your form');
             }
 
-            if ($this->postMode === 'create') {
+            // todo bool for $postMode would be enough?
+            if ($this->postMode === self::POST_MODE_CREATE) {
                 $this->model::query()->create($values);
             } else {
                 $this->model::query()->findOrFail($this->modelId)->update($values);

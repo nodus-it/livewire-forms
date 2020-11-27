@@ -10,7 +10,7 @@
                 data-none-selected-text="{{ $input->getNoneSelectedText() }}"
                 data-none-results-text="{{ $input->getNoneResultsText() }}"
                 wire:model="{{ $input->getViewId() }}">
-            @foreach($input->getValues() as $key => $option)
+            @foreach($input->getOptions() as $key => $option)
                 <option value="{{ $key }}" data-icon="{{ $option['icon'] }}">{{ $option['label'] }}</option>
             @endforeach
         </select>
