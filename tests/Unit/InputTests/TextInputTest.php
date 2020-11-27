@@ -22,4 +22,11 @@
             $this->assertSame(null,$input->getDefaultValue());
             $this->assertSame(null,$input->getValue());
         }
+
+        public function testSupports()
+        {
+            $this->assertTrue(Text::supports('placeholder'));
+            $this->assertTrue(Text::supports('Size'));
+            $this->assertFalse(Text::supports('test-trait-name'));
+        }
     }

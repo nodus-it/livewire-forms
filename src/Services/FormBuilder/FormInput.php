@@ -2,6 +2,8 @@
 
     namespace Nodus\Packages\LivewireForms\Services\FormBuilder;
 
+    use Illuminate\Support\Str;
+
     /**
      * Form input base class
      *
@@ -130,5 +132,17 @@
         public function getViewId()
         {
             return 'values.' . $this->getId();
+        }
+
+        public static function supports(string $feature)
+        {
+            // todo maybe use static cache
+            $traits = collect(class_uses(static::class))->map(
+                function ($value) {
+                    return (string)(Str::of($value)->classBasename()->lower()->replaceFirst('supports',''));
+                }
+            )->toArray();
+
+            return in_array(Str::lower($feature), $traits);
         }
     }
