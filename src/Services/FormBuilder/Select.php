@@ -27,21 +27,21 @@ class Select extends FormInput
     use SupportsHint;
 
     /**
-     * Spezial Option Value Konstante
+     * Special option value constants
      */
     public const FORCE_OPTION = -100;
     public const NULL_OPTION = -101;
 
     /**
-     * Select Options Array
+     * Select options array
      *
      * @var array
      */
     protected array $values = [];
 
     /**
-     * Flag das festlegt ob eine zusätzliche Option hinzugefügt wird die ungültig ist um den Nutzer zu zwingen
-     * eine andere Option auszuwählen (funktioniert nur bei Non-Remote-Selects)
+     * Flag that determines whether an additional option will be added that is invalid,
+     * forcing the user to select another option.
      *
      * @var bool
      */
@@ -93,7 +93,7 @@ class Select extends FormInput
     }
 
     /**
-     * Gibt den Default Value zurück, überschreibt die Funktion aus dem SupportsDefaultValue Trait
+     * Returns the default value
      *
      * @return mixed
      */
@@ -239,16 +239,17 @@ class Select extends FormInput
     {
         if ($this->getMultiple()) {
             return Arr::wrap($options);
-        } elseif (empty($options)) {
-            return array_key_first($this->getValues());
+        }
+
+        if (empty($options)) {
+            return array_key_first($this->getOptions());
         }
 
         return $options;
     }
 
-
     /**
-     * Castet null Options zu einem speziellen Value
+     * Casts null options to a special value
      *
      * @param array $options
      *

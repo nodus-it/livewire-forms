@@ -50,12 +50,12 @@
                 {
                     $method = func_get_arg(0);
 
-                    $this->$method($method,$method);
+                    $this->$method($method, $method);
                 }
             };
             $view->inputs($method);
 
-            $this->assertInstanceOf($expected,$view->getInput($method));
+            $this->assertInstanceOf($expected, $view->getInput($method));
         }
 
         public function testFormInputCreate()
@@ -64,7 +64,39 @@
             $input2 = Text::create('text_input');
 
             $this->assertEquals($input, $input2);
-            // Todo Undefined variable: errors
-            //$this->assertEquals($input->render(), $input2->__toString());
+        }
+
+        public function testGetInput()
+        {
+            $view = new class() extends FormView {
+                public function inputs()
+                {
+                    $this->addText('text_input');
+                }
+            };
+            $view->inputs();
+
+            $this->assertInstanceOf(Text::class, $view->getInput('text_input'));
+            $this->assertNull($view->getInput('not_defined_input'));
+        }
+
+        public function testMacroableSupport()
+        {
+            FormView::macro(
+                'addNewCustomInput',
+                function (string $name, string $label = null) {
+                    return $this->addInput(Text::class, $name, $label);
+                }
+            );
+
+            $view = new class() extends FormView {
+                public function inputs()
+                {
+                    $this->addNewCustomInput('test_custom');
+                }
+            };
+            $view->inputs();
+
+            $this->assertInstanceOf(Text::class, $view->getInput('test_custom'));
         }
     }

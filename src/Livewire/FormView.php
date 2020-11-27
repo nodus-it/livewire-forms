@@ -2,6 +2,7 @@
 
     namespace Nodus\Packages\LivewireForms\Livewire;
 
+    use Exception;
     use Illuminate\Database\Eloquent\Collection;
     use Illuminate\Database\Eloquent\Model;
     use Illuminate\Support\Str;
@@ -90,7 +91,7 @@
          * @param Model|array|null $modelOrArray
          * @param string           $postMode
          *
-         * @throws \Exception
+         * @throws Exception
          */
         public function mount($modelOrArray = null, string $postMode = 'create')
         {
@@ -173,7 +174,7 @@
         /**
          * On form submit handler
          *
-         * @throws \Exception
+         * @throws Exception
          * @return string
          */
         public function onSubmit()
@@ -193,7 +194,7 @@
 
             // Default post handling
             if ( !is_a($this->model, Model::class, true)) {
-                throw new \Exception('You need to use either the custom post handling or use a model for initializing your form');
+                throw new Exception('You need to use either the custom post handling or use a model for initializing your form');
             }
 
             if ($this->postMode === 'create') {
@@ -393,11 +394,11 @@
          *
          * @param string $identifier
          *
-         * @return FormInput
+         * @return FormInput|null
          */
         public function getInput(string $identifier)
         {
-            return $this->inputs[ $identifier ];
+            return $this->inputs[ $identifier ] ?? null;
         }
 
         /**
