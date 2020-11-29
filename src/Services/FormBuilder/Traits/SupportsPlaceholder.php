@@ -23,7 +23,7 @@
          */
         public function getPlaceholder()
         {
-            if($this->placeholder === null) {
+            if ($this->placeholder === null) {
                 return $this->getLabel();
             }
 

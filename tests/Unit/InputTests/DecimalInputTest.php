@@ -4,6 +4,8 @@
 
     use Carbon\Carbon;
     use Carbon\Exceptions\InvalidFormatException;
+    use Illuminate\Support\Facades\Validator;
+    use Illuminate\Validation\ValidationException;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Date;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Decimal;
     use Tests\Unit\TestCase;
@@ -76,5 +78,15 @@
             $this->assertSame(2,$input->getDecimals());
             $this->assertInstanceOf(Decimal::class, $input->setDecimals(4));
             $this->assertSame(4,$input->getDecimals());
+        }
+
+        public function testFloatValidationRule()
+        {
+            $this->assertArrayHasKey('input',Validator::validate(['input' => '0'],['input' => 'float']));
+            $this->assertArrayHasKey('input',Validator::validate(['input' => '0.5'],['input' => 'float']));
+            $this->assertArrayHasKey('input',Validator::validate(['input' => '5.99'],['input' => 'float']));
+            $this->expectException(ValidationException::class);
+            $this->assertArrayHasKey('input',Validator::validate(['input' => '5,99'],['input' => 'float']));
+            $this->assertArrayHasKey('input',Validator::validate(['input' => 'test'],['input' => 'float']));
         }
     }

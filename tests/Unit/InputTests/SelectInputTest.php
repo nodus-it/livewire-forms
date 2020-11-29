@@ -43,7 +43,7 @@
             $this->assertArrayHasKey(Select::NULL_OPTION, Select::castNullSelectOptions($options[1]));
         }
 
-        public function testSetValues()
+        public function testSetOptions()
         {
             $input = new Select('select_input');
             $options = [0 => Select::option('test_label')];
@@ -51,6 +51,16 @@
             $this->assertSame([],$input->getOptions());
             $this->assertInstanceOf(Select::class, $input->setOptions($options));
             $this->assertSame($options,$input->getOptions());
+        }
+
+        public function testSetValues()
+        {
+            $input = new Select('select_input');
+            $options = [0 => Select::option('test_label')];
+
+            $this->assertSame([],$input->getValues());
+            $this->assertInstanceOf(Select::class, $input->setValues($options));
+            $this->assertSame($options,$input->getValues());
         }
 
         public function testSetForceOption()
@@ -65,28 +75,28 @@
             $this->assertSame(Select::FORCE_OPTION,$input->getDefaultValue());
         }
 
-        public function validTranslations()
+        public function testPreRenderMutator()
         {
-            return [
-                ['DeselectAllText', 'deselect_all'],
-                ['SelectAllText', 'select_all'],
-                ['NoneSelectedText', 'none_selected'],
-                ['NoneResultsText', 'none_results'],
+            // Single select
+            $input = new Select('select_input');
+            $options = [
+                0 => Select::option('test_label1'),
+                1 => Select::option('test_label2')
             ];
-        }
 
-        /**
-         * @dataProvider validTranslations
-         */
-        public function testTranslationSetter($method,$trans)
-        {
-            $input = Select::create('select_input');
+            $this->assertSame(null,$input->preRenderMutator(null));
+            $this->assertSame(null,$input->preRenderMutator(''));
 
-            $this->assertSame(
-                trans('nodus.packages.livewire-forms::forms.bootstrap_select.' . $trans),
-                $input->{'get'.$method}()
-            );
-            $this->assertInstanceOf(Select::class, $input->{'set'.$method}('test_translation'));
-            $this->assertSame(trans('test_translation'), $input->{'get'.$method}());
+            $input->setOptions($options);
+
+            $this->assertSame(0,$input->preRenderMutator(null));
+            $this->assertSame(0,$input->preRenderMutator(''));
+            $this->assertSame(1,$input->preRenderMutator(1));
+
+            // Multi select
+            $input->setMultiple();
+            $this->assertSame([],$input->preRenderMutator(null));
+            $this->assertSame([1],$input->preRenderMutator(1));
+            $this->assertSame([1],$input->preRenderMutator([1]));
         }
     }

@@ -46,7 +46,8 @@
             );
 
             $app[ 'config' ]->set('app.key', 'base64:Hupx3yAySikrM2/edkZQNQHslgDWYfiBfCuSThJ5SK8=');
-
+            $app[ 'config' ]->set('app.locale', 'en');
+            $app[ 'config' ]->set('app.fallback_locale', 'de');
             $app[ 'config' ]->set('database.default', 'sqlite');
             $app[ 'config' ]->set(
                 'database.connections.sqlite',

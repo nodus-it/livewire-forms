@@ -1,7 +1,7 @@
 <div class="nodus-form-control" id="{{ $input->getId() }}_container" >
     <div wire:ignore>
         <select name="{{ $input->getName() }}"
-                class="form-control selectpicker @if($errors->has($input->getViewId())) is-invalid @endif"
+                class="form-control selectpicker @if(isset($errors) && $errors->has($input->getViewId())) is-invalid @endif"
                 @if($input->getMultiple()) multiple @endif
                 data-size="10"
                 data-live-search="true"

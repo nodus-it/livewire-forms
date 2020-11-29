@@ -2,7 +2,7 @@
     <input type="text"
            id="{{ $input->getId() }}"
            name="{{ $input->getName() }}"
-           class="form-control @if($errors->has($input->getViewId())) is-invalid @endif"
+           class="form-control @if(isset($errors) && $errors->has($input->getViewId())) is-invalid @endif"
            wire:model.lazy="{{ $input->getViewId() }}"
            data-decimals="{{ $input->getDecimals() }}"
            data-unit="{{ $input->getUnit() }}"

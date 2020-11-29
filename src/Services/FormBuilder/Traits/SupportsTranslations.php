@@ -36,7 +36,7 @@
         public function getTranslation(string $key)
         {
             if ( !isset($this->translations[ $key ])) {
-                null;
+                return null;
             }
 
             return trans($this->translations[ $key ]);

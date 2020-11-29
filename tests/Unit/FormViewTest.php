@@ -8,6 +8,7 @@
     use Livewire\Component;
     use Livewire\Livewire;
     use Nodus\Packages\LivewireForms\Livewire\FormView;
+    use Nodus\Packages\LivewireForms\Services\FormBuilder\Text;
 
     class FormViewTest extends TestCase
     {
@@ -46,6 +47,40 @@
                 ->assertHasErrors(['values.min_input' => 'min'])
                 ->set('values.min_input', 'test123')
                 ->assertHasNoErrors(['values.min_input' => 'min']);
+        }
+
+        public function testGetInput()
+        {
+            $view = new class() extends FormView {
+                public function inputs()
+                {
+                    $this->addText('text_input');
+                }
+            };
+            $view->inputs();
+
+            $this->assertInstanceOf(Text::class, $view->getInput('text_input'));
+            $this->assertNull($view->getInput('not_defined_input'));
+        }
+
+        public function testMacroableSupport()
+        {
+            FormView::macro(
+                'addNewCustomInput',
+                function (string $name, string $label = null) {
+                    return $this->addInput(Text::class, $name, $label);
+                }
+            );
+
+            $view = new class() extends FormView {
+                public function inputs()
+                {
+                    $this->addNewCustomInput('test_custom');
+                }
+            };
+            $view->inputs();
+
+            $this->assertInstanceOf(Text::class, $view->getInput('test_custom'));
         }
     }
 
