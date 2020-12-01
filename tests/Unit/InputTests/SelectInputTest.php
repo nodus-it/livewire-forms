@@ -48,20 +48,20 @@
             $input = new Select('select_input');
             $options = [0 => Select::option('test_label')];
 
-            $this->assertSame([],$input->getOptions());
-            $this->assertInstanceOf(Select::class, $input->setOptions($options));
-            $this->assertSame($options,$input->getOptions());
+            $this->assertSame([],$input->getValues());
+            $this->assertInstanceOf(Select::class, $input->setValues($options));
+            $this->assertSame($options,$input->getValues());
         }
 
         public function testSetForceOption()
         {
             $options = [0 => Select::option('test_label')];
-            $input = Select::create('select_input')->setOptions($options);
+            $input = Select::create('select_input')->setValues($options);
 
 
-            $this->assertSame($options,$input->getOptions());
+            $this->assertSame($options,$input->getValues());
             $this->assertInstanceOf(Select::class, $input->setForceOption());
-            $this->assertArrayHasKey(Select::FORCE_OPTION,$input->getOptions());
+            $this->assertArrayHasKey(Select::FORCE_OPTION,$input->getValues());
             $this->assertSame(Select::FORCE_OPTION,$input->getDefaultValue());
         }
 
