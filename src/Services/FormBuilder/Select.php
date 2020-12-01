@@ -242,7 +242,7 @@ class Select extends FormInput
         }
 
         if (empty($options)) {
-            return array_key_first($this->getOptions());
+            return array_key_first($this->getValues());
         }
 
         return $options;
