@@ -23,24 +23,63 @@
         /**
          * Post validation mutator handler
          *
-         * @param string $date
+         * @param array $date
          *
          * @return Carbon|false
          */
-        public function postValidationMutator(?string $date)
+        public function postValidationMutator(?array $date)
         {
             if (empty($date)) {
                 return null;
             }
 
+            $date = $date[ 'datetime' ];
+
             return Carbon::parse($date);
+        }
+
+        public function getArrayValue($value = null)
+        {
+            if (empty($value)) {
+                $value = $this->getDefaultValue();
+            }
+
+            if ( !empty($value) && !is_array($value)) {
+                $value = Carbon::parse($value);
+            }
+
+            if ( !is_array($value)) {
+                return [
+                    'date'     => null,
+                    'time'     => null,
+                    'datetime' => $value,
+                ];
+            }
+
+            return $value;
+        }
+
+        /**
+         * Returns the value of the underlying attribute if such exists or the default otherwise
+         *
+         * @param mixed|null $value
+         *
+         * @return mixed|string
+         */
+        public function getValue($value = null)
+        {
+            $value = $this->getArrayValue($value);
+
+            $value[ 'date' ] = $this->getDateValue($value[ 'date' ] ?? $value[ 'datetime' ] ?? null);
+            $value[ 'time' ] = $this->getTimeValue($value[ 'time' ] ?? $value[ 'datetime' ] ?? null);
+            $value[ 'datetime' ] = trim($value[ 'date' ] . ' ' . $value[ 'time' ]);
+
+            return $value;
         }
 
         public function getDateValue($value = null)
         {
-            $value = $this->getValue($value);
-
-            if($value === null) {
+            if ($value === null) {
                 return null;
             }
 
@@ -49,22 +88,10 @@
 
         public function getTimeValue($value = null)
         {
-            $value = $this->getValue($value);
-
-            if($value === null) {
+            if ($value === null) {
                 return null;
             }
 
             return Carbon::parse($value)->format('H:i:s');
-        }
-
-        public function getDateId()
-        {
-            return $this->getId() . '_date';
-        }
-
-        public function getTimeId()
-        {
-            return $this->getId() . '_time';
         }
     }

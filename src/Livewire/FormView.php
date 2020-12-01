@@ -5,6 +5,7 @@
     use Exception;
     use Illuminate\Database\Eloquent\Collection;
     use Illuminate\Database\Eloquent\Model;
+    use Illuminate\Http\RedirectResponse;
     use Illuminate\Support\Str;
     use Illuminate\Validation\ValidationException;
     use Livewire\Component;
@@ -244,8 +245,17 @@
                 $this->model::query()->findOrFail($this->modelId)->update($values);
             }
 
-            // todo response
-            return 'OK';
+            return $this->returnResponse();
+        }
+
+        /**
+         * Method which creates the return response
+         *
+         * @return RedirectResponse
+         */
+        protected function returnResponse()
+        {
+            return redirect()->back();
         }
 
         /**
@@ -407,13 +417,6 @@
 
                 if (in_array(SupportsDefaultValue::class, class_uses($input))) {
                     $this->values[ $input->getId() ] = $input->getValue($this->values[ $input->getId() ]);
-                }
-
-                // Todo einmal in schön?
-                if($input instanceof FormBuilder\DateTime) {
-                    $this->values[ $input->getDateId() ] = $input->getDateValue($this->values[ $input->getDateId() ] ?? $this->values[ $input->getId() ] ?? null);
-                    $this->values[ $input->getTimeId() ] = $input->getTimeValue($this->values[ $input->getTimeId() ] ?? $this->values[ $input->getId() ] ?? null);
-                    $this->values[ $input->getId() ] = trim($this->values[ $input->getDateId() ] . ' ' . $this->values[ $input->getTimeId() ]);
                 }
             }
 

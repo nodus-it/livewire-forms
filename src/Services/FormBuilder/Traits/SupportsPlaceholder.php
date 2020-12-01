@@ -27,6 +27,10 @@
                 return $this->getLabel();
             }
 
+            if (empty($this->placeholder)) {
+                return null;
+            }
+
             return trans($this->placeholder);
         }
 

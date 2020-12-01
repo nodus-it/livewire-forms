@@ -107,6 +107,21 @@
             $this->expectException(\InvalidArgumentException::class);
             $input->_randomMethodText();
         }
+
+        public function testSupportsPlaceholder()
+        {
+            $input = new Text('text_input');
+            $this->assertSame('text_input',$input->getPlaceholder());
+            $this->assertSame(true,$input->hasPlaceholder());
+
+            $this->assertInstanceOf(Text::class,$input->setPlaceholder('custom_placeholder'));
+            $this->assertSame('custom_placeholder',$input->getPlaceholder());
+            $this->assertSame(true,$input->hasPlaceholder());
+
+            $this->assertInstanceOf(Text::class,$input->setPlaceholder(''));
+            $this->assertSame(null,$input->getPlaceholder());
+            $this->assertSame(false,$input->hasPlaceholder());
+        }
     }
 
     class TestModel extends Model
