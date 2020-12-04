@@ -38,6 +38,13 @@
             return Carbon::parse($date);
         }
 
+        /**
+         * Returns the array with values used by this input
+         *
+         * @param Carbon|array|string|null $value
+         *
+         * @return array
+         */
         public function getArrayValue($value = null)
         {
             if (empty($value)) {
@@ -77,6 +84,13 @@
             return $value;
         }
 
+        /**
+         * Returns the date value of the underlaying datetime
+         *
+         * @param Carbon|string|null $value
+         *
+         * @return string|null
+         */
         public function getDateValue($value = null)
         {
             if ($value === null) {
@@ -86,6 +100,13 @@
             return Carbon::parse($value)->format('Y-m-d');
         }
 
+        /**
+         * Returns the time value of the underlaying datetime
+         *
+         * @param Carbon|string|null $value
+         *
+         * @return string|null
+         */
         public function getTimeValue($value = null)
         {
             if ($value === null) {

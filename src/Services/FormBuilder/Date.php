@@ -23,7 +23,7 @@
         /**
          * Post validation mutator handler
          *
-         * @param string $date
+         * @param string|null $date
          *
          * @return Carbon|false
          */
@@ -36,6 +36,13 @@
             return Carbon::parse($date);
         }
 
+        /**
+         * Pre render mutator handler
+         *
+         * @param Carbon|string|null $date
+         *
+         * @return string|null
+         */
         public function preRenderMutator($date)
         {
             if (empty($date)) {
