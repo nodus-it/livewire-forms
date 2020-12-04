@@ -15,7 +15,7 @@
             );
         }
 
-        public function pretendResponseIsFile($files)
+        protected function pretendResponseIsFile($files)
         {
             $files = Arr::wrap($files);
             $content = '';
