@@ -5,20 +5,38 @@
 
 _An awesome package for easy dynamic forms with livewire._
 
+The following inputs are currently supported:
+
+- Checkbox
+- Color
+- Date
+- Datetime (composed of a date and a time input)
+- Decimal (own implementation)
+- File
+- Hidden
+- Number
+- Password
+- RichTextarea (powered by Quill.js)
+- Select
+- Text
+- Textarea
+- Time
+
+
+**This package is currently being developed and is still in testing**
+
 ## Roadmap
 ### Near term
-- DateTime input improvements
-- Return route?
-- Unit tests
+- Support more properties
+    - min
+    - max
+    - step
+    - placeholder
 
 ### Future
 - All Inputs
     - improve multiple support
     - check if we should support more properties
-        - min
-        - max
-        - step
-        - placeholder
         - pattern
         - required
         - spellcheck

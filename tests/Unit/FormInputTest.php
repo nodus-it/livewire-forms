@@ -18,8 +18,16 @@
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Textarea;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Time;
 
-    class FormBuilderTest extends TestCase
+    class FormInputTest extends TestCase
     {
+        public function testFormInputCreate()
+        {
+            $input = new Text('text_input');
+            $input2 = Text::create('text_input');
+
+            $this->assertEquals($input, $input2);
+        }
+
         public static function validInputs()
         {
             return [
@@ -35,7 +43,8 @@
                 [Decimal::class, 'addDecimal'],
                 [Select::class, 'addSelect'],
                 [Checkbox::class, 'addCheckbox'],
-                [RichTextarea::class, 'addRichTextarea'],
+                // Note: Richtextarea doesn't support standalone rendering (yet)
+                //[RichTextarea::class, 'addRichTextarea'],
                 [Hidden::class, 'addHidden'],
             ];
         }
@@ -43,18 +52,11 @@
         /**
          * @dataProvider validInputs
          */
-        public function testReturnTypes($expected, $method)
+        public function testFormInputStandaloneRender($class)
         {
-            $view = new class() extends FormView {
-                public function inputs()
-                {
-                    $method = func_get_arg(0);
+            $input = new $class('test_input','test');
 
-                    $this->$method($method, $method);
-                }
-            };
-            $view->inputs($method);
-
-            $this->assertInstanceOf($expected, $view->getInput($method));
+            $this->assertIsString($input->render());
+            $this->assertIsString($input->__toString());
         }
     }

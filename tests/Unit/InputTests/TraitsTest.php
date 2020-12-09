@@ -68,6 +68,60 @@
             $this->assertInstanceOf(Text::class,$input->setValidations('unique:mysql.test,id'));
             $this->assertSame('unique:mysql.test,id,1',$input->rewriteValidationRules(new TestModel(['id' => 1])));
         }
+
+        public function validTranslations()
+        {
+            return [
+                ['DeselectAllText', 'deselect_all'],
+                ['SelectAllText', 'select_all'],
+                ['NoneSelectedText', 'none_selected'],
+                ['NoneResultsText', 'none_results'],
+                ['_NotExistingTest1', null],
+                ['_NotExistingTest2Text', null],
+            ];
+        }
+
+        /**
+         * @dataProvider validTranslations
+         */
+        public function testSupportsTranslations($method,$trans)
+        {
+            $input = Select::create('select_input');
+
+            if ($trans === null) {
+                $this->expectException(\InvalidArgumentException::class);
+            }
+
+            $this->assertSame(
+                trans('nodus.packages.livewire-forms::forms.bootstrap_select.' . $trans),
+                $input->{'get'.$method}()
+            );
+            $this->assertInstanceOf(Select::class, $input->{'set'.$method}('test_translation'));
+            $this->assertSame(trans('test_translation'), $input->{'get'.$method}());
+        }
+
+        public function testSupportsTranslationsInvalidCalls()
+        {
+            $input = Select::create('select_input');
+
+            $this->expectException(\InvalidArgumentException::class);
+            $input->_randomMethodText();
+        }
+
+        public function testSupportsPlaceholder()
+        {
+            $input = new Text('text_input');
+            $this->assertSame('text_input',$input->getPlaceholder());
+            $this->assertSame(true,$input->hasPlaceholder());
+
+            $this->assertInstanceOf(Text::class,$input->setPlaceholder('custom_placeholder'));
+            $this->assertSame('custom_placeholder',$input->getPlaceholder());
+            $this->assertSame(true,$input->hasPlaceholder());
+
+            $this->assertInstanceOf(Text::class,$input->setPlaceholder(''));
+            $this->assertSame(null,$input->getPlaceholder());
+            $this->assertSame(false,$input->hasPlaceholder());
+        }
     }
 
     class TestModel extends Model
