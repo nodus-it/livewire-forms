@@ -12,6 +12,7 @@
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Number;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Password;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\RichTextarea;
+    use Nodus\Packages\LivewireForms\Services\FormBuilder\Section;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Select;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Text;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Textarea;
@@ -208,5 +209,17 @@
             $this->inputs[ $input->getId() ] = $input;
 
             return $input;
+        }
+
+        /**
+         * Adds an Section delimiter with headline
+         *
+         * @param $label
+         *
+         * @return FormBuilder\FormInput
+         */
+        public function addSection($label)
+        {
+            return $this->addInput(Section::class, $label);
         }
     }

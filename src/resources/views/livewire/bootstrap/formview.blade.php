@@ -3,6 +3,10 @@
         @foreach($this->getInputs() as $input)
             @if($input->getType() == 'hidden')
                 <input type="hidden" name="{{ $input->getName() }}" value="{{$input->getValue()}}">
+            @elseif($input->getType() == 'section')
+                <div class="col-12 mt-4"><h3>{{ $input->getLabel() }}</h3>
+                    <hr/>
+                </div>
             @else
                 <div class="col-{{ $input->getSize() }}">
                     <label for="{{ $input->getId() }}">{{ $input->getLabel() }}</label>
