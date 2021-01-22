@@ -139,7 +139,7 @@
             // todo would caching here worth a try or is it not possible due to the nature of livewire?
             if ($this->modelId === null ||
                 $this->model === null ||
-                is_a($this->model, Model::class, true)) {
+                !is_a($this->model, Model::class, true)) {
                 return null;
             }
 
