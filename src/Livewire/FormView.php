@@ -130,6 +130,23 @@
         }
 
         /**
+         * Returns the underlaying model instance (but uses everytime an new query)
+         *
+         * @return Model|null
+         */
+        public function getModel()
+        {
+            // todo would caching here worth a try or is it not possible due to the nature of livewire?
+            if ($this->modelId === null ||
+                $this->model === null ||
+                is_a($this->model, Model::class, true)) {
+                return null;
+            }
+
+            return $this->model::query()->findOrFail($this->modelId);
+        }
+
+        /**
          * Loads the form values by the given model
          *
          * @param Model|array|null $modelOrArray
@@ -433,13 +450,15 @@
         {
             $this->inputs();
 
+            $model = $this->getModel();
+
             foreach ($this->inputs as $input) {
                 if ( !isset($this->values[ $input->getId() ])) {
                     $this->values[ $input->getId() ] = null;
                 }
 
                 if (in_array(SupportsValidations::class, class_uses($input))) {
-                    $this->rules[ $input->getViewId() ] = $input->rewriteValidationRules();
+                    $this->rules[ $input->getViewId() ] = $input->rewriteValidationRules($model);
                 }
 
                 if (in_array(SupportsDefaultValue::class, class_uses($input))) {
