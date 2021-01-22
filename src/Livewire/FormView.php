@@ -101,12 +101,32 @@
          * @throws Exception
          * @return void
          */
-        public function mount($modelOrArray = null, string $postMode = self::POST_MODE_CREATE)
+        public function mount($modelOrArray = null, string $postMode = null)
         {
             $this->initialRender = true;
-            $this->postMode = $postMode;
+            $this->postMode = $postMode ?? (($modelOrArray !== null) ? self::POST_MODE_UPDATE : self::POST_MODE_CREATE);
 
             $this->loadValuesByModelOrArray($modelOrArray);
+        }
+
+        /**
+         * Returns whether or not the form is in create mode
+         *
+         * @return bool
+         */
+        public function isCreateMode()
+        {
+            return $this->postMode === self::POST_MODE_CREATE;
+        }
+
+        /**
+         * Returns whether or not the form is in update mode
+         *
+         * @return bool
+         */
+        public function isUpdateMode()
+        {
+            return $this->postMode === self::POST_MODE_UPDATE;
         }
 
         /**
@@ -216,8 +236,16 @@
             $values = $this->applyPostValidationMutators($values);
 
             // Custom post handling
-            if (method_exists($this, 'submit')) {
-                return $this->submit( $values );
+            if (method_exists($this, 'submitCreate') && method_exists($this, 'submitUpdate')) {
+                if ($this->isCreateMode()) {
+                    return $this->submitCreate($values);
+                } else {
+                    $model = $this->model::query()->findOrFail($this->modelId);
+
+                    return $this->submitUpdate($values, $model);
+                }
+            } elseif (method_exists($this, 'submit')) {
+                return $this->submit($values);
             }
 
             // Default post handling
@@ -238,8 +266,7 @@
                 throw new Exception('You need to use either the custom post handling or use a model for initializing your form');
             }
 
-            // todo bool for $postMode would be enough?
-            if ($this->postMode === self::POST_MODE_CREATE) {
+            if ($this->isCreateMode()) {
                 $this->model::query()->create($values);
             } else {
                 $this->model::query()->findOrFail($this->modelId)->update($values);
