@@ -33,7 +33,7 @@
          *
          * @return Text
          */
-        protected function addText(string $name, string $label = null)
+        public function addText(string $name, string $label = null)
         {
             return $this->addInput(Text::class, $name, $label);
         }
@@ -46,7 +46,7 @@
          *
          * @return Color
          */
-        protected function addColor(string $name, string $label = null)
+        public function addColor(string $name, string $label = null)
         {
             return $this->addInput(Color::class, $name, $label);
         }
@@ -59,7 +59,7 @@
          *
          * @return Password
          */
-        protected function addPassword(string $name, string $label = null)
+        public function addPassword(string $name, string $label = null)
         {
             return $this->addInput(Password::class, $name, $label);
         }
@@ -72,7 +72,7 @@
          *
          * @return File
          */
-        protected function addFile(string $name, string $label = null)
+        public function addFile(string $name, string $label = null)
         {
             return $this->addInput(File::class, $name, $label);
         }
@@ -85,7 +85,7 @@
          *
          * @return Number
          */
-        protected function addNumber(string $name, string $label = null)
+        public function addNumber(string $name, string $label = null)
         {
             return $this->addInput(Number::class, $name, $label);
         }
@@ -98,7 +98,7 @@
          *
          * @return Textarea
          */
-        protected function addTextarea(string $name, string $label = null)
+        public function addTextarea(string $name, string $label = null)
         {
             return $this->addInput(Textarea::class, $name, $label);
         }
@@ -111,7 +111,7 @@
          *
          * @return Date
          */
-        protected function addDate(string $name, string $label = null)
+        public function addDate(string $name, string $label = null)
         {
             return $this->addInput(Date::class, $name, $label);
         }
@@ -124,7 +124,7 @@
          *
          * @return Time
          */
-        protected function addTime(string $name, string $label = null)
+        public function addTime(string $name, string $label = null)
         {
             return $this->addInput(Time::class, $name, $label);
         }
@@ -137,7 +137,7 @@
          *
          * @return Date
          */
-        protected function addDateTime(string $name, string $label = null)
+        public function addDateTime(string $name, string $label = null)
         {
             return $this->addInput(DateTime::class, $name, $label);
         }
@@ -150,7 +150,7 @@
          *
          * @return Decimal
          */
-        protected function addDecimal(string $name, string $label = null)
+        public function addDecimal(string $name, string $label = null)
         {
             return $this->addInput(Decimal::class, $name, $label);
         }
@@ -163,7 +163,7 @@
          *
          * @return Select
          */
-        protected function addSelect(string $name, string $label = null)
+        public function addSelect(string $name, string $label = null)
         {
             return $this->addInput(Select::class, $name, $label);
         }
@@ -176,7 +176,7 @@
          *
          * @return Checkbox
          */
-        protected function addCheckbox(string $name, string $label = null)
+        public function addCheckbox(string $name, string $label = null)
         {
             return $this->addInput(Checkbox::class, $name, $label);
         }
@@ -189,7 +189,7 @@
          *
          * @return RichTextarea
          */
-        protected function addRichTextarea(string $name, string $label = null)
+        public function addRichTextarea(string $name, string $label = null)
         {
             return $this->addInput(RichTextarea::class, $name, $label);
         }
@@ -202,7 +202,7 @@
          *
          * @return Hidden
          */
-        protected function addHidden(string $name, string $value)
+        public function addHidden(string $name, string $value)
         {
             $input = new Hidden($name, $value);
 
