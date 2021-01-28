@@ -3,6 +3,7 @@
     namespace Nodus\Packages\LivewireForms\Services;
 
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Checkbox;
+    use Nodus\Packages\LivewireForms\Services\FormBuilder\Code;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Color;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Date;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\DateTime;
@@ -192,6 +193,19 @@
         public function addRichTextarea(string $name, string $label = null)
         {
             return $this->addInput(RichTextarea::class, $name, $label);
+        }
+
+        /**
+         * Adds an code editor input
+         *
+         * @param string      $name
+         * @param string|null $label
+         *
+         * @return Code
+         */
+        public function addCode(string $name, string $label = null)
+        {
+            return $this->addInput(Code::class, $name, $label);
         }
 
         /**
