@@ -1,4 +1,4 @@
-<div class="nodus-form-control" id="{{ $input->getId() }}_container">
+<div class="nodus-form-control" id="{{ $input->getId(true) }}_container">
     <input type="{{$input->getType()}}"
            name="{{ $input->getName() }}"
            @if($input::supports('placeholder') && $input->hasPlaceholder()) placeholder="{{ $input->getPlaceholder() }}" @endif

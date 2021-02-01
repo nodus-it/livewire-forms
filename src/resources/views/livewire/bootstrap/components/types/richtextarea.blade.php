@@ -1,11 +1,11 @@
-<div class="nodus-form-control" id="{{ $input->getId() }}_container">
+<div class="nodus-form-control" id="{{ $input->getId(true) }}_container">
     <div wire:ignore>
-        <div id="{{ $input->getId() }}">
+        <div id="{{ $input->getId(true) }}">
             {!! $this->values[$input->getId()] !!}
         </div>
     </div>
     <textarea name="{{ $input->getId() }}"
-              id="{{ $input->getId() }}_text"
+              id="{{ $input->getId(true) }}_text"
               class="d-none"
               wire:model.defer="{{ $input->getViewId() }}"
     >{!! $this->values[$input->getId()] !!}</textarea>
@@ -16,8 +16,8 @@
 <script>
     (function(){
         function init() {
-            const element = document.querySelector('#{{ $input->getId() }}');
-            const input = document.querySelector('#{{ $input->getId() }}_text');
+            const element = document.querySelector('#{{ $input->getId(true) }}');
+            const input = document.querySelector('#{{ $input->getId(true) }}_text');
             const editor = new Quill(element,{
                 theme: 'snow'
             });

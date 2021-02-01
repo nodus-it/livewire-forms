@@ -1,6 +1,6 @@
-<div class="nodus-form-control" id="{{ $input->getId() }}_container">
+<div class="nodus-form-control" id="{{ $input->getId(true) }}_container">
     <input type="text"
-           id="{{ $input->getId() }}"
+           id="{{ $input->getId(true) }}"
            name="{{ $input->getName() }}"
            class="form-control @if(isset($errors) && $errors->has($input->getViewId())) is-invalid @endif"
            wire:model.lazy="{{ $input->getViewId() }}"
@@ -13,6 +13,6 @@
 
 @push('javascript')
     <script>
-        new Nodus.DecimalInput('#{{ $input->getId() }}')
+        new Nodus.DecimalInput('#{{ $input->getId(true) }}')
     </script>
 @endpush

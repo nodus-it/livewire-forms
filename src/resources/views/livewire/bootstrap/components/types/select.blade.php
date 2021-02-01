@@ -1,4 +1,4 @@
-<div class="nodus-form-control" id="{{ $input->getId() }}_container" >
+<div class="nodus-form-control" id="{{ $input->getId(true) }}_container" >
     <div wire:ignore>
         <select name="{{ $input->getName() }}"
                 class="form-control selectpicker @if(isset($errors) && $errors->has($input->getViewId())) is-invalid @endif"
@@ -22,7 +22,7 @@
 <script>
     (function(){
         function init() {
-            $('#{{ $input->getId() }}_container').find('.selectpicker').selectpicker();
+            $('#{{ $input->getId(true) }}_container').find('.selectpicker').selectpicker();
         }
 
         @if($initialRender===true)

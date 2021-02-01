@@ -117,10 +117,16 @@
         /**
          * Returns the identifier of the input
          *
+         * @param bool $escape
+         *
          * @return string
          */
-        public function getId()
+        public function getId(bool $escape = false)
         {
+            if ($escape === true) {
+                return str_replace('.', '__', $this->id);
+            }
+
             return $this->id;
         }
 
