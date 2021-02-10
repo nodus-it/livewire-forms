@@ -7,9 +7,6 @@
         <testsuite name="Unit">
             <directory>./tests/Unit</directory>
         </testsuite>
-        <testsuite name="Browser">
-            <directory>./tests/Browser</directory>
-        </testsuite>
     </testsuites>
     <coverage>
         <include>
