@@ -2,6 +2,10 @@
 
 return [
 
+    'options' => [
+        'force' => 'Please choose',
+    ],
+
     'bootstrap_select' => [
         'deselect_all'  => 'Deselect All',
         'select_all'    => 'Select All',

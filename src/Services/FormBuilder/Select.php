@@ -74,7 +74,7 @@ class Select extends FormInput
      *
      * @param array $values
      *
-     * @deprecated
+     * @deprecated use setOptions instead
      *
      * @return $this
      */
@@ -86,7 +86,7 @@ class Select extends FormInput
     /**
      * Returns the select options array
      *
-     * @deprecated
+     * @deprecated use getOptions instead
      *
      * @return array
      */
@@ -117,12 +117,7 @@ class Select extends FormInput
     public function getOptions()
     {
         if ($this->forceOption === true) {
-            return [
-                    self::FORCE_OPTION => static::option(
-                        trans('nodus.content_handler::select.options.force'),
-                        'fas fa-question-circle text-danger'
-                    )
-                ] + $this->values;
+            return [self::FORCE_OPTION => static::forceOption()] + $this->values;
         }
 
         return $this->values;
@@ -170,7 +165,7 @@ class Select extends FormInput
 
     /**
      * Pre render mutator handler
-     * 
+     *
      * @param $options
      *
      * @return array|int|string|null
@@ -182,7 +177,7 @@ class Select extends FormInput
         }
 
         if (empty($options)) {
-            return array_key_first($this->getValues());
+            return array_key_first($this->getOptions());
         }
 
         return $options;
@@ -218,5 +213,18 @@ class Select extends FormInput
     public static function option(string $label, ?string $icon = null)
     {
         return compact('label', 'icon');
+    }
+
+    /**
+     * Creates an option array for the force option
+     *
+     * @return array
+     */
+    private static function forceOption()
+    {
+        return static::option(
+            trans('nodus.packages.livewire-forms::forms.options.force'),
+            'fas fa-question-circle text-danger'
+        );
     }
 }

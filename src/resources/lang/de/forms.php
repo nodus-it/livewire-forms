@@ -2,6 +2,10 @@
 
 return [
 
+    'options' => [
+        'force' => 'Bitte wählen',
+    ],
+
     'bootstrap_select' => [
         'deselect_all'  => 'Alle abwählen',
         'select_all'    => 'Alle auswählen',
