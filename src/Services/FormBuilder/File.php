@@ -18,4 +18,39 @@ class File extends FormInput
     use SupportsValidations;
     use SupportsSize;
     use SupportsHint;
+
+    /**
+     * Accepted file formats
+     *
+     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#htmlattrdefaccept
+     *
+     * @var string|null
+     */
+    protected ?string $acceptFormats = null;
+
+    /**
+     * Defines the accepted file formats
+     *
+     * @param string $acceptFormats
+     *
+     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#htmlattrdefaccept
+     *
+     * @return $this
+     */
+    public function setAcceptFormats(string $acceptFormats)
+    {
+        $this->acceptFormats = $acceptFormats;
+
+        return $this;
+    }
+
+    /**
+     * Returns the accepted file formats
+     *
+     * @return bool
+     */
+    public function getAcceptFormats()
+    {
+        return $this->acceptFormats;
+    }
 }

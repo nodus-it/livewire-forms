@@ -159,7 +159,7 @@ class Select extends FormInput
     }
 
     /**
-     * Gibt das Force Option Flag zurück
+     * Returns the force option flag
      *
      * @return bool
      */
