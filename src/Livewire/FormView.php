@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
@@ -37,6 +38,10 @@ abstract class FormView extends Component
 
     /**
      * Array of input values
+     *
+     * WARNING: Do not use this directly!
+     * It's only public in order for livewire to work with it.
+     * Consider using the related getter and setter instead.
      *
      * @var array
      */
@@ -153,6 +158,66 @@ abstract class FormView extends Component
     }
 
     /**
+     * Checks if the given value key exists using the "dot" notation
+     *
+     * @param string $key
+     *
+     * @return bool
+     */
+    public function hasValue(string $key)
+    {
+        return Arr::has($this->values, $key);
+    }
+
+    /**
+     * Returns the value for the given key using the "dot" notation
+     *
+     * @param string $key
+     * @param null $default
+     *
+     * @return array|\ArrayAccess|mixed
+     */
+    public function getValue(string $key, $default = null)
+    {
+        return Arr::get($this->values, $key, $default);
+    }
+
+    /**
+     * Sets the value for the given key using the "dot" notation
+     *
+     * @param string $key
+     * @param mixed $value
+     *
+     * @return array
+     */
+    public function setValue(string $key, $value)
+    {
+        return Arr::set($this->values, $key, $value);
+    }
+
+    /**
+     * Sets an array of key-value pairs as values using the "dot" notation
+     *
+     * @param array $keyValueArray
+     */
+    public function setValues(array $keyValueArray)
+    {
+        foreach ($keyValueArray as $key => $value) {
+            $this->setValue($key, $value);
+        }
+    }
+
+    /**
+     * Returns an array of all values
+     *
+     * @return array
+     */
+    public function getValues()
+    {
+        return $this->values;
+    }
+
+    /**
      * Loads the form values by the given model
      *
      * @param Model|array|null $modelOrArray
@@ -175,7 +240,7 @@ abstract class FormView extends Component
         }
 
         if (is_array($modelOrArray)) {
-            $this->values = $modelOrArray;
+            $this->loadValuesByArray($modelOrArray);
 
             return;
         }
@@ -193,7 +258,6 @@ abstract class FormView extends Component
     protected function loadValuesByModel(Model $model)
     {
         $this->model = get_class($model);
-        $this->values = $model->getAttributes();
 
         // load relation collections as ID arrays for multiple selects
         foreach ($model->getRelations() as $key => $relation) {
@@ -201,15 +265,27 @@ abstract class FormView extends Component
                 continue;
             }
 
-            $this->values[ $key ] = $relation->pluck('id')->toArray();
+            $this->setValue($key, $relation->pluck('id')->toArray());
         }
 
         // todo nur notwendige values
-        $this->values = array_merge($this->values, $model->getAttributes());
+        $this->setValues($model->getAttributes());
 
         if ($model->exists) {
             $this->modelId = $model->id;
         }
+    }
+
+    /**
+     * Loads the form values by the given array
+     *
+     * @param array $array
+     *
+     * @return void
+     */
+    protected function loadValuesByArray(array $array)
+    {
+        $this->setValues($array);
     }
 
     /**
@@ -254,7 +330,7 @@ abstract class FormView extends Component
 
         // Validations & mutators
         // todo the pre validation mutators are basically called twice due to the prepareForValidation method
-        $values = $this->applyPreValidationMutators($this->values);
+        $values = $this->applyPreValidationMutators($this->getValues());
         $this->validate(null, [], $this->getCustomValidationAttributes());
         $values = $this->applyPostValidationMutators($values);
 
@@ -365,7 +441,7 @@ abstract class FormView extends Component
     {
         foreach ($this->inputs as $input) {
             if (method_exists($input, 'preRenderMutator')) {
-                $this->values[ $input->getId() ] = $input->preRenderMutator($this->values[ $input->getId() ]);
+                $this->setValue($input->getId(), $input->preRenderMutator($this->getValue($input->getId())));
             }
         }
     }
@@ -463,8 +539,8 @@ abstract class FormView extends Component
                 continue;
             }
 
-            if (!isset($this->values[ $input->getId() ])) {
-                $this->values[ $input->getId() ] = null;
+            if (!$this->hasValue($input->getId())) {
+                $this->setValue($input->getId(), null);
             }
 
             if (in_array(SupportsValidations::class, class_uses($input))) {
@@ -472,7 +548,7 @@ abstract class FormView extends Component
             }
 
             if (in_array(SupportsDefaultValue::class, class_uses($input))) {
-                $this->values[ $input->getId() ] = $input->getValue($this->values[ $input->getId() ]);
+                $this->setValue($input->getId(), $input->getValue($this->getValue($input->getId())));
             }
         }
 
