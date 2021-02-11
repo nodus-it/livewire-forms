@@ -19,6 +19,10 @@ use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsValidations
  * FormView Class
  *
  * @package Nodus\Packages\LivewireForms\Livewire
+ *
+ * @method submit(array $values)
+ * @method submitCreate(array $values)
+ * @method submitUpdate(array $values, Model $model)
  */
 abstract class FormView extends Component
 {
@@ -455,6 +459,10 @@ abstract class FormView extends Component
         $model = $this->getModel();
 
         foreach ($this->inputs as $input) {
+            if ($input instanceof FormBuilder\Section) {
+                continue;
+            }
+
             if (!isset($this->values[ $input->getId() ])) {
                 $this->values[ $input->getId() ] = null;
             }
