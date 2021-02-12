@@ -224,7 +224,7 @@ class Select extends FormInput
     {
         return static::option(
             trans('nodus.packages.livewire-forms::forms.options.force'),
-            'fas fa-question-circle text-danger'
+            'fas fa-fw fa-question-circle text-danger'
         );
     }
 }
