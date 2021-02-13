@@ -2,6 +2,7 @@
 
 namespace Nodus\Packages\LivewireForms\Services\FormBuilder;
 
+use Livewire\TemporaryUploadedFile;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsHint;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsMultiple;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsSize;
@@ -52,5 +53,21 @@ class File extends FormInput
     public function getAcceptFormats()
     {
         return $this->acceptFormats;
+    }
+
+    /**
+     * Pre render mutator handler
+     *
+     * @param TemporaryUploadedFile|string|null $value
+     *
+     * @return string|null
+     */
+    public function preRenderMutator($value)
+    {
+        if (!$value instanceof TemporaryUploadedFile) {
+            return null;
+        }
+
+        return $value;
     }
 }
