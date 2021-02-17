@@ -1,6 +1,6 @@
 <div class="nodus-form-control" id="{{ $input->getId(true) }}_container">
     <div wire:ignore>
-        <textarea id="{{ $input->getId(true) }}">{!! $this->values[$input->getId()] !!}</textarea>
+        <textarea class="d-none" id="{{ $input->getId(true) }}">{!! $this->values[$input->getId()] !!}</textarea>
     </div>
     <textarea name="{{ $input->getId() }}"
               id="{{ $input->getId(true) }}_text"
@@ -19,6 +19,7 @@
             const editor = CodeMirror.fromTextArea(element, {
                 mode: (@json($input->getMode())),
                 lineNumbers: true,
+                indentUnit: 4,
             });
 
             editor.on("change", function(){
@@ -26,7 +27,14 @@
                     detail: editor.getValue(),
                     bubbles: true,
                 }));
-            })
+            });
+
+            editor.setOption("extraKeys", {
+                Tab: function(cm) {
+                    var spaces = Array(cm.getOption("indentUnit") + 1).join(" ");
+                    cm.replaceSelection(spaces);
+                }
+            });
         }
 
         @if($initialRender===true)
