@@ -324,7 +324,7 @@ abstract class FormView extends Component
      * @return string
      * @throws Exception
      */
-    public function onSubmit()
+    public final function onSubmit()
     {
         $this->prepareInputs();
 

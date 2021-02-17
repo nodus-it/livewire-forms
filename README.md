@@ -8,6 +8,7 @@ _An awesome package for easy dynamic forms with livewire._
 The following inputs are currently supported:
 
 - Checkbox
+- Code (powered by CodeMirror.js)
 - Color
 - Date
 - Datetime (composed of a date and a time input)
