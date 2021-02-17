@@ -268,7 +268,8 @@ abstract class FormView extends Component
             $this->setValue($key, $relation->pluck('id')->toArray());
         }
 
-        // todo nur notwendige values
+        // We load all attributes because some inputs could be added later dynamically so we may need them.
+        // Therefore we filter unessecarry values only later in the onSubmit method.
         $this->setValues($model->getAttributes());
 
         if ($model->exists) {
@@ -307,7 +308,7 @@ abstract class FormView extends Component
      *
      * @return array
      */
-    public function getCustomValidationAttributes()
+    protected function getCustomValidationAttributes()
     {
         $customAttributes = [];
 
@@ -316,6 +317,32 @@ abstract class FormView extends Component
         }
 
         return $customAttributes;
+    }
+
+    /**
+     * Filters the given array so that only keys that are represented in the form inputs are given back
+     *
+     * @param array $values
+     *
+     * @return array
+     */
+    protected function filterValues(array $values): array
+    {
+        $keys = [];
+        foreach ($this->inputs as $input) {
+            if ($input instanceof FormBuilder\Section) {
+                continue;
+            }
+
+            $keys[] = $input->getId();
+        }
+
+        $filteredValues = [];
+        foreach ($keys as $key) {
+            Arr::set($filteredValues, $key, Arr::get($values, $key));
+        }
+
+        return $filteredValues;
     }
 
     /**
@@ -328,9 +355,12 @@ abstract class FormView extends Component
     {
         $this->prepareInputs();
 
+        // Filter values
+        $values = $this->filterValues($this->getValues());
+
         // Validations & mutators
         // todo the pre validation mutators are basically called twice due to the prepareForValidation method
-        $values = $this->applyPreValidationMutators($this->getValues());
+        $values = $this->applyPreValidationMutators($values);
         $this->validate(null, [], $this->getCustomValidationAttributes());
         $values = $this->applyPostValidationMutators($values);
 
