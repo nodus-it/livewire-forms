@@ -2,6 +2,10 @@
 
 return [
 
+    'general' => [
+        'save' => 'Save',
+    ],
+
     'options' => [
         'force' => 'Please choose',
     ],

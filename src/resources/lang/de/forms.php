@@ -2,6 +2,10 @@
 
 return [
 
+    'general' => [
+        'save' => 'Speichern',
+    ],
+
     'options' => [
         'force' => 'Bitte wählen',
     ],

@@ -228,12 +228,13 @@ trait FormBuilder
     /**
      * Adds an Section delimiter with headline
      *
-     * @param $label
+     * @param string      $label
+     * @param string|null $id
      *
      * @return Section
      */
-    public function addSection($label)
+    public function addSection(string $label, ?string $id = null)
     {
-        return $this->addInput(Section::class, $label);
+        return $this->addInput(Section::class, $label, $id);
     }
 }

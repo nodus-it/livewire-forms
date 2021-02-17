@@ -2,7 +2,6 @@
 
 namespace Nodus\Packages\LivewireForms\Services\FormBuilder;
 
-use Nodus\Packages\LivewireDatatables\Services\Column;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsSize;
 
 class Section extends FormInput
@@ -19,11 +18,16 @@ class Section extends FormInput
     /**
      * Section constructor.
      *
-     * @param string $label
+     * @param string      $label
+     * @param string|null $id
      */
-    public function __construct(string $label)
+    public function __construct(string $label, ?string $id = null)
     {
-        parent::__construct($label, $label);
+        if ($id === null) {
+            $id = $label;
+        }
+
+        parent::__construct($id, $label);
 
         $this->setSize(4);
     }
