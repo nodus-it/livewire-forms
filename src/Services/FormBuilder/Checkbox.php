@@ -31,4 +31,20 @@ class Checkbox extends FormInput
 
         parent::__construct($name, $label);
     }
+
+    /**
+     * Returns the value of the underlying attribute if such exists or the default otherwise
+     *
+     * @param mixed|null $value
+     *
+     * @return mixed|string
+     */
+    public function getValue($value = null)
+    {
+        if ( !empty($value) || $value === false) {
+            return $value;
+        }
+
+        return $this->getDefaultValue();
+    }
 }
