@@ -365,14 +365,12 @@ abstract class FormView extends Component
         $values = $this->applyPostValidationMutators($values);
 
         // Custom post handling
-        if (method_exists($this, 'submitCreate') && method_exists($this, 'submitUpdate')) {
-            if ($this->isCreateMode()) {
-                return $this->submitCreate($values);
-            } else {
-                $model = $this->model::query()->findOrFail($this->modelId);
+        if (method_exists($this, 'submitCreate') && $this->isCreateMode()) {
+            return $this->submitCreate($values);
+        } elseif (method_exists($this, 'submitUpdate') && $this->isUpdateMode()) {
+            $model = $this->model::query()->findOrFail($this->modelId);
 
-                return $this->submitUpdate($values, $model);
-            }
+            return $this->submitUpdate($values, $model);
         } elseif (method_exists($this, 'submit')) {
             return $this->submit($values);
         }
