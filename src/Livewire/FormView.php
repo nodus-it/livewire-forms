@@ -270,7 +270,13 @@ abstract class FormView extends Component
 
         // We load all attributes because some inputs could be added later dynamically so we may need them.
         // Therefore we filter unessecarry values only later in the onSubmit method.
-        $this->setValues($model->getAttributes());
+        $values = [];
+        foreach ($model->getAttributes() as $key => $value) {
+            $values[$key] = $model->getAttribute($key);
+        }
+
+        // Also we cannot use getAttributes here directly because on these values the casts aren't applied yet
+        $this->setValues($values);
 
         if ($model->exists) {
             $this->modelId = $model->id;
