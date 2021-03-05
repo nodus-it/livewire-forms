@@ -47,7 +47,7 @@
          */
         public function getValue($value = null)
         {
-            if ( !empty($value)) {
+            if ($value !== '' && $value !== null) {
                 return $value;
             }
 

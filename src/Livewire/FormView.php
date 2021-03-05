@@ -192,6 +192,10 @@ abstract class FormView extends Component
      */
     public function setValue(string $key, $value)
     {
+        if (is_string($value)) {
+            $value = trim($value);
+        }
+
         return Arr::set($this->values, $key, $value);
     }
 
