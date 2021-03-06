@@ -506,7 +506,7 @@ abstract class FormView extends Component
     protected function getTranslationPrefix()
     {
         if ($this->translationPrefix === null) {
-            return Str::plural(Str::lower(Str::afterLast($this->model, '\\'))) . '.fields';
+            return Str::plural(Str::snake(Str::afterLast($this->model, '\\'))) . '.fields';
         }
 
         return $this->translationPrefix;
