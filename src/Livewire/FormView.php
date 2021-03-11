@@ -192,10 +192,6 @@ abstract class FormView extends Component
      */
     public function setValue(string $key, $value)
     {
-        if (is_string($value)) {
-            $value = trim($value);
-        }
-
         return Arr::set($this->values, $key, $value);
     }
 
@@ -322,7 +318,7 @@ abstract class FormView extends Component
     {
         $customAttributes = [];
 
-        foreach ($this->inputs as $input) {
+        foreach ($this->getRealInputs() as $input) {
             $customAttributes[ 'values.' . $input->getId() ] = $input->getLabel();
         }
 
@@ -339,11 +335,7 @@ abstract class FormView extends Component
     protected function filterValues(array $values): array
     {
         $keys = [];
-        foreach ($this->inputs as $input) {
-            if ($input instanceof FormBuilder\Section) {
-                continue;
-            }
-
+        foreach ($this->getRealInputs() as $input) {
             $keys[] = $input->getId();
         }
 
@@ -445,9 +437,13 @@ abstract class FormView extends Component
      */
     private function applyPreValidationMutators(array $values)
     {
-        foreach ($this->inputs as $input) {
+        foreach ($this->getRealInputs() as $input) {
+            if (is_string($values[$input->getId()])) {
+                $values[$input->getId()] = trim($values[$input->getId()]);
+            }
+
             if (method_exists($input, 'preValidationMutator')) {
-                $values[ $input->getId() ] = $input->preValidationMutator($values[ $input->getId() ]);
+                $values[$input->getId()] = $input->preValidationMutator($values[$input->getId()]);
             }
         }
 
@@ -463,7 +459,7 @@ abstract class FormView extends Component
      */
     private function applyPostValidationMutators(array $values)
     {
-        foreach ($this->inputs as $input) {
+        foreach ($this->getRealInputs() as $input) {
             if (method_exists($input, 'postValidationMutator')) {
                 $values[ $input->getId() ] = $input->postValidationMutator($values[ $input->getId() ]);
             }
@@ -477,7 +473,7 @@ abstract class FormView extends Component
      */
     private function applyPreRenderMutators()
     {
-        foreach ($this->inputs as $input) {
+        foreach ($this->getRealInputs() as $input) {
             if (method_exists($input, 'preRenderMutator')) {
                 $this->setValue($input->getId(), $input->preRenderMutator($this->getValue($input->getId())));
             }
@@ -572,17 +568,13 @@ abstract class FormView extends Component
 
         $model = $this->getModel();
 
-        foreach ($this->inputs as $input) {
-            if ($input instanceof FormBuilder\Section) {
-                continue;
-            }
-
+        foreach ($this->getRealInputs() as $input) {
             if (!$this->hasValue($input->getId())) {
                 $this->setValue($input->getId(), null);
             }
 
             if (in_array(SupportsValidations::class, class_uses($input))) {
-                $this->rules[ $input->getViewId() ] = $input->rewriteValidationRules($model);
+                $this->rules[$input->getViewId()] = $input->rewriteValidationRules($model);
             }
 
             if (in_array(SupportsDefaultValue::class, class_uses($input))) {
@@ -591,6 +583,26 @@ abstract class FormView extends Component
         }
 
         $this->applyPreRenderMutators();
+    }
+
+    /**
+     * Returns the array with all registered real inputs (excludes sections)
+     *
+     * @return array
+     */
+    public function getRealInputs()
+    {
+        $inputs = [];
+
+        foreach ($this->inputs as $input) {
+            if ($input instanceof FormBuilder\Section) {
+                continue;
+            }
+
+            $inputs[] = $input;
+        }
+
+        return $inputs;
     }
 
     /**
