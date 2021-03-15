@@ -2,6 +2,7 @@
 
 namespace Nodus\Packages\LivewireForms\Livewire;
 
+use ArrayAccess;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -15,6 +16,7 @@ use Nodus\Packages\LivewireForms\Services\FormBuilder;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\FormInput;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDefaultValue;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsValidations;
+use Throwable;
 
 /**
  * FormView Class
@@ -107,10 +109,10 @@ abstract class FormView extends Component
      * On component mount handler
      *
      * @param Model|array|null $modelOrArray
-     * @param string           $postMode
+     * @param string|null      $postMode
      *
-     * @return void
      * @throws Exception
+     * @return void
      */
     public function mount($modelOrArray = null, string $postMode = null)
     {
@@ -175,7 +177,7 @@ abstract class FormView extends Component
      * @param string $key
      * @param null $default
      *
-     * @return array|\ArrayAccess|mixed
+     * @return array|ArrayAccess|mixed
      */
     public function getValue(string $key, $default = null)
     {
@@ -438,13 +440,18 @@ abstract class FormView extends Component
     private function applyPreValidationMutators(array $values)
     {
         foreach ($this->getRealInputs() as $input) {
-            if (is_string($values[$input->getId()])) {
-                $values[$input->getId()] = trim($values[$input->getId()]);
+            $key = $input->getId();
+            $value = Arr::get($values, $key);
+
+            if (is_string($value)) {
+                $value = trim($value);
             }
 
             if (method_exists($input, 'preValidationMutator')) {
-                $values[$input->getId()] = $input->preValidationMutator($values[$input->getId()]);
+                $value = $input->preValidationMutator($value);
             }
+
+            Arr::set($values, $key, $value);
         }
 
         return $values;
@@ -460,9 +467,14 @@ abstract class FormView extends Component
     private function applyPostValidationMutators(array $values)
     {
         foreach ($this->getRealInputs() as $input) {
+            $key = $input->getId();
+            $value = Arr::get($values, $key);
+
             if (method_exists($input, 'postValidationMutator')) {
-                $values[ $input->getId() ] = $input->postValidationMutator($values[ $input->getId() ]);
+                $value = $input->postValidationMutator($value);
             }
+
+            Arr::set($values, $key, $value);
         }
 
         return $values;
@@ -474,8 +486,10 @@ abstract class FormView extends Component
     private function applyPreRenderMutators()
     {
         foreach ($this->getRealInputs() as $input) {
+            $key = $input->getId();
+
             if (method_exists($input, 'preRenderMutator')) {
-                $this->setValue($input->getId(), $input->preRenderMutator($this->getValue($input->getId())));
+                $this->setValue($key, $input->preRenderMutator($this->getValue($key)));
             }
         }
     }
@@ -569,8 +583,10 @@ abstract class FormView extends Component
         $model = $this->getModel();
 
         foreach ($this->getRealInputs() as $input) {
-            if (!$this->hasValue($input->getId())) {
-                $this->setValue($input->getId(), null);
+            $key = $input->getId();
+
+            if (!$this->hasValue($key)) {
+                $this->setValue($key, null);
             }
 
             if (in_array(SupportsValidations::class, class_uses($input))) {
@@ -580,7 +596,7 @@ abstract class FormView extends Component
             }
 
             if (in_array(SupportsDefaultValue::class, class_uses($input))) {
-                $this->setValue($input->getId(), $input->getValue($this->getValue($input->getId())));
+                $this->setValue($key, $input->getValue($this->getValue($key)));
             }
         }
 
@@ -633,7 +649,7 @@ abstract class FormView extends Component
      * Renders the form view
      *
      * @return string
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function render()
     {
