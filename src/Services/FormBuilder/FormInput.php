@@ -67,6 +67,22 @@
         }
 
         /**
+         * Returns the name of the related blade view
+         *
+         * @return string
+         */
+        public function getViewName()
+        {
+            $view = 'nodus.packages.livewire-forms::livewire.' . config('livewire-forms.theme') . '.components.types.' . $this->getType();
+
+            if (!view()->exists($view)) {
+                return 'nodus.packages.livewire-forms::livewire.' . config('livewire-forms.theme') . '.components.input';
+            }
+
+            return $view;
+        }
+
+        /**
          * Renders the form input
          *
          * @param bool $initialRender
@@ -75,13 +91,7 @@
          */
         public function render(bool $initialRender = false)
         {
-            $view = 'nodus.packages.livewire-forms::livewire.' . config('livewire-forms.theme') . '.components.types.' . $this->getType();
-
-            if ( !view()->exists($view)) {
-                $view = 'nodus.packages.livewire-forms::livewire.' . config('livewire-forms.theme') . '.components.input';
-            }
-
-            return view($view, ['input' => $this, 'initialRender' => $initialRender])->render();
+            return view($this->getViewName(), ['input' => $this, 'initialRender' => $initialRender])->render();
         }
 
         /**
