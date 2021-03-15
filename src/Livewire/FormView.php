@@ -575,6 +575,8 @@ abstract class FormView extends Component
 
             if (in_array(SupportsValidations::class, class_uses($input))) {
                 $this->rules[$input->getViewId()] = $input->rewriteValidationRules($model);
+            } else {
+                $this->rules[$input->getViewId()] = [];
             }
 
             if (in_array(SupportsDefaultValue::class, class_uses($input))) {
