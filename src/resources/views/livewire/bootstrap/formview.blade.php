@@ -20,9 +20,7 @@
     </div>
     <div class="row">
         <div class="col">
-            <button type="submit" class="btn btn-primary">
-                @lang('nodus.packages.livewire-forms::forms.general.save')
-            </button>
+            @include('nodus.packages.livewire-forms::livewire.'.config('livewire-forms.theme').'.components.save_button')
         </div>
     </div>
 </form>
