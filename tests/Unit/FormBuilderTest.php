@@ -4,6 +4,7 @@
 
     use Nodus\Packages\LivewireForms\Livewire\FormView;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Checkbox;
+    use Nodus\Packages\LivewireForms\Services\FormBuilder\Code;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Color;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Date;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\DateTime;
@@ -13,6 +14,7 @@
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Number;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Password;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\RichTextarea;
+    use Nodus\Packages\LivewireForms\Services\FormBuilder\Section;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Select;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Text;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Textarea;
@@ -37,6 +39,8 @@
                 [Checkbox::class, 'addCheckbox'],
                 [RichTextarea::class, 'addRichTextarea'],
                 [Hidden::class, 'addHidden'],
+                [Code::class, 'addCode'],
+                [Section::class, 'addSection'],
             ];
         }
 

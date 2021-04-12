@@ -69,16 +69,4 @@ class Section extends FormInput
 
         return e(parent::getLabel());
     }
-
-    /**
-     * Renders the form input
-     *
-     * @param bool $initialRender
-     *
-     * @return  string
-     */
-    public function render(bool $initialRender = false)
-    {
-        return view('section', ['input' => $this, 'initialRender' => $initialRender])->render();
-    }
 }

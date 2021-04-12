@@ -89,6 +89,7 @@
         public function inputs()
         {
             $this->addCheckbox('checkbox_input');
+            $this->addCode('code_input');
             $this->addColor('color_input');
             $this->addDate('date_input');
             $this->addDateTime('date_time_input');

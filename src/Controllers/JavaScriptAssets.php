@@ -46,12 +46,12 @@
             );
         }
 
-        protected function matchesCache($lastModified)
+        /*protected function matchesCache($lastModified)
         {
             $ifModifiedSince = $_SERVER[ 'HTTP_IF_MODIFIED_SINCE' ] ?? '';
 
             return @strtotime($ifModifiedSince) === $lastModified;
-        }
+        }*/
 
         protected function httpDate($timestamp)
         {

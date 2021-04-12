@@ -4,6 +4,7 @@
 
     use Nodus\Packages\LivewireForms\Livewire\FormView;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Checkbox;
+    use Nodus\Packages\LivewireForms\Services\FormBuilder\Code;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Color;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Date;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\DateTime;
@@ -46,6 +47,8 @@
                 // Note: Richtextarea doesn't support standalone rendering (yet)
                 //[RichTextarea::class, 'addRichTextarea'],
                 [Hidden::class, 'addHidden'],
+                // Note: Code doesn't support standalone rendering (yet)
+                //[Code::class, 'addCode'],
             ];
         }
 
