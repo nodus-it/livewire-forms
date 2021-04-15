@@ -235,7 +235,7 @@ trait FormBuilder
      */
     public function addSection(string $label, ?string $id = null)
     {
-        $this->addHtml('<h3>' . trans($label) . '</h3><hr />', $id);
+        return $this->addHtml('<h3>' . trans($label) . '</h3><hr/>', $id);
     }
 
     /**
@@ -244,7 +244,7 @@ trait FormBuilder
      * @param string      $content
      * @param string|null $id
      *
-     * @return FormBuilder\FormInput
+     * @return Html
      */
     public function addHtml(string $content, ?string $id = null)
     {

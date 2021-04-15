@@ -11,10 +11,10 @@
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Decimal;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\File;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Hidden;
+    use Nodus\Packages\LivewireForms\Services\FormBuilder\Html;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Number;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Password;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\RichTextarea;
-    use Nodus\Packages\LivewireForms\Services\FormBuilder\Section;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Select;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Text;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Textarea;
@@ -40,7 +40,8 @@
                 [RichTextarea::class, 'addRichTextarea'],
                 [Hidden::class, 'addHidden'],
                 [Code::class, 'addCode'],
-                [Section::class, 'addSection'],
+                [Html::class, 'addSection'],
+                [Html::class, 'addHtml'],
             ];
         }
 
