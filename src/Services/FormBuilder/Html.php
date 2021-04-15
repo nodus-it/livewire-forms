@@ -24,42 +24,4 @@ class Html extends FormInput
 
         $this->setSize(4);
     }
-
-    /**
-     * Sets the html flag
-     *
-     * @param bool $html Allow html
-     *
-     * @return Section
-     */
-    public function enableHtml(bool $html = true)
-    {
-        $this->html = $html;
-
-        return $this;
-    }
-
-    /**
-     * Returns the html flag
-     *
-     * @return bool
-     */
-    public function isHtmlEnabled()
-    {
-        return $this->html;
-    }
-
-    /**
-     * Returns the label of the input
-     *
-     * @return string
-     */
-    public function getLabel()
-    {
-        if ($this->isHtmlEnabled()) {
-            return parent::getLabel();
-        }
-
-        return e(parent::getLabel());
-    }
 }
