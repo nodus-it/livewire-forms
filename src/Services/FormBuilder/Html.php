@@ -4,30 +4,23 @@ namespace Nodus\Packages\LivewireForms\Services\FormBuilder;
 
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsSize;
 
-class Section extends FormInput
+class Html extends FormInput
 {
     use SupportsSize;
 
     /**
-     * Flag for enabling/disabling html output
+     * Html constructor.
      *
-     * @var bool
-     */
-    protected bool $html = false;
-
-    /**
-     * Section constructor.
-     *
-     * @param string      $label
+     * @param string      $content
      * @param string|null $id
      */
-    public function __construct(string $label, ?string $id = null)
+    public function __construct(string $content, ?string $id = null)
     {
         if ($id === null) {
-            $id = $label;
+            $id = md5($content);
         }
 
-        parent::__construct($id, $label);
+        parent::__construct($content, $id);
 
         $this->setSize(4);
     }

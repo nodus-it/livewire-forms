@@ -13,7 +13,7 @@ use Nodus\Packages\LivewireForms\Services\FormBuilder\Hidden;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Number;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Password;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\RichTextarea;
-use Nodus\Packages\LivewireForms\Services\FormBuilder\Section;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Html;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Select;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Text;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Textarea;
@@ -231,10 +231,27 @@ trait FormBuilder
      * @param string      $label
      * @param string|null $id
      *
-     * @return Section
+     * @return Html
      */
     public function addSection(string $label, ?string $id = null)
     {
-        return $this->addInput(Section::class, $label, $id);
+        $this->addHtml('<h3>' . trans($label) . '</h3><hr />', $id);
+    }
+
+    /**
+     * Adds an Html block
+     *
+     * @param string      $content
+     * @param string|null $id
+     *
+     * @return FormBuilder\FormInput
+     */
+    public function addHtml(string $content, ?string $id = null)
+    {
+        if ($id == null) {
+            $id = md5($content);
+        }
+
+        return $this->addInput(Html::class, $id, $content);
     }
 }
