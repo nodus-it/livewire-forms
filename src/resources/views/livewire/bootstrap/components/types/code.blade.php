@@ -16,6 +16,12 @@
         function init() {
             const element = document.querySelector('#{{ $input->getId(true) }}');
             const input = document.querySelector('#{{ $input->getId(true) }}_text');
+
+            if (element.hasAttribute('data-init') && element.getAttribute('data-init') === 'true') {
+                console.log('Already initialized', element);
+                return true;
+            }
+
             const editor = CodeMirror.fromTextArea(element, {
                 mode: (@json($input->getMode())),
                 lineNumbers: true,
@@ -35,6 +41,8 @@
                     cm.replaceSelection(spaces);
                 }
             });
+
+            element.setAttribute('data-init', 'true');
         }
 
         @if($initialRender===true)

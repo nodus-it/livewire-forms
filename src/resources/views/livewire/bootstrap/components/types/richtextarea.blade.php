@@ -18,6 +18,12 @@
         function init() {
             const element = document.querySelector('#{{ $input->getId(true) }}');
             const input = document.querySelector('#{{ $input->getId(true) }}_text');
+
+            if (element.hasAttribute('data-init') && element.getAttribute('data-init') === 'true') {
+                console.log('Already initialized', element);
+                return true;
+            }
+
             const editor = new Quill(element,{
                 theme: 'snow'
             });
@@ -34,6 +40,8 @@
                 @this.set('{{ $input->getViewId() }}', editor.root.innerHTML);
                 }
             });
+
+            element.setAttribute('data-init', 'true');
         }
 
         @if($initialRender===true)
