@@ -176,7 +176,7 @@ class Select extends FormInput
             return Arr::wrap($options);
         }
 
-        if (empty($options)) {
+        if (empty($options) && $options !== 0) {
             return array_key_first($this->getOptions());
         }
 
