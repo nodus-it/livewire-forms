@@ -34,22 +34,22 @@
             $this->assertSame(
                 [
                     'date'     => '2020-01-23',
-                    'time'     => '10:32:54',
-                    'datetime' => '2020-01-23 10:32:54',
+                    'time'     => '10:32',
+                    'datetime' => '2020-01-23 10:32',
                 ],
                 $input->getValue('23.01.2020 10:32:54')
             );
         }
 
-        public function testPostValidationMutator()
+        public function testPreValidationMutator()
         {
             $input = new DateTime('datetime_input');
 
-            $this->assertSame(null,$input->postValidationMutator(null));
-            $this->assertEquals(Carbon::create(2020,01,23,10,32,54),$input->postValidationMutator(['datetime' => '23.01.2020 10:32:54']));
+            $this->assertSame(null,$input->preValidationMutator(null));
+            $this->assertEquals(Carbon::create(2020,01,23,10,32,54),$input->preValidationMutator(['datetime' => '23.01.2020 10:32:54']));
 
             $this->expectException(InvalidFormatException::class);
-            $input->postValidationMutator(['datetime' => 'test']);
+            $input->preValidationMutator(['datetime' => 'test']);
         }
 
         /*public function testPreRenderMutator()
