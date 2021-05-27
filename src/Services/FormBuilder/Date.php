@@ -49,6 +49,10 @@
                 return null;
             }
 
-            return Carbon::parse($date)->format('Y-m-d');
+            try {
+                return Carbon::parse($date)->format('Y-m-d');
+            } catch (\Throwable $e) {
+                return $date;
+            }
         }
     }

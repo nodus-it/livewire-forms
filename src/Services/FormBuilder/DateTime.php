@@ -35,6 +35,7 @@ class DateTime extends FormInput
 
         $date = $date[ 'datetime' ];
 
+        // todo test in older browser versions or safari
         return Carbon::parse($date);
     }
 
