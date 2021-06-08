@@ -11,7 +11,7 @@
     @include('nodus.packages.livewire-forms::livewire.'.config('livewire-forms.theme').'.components.validation')
 </div>
 
-<script>
+<script {!! $input->getNonceAttribute() !!}>
     (function(){
         function init() {
             const element = document.querySelector('#{{ $input->getId(true) }}');

@@ -19,7 +19,7 @@
     @include('nodus.packages.livewire-forms::livewire.'.config('livewire-forms.theme').'.components.validation')
 </div>
 
-<script>
+<script {!! $input->getNonceAttribute() !!}>
     (function(){
         function init() {
             $('#{{ $input->getId(true) }}_container').find('.selectpicker').selectpicker();

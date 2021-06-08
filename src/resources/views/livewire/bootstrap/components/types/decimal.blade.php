@@ -12,7 +12,7 @@
 </div>
 
 @push('javascript')
-    <script>
+    <script {!! $input->getNonceAttribute() !!}>
         new Nodus.DecimalInput('#{{ $input->getId(true) }}')
     </script>
 @endpush
