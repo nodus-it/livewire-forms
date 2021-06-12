@@ -106,6 +106,13 @@ abstract class FormView extends Component
     protected bool $initialRender = false;
 
     /**
+     * Label/Translation key for the save button
+     *
+     * @var string
+     */
+    protected string $saveButtonLabel = 'nodus.packages.livewire-forms::forms.general.save';
+
+    /**
      * On component mount handler
      *
      * @param Model|array|null $modelOrArray
@@ -492,6 +499,30 @@ abstract class FormView extends Component
                 $this->setValue($key, $input->preRenderMutator($this->getValue($key)));
             }
         }
+    }
+
+    /**
+     * Overwrites the save button label
+     *
+     * @param string $label
+     *
+     * @return $this
+     */
+    public function setSaveButtonLabel(string $label)
+    {
+        $this->saveButtonLabel = $label;
+
+        return $this;
+    }
+
+    /**
+     * Returns the save button label
+     *
+     * @return string
+     */
+    public function getSaveButtonLabel()
+    {
+        return $this->saveButtonLabel;
     }
 
     /**
