@@ -635,7 +635,7 @@ abstract class FormView extends Component
     }
 
     /**
-     * Returns the array with all registered real inputs (excludes sections)
+     * Returns the array with all registered real inputs (excludes html)
      *
      * @return array
      */
@@ -644,7 +644,7 @@ abstract class FormView extends Component
         $inputs = [];
 
         foreach ($this->inputs as $input) {
-            if ($input instanceof FormBuilder\Section) {
+            if ($input instanceof FormBuilder\Html) {
                 continue;
             }
 
