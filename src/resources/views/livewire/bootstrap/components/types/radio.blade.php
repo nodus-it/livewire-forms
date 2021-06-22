@@ -8,7 +8,7 @@
                        value="{{$key}}"
                        wire:model="{{ $input->getViewId() }}"
                        autocomplete="off" >
-                {{$option}}
+                {{$option['label']}}
             </label>
         @endforeach
     </div>
