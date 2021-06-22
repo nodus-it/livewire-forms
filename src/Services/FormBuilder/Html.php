@@ -11,16 +11,12 @@ class Html extends FormInput
     /**
      * Html constructor.
      *
-     * @param string      $content
-     * @param string|null $id
+     * @param string      $id
+     * @param string|null $content
      */
-    public function __construct(string $content, ?string $id = null)
+    public function __construct(?string $id, string $content)
     {
-        if ($id === null) {
-            $id = md5($content);
-        }
-
-        parent::__construct($content, $id);
+        parent::__construct($id, $content);
 
         $this->setSize(4);
     }
