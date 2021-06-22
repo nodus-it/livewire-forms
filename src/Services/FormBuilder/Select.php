@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDefaultValue;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsHint;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsMultiple;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsOptions;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsSize;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsTranslations;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsValidations;
@@ -35,19 +36,16 @@ class Select extends FormInput
     use SupportsValidations;
     use SupportsHint;
     use SupportsTranslations;
+    use SupportsOptions {
+        getOptions as parentGetOptions;
+        setOptions as parentSetOptions;
+    }
 
     /**
      * Special option value constants
      */
     public const FORCE_OPTION = -100;
     public const NULL_OPTION = -101;
-
-    /**
-     * Select options array
-     *
-     * @var array
-     */
-    protected array $values = [];
 
     /**
      * Flag that determines whether an additional option will be added that is invalid,
@@ -70,43 +68,15 @@ class Select extends FormInput
     ];
 
     /**
-     * Sets the option values
+     * Sets the options array
      *
-     * @param array $values
-     *
-     * @deprecated use setOptions instead
+     * @param array $options
      *
      * @return $this
      */
-    public function setValues(array $values)
+    public function setOptions(array $options)
     {
-        return $this->setOptions($values);
-    }
-
-    /**
-     * Returns the select options array
-     *
-     * @deprecated use getOptions instead
-     *
-     * @return array
-     */
-    public function getValues()
-    {
-        return $this->getOptions();
-    }
-
-    /**
-     * Sets the option values
-     *
-     * @param array $values
-     *
-     * @return $this
-     */
-    public function setOptions(array $values)
-    {
-        $this->values = Select::castNullSelectOptions($values);
-
-        return $this;
+        return $this->parentSetOptions(Select::castNullSelectOptions($options));
     }
 
     /**
@@ -116,11 +86,13 @@ class Select extends FormInput
      */
     public function getOptions()
     {
+        $options = $this->parentGetOptions();
+
         if ($this->forceOption === true) {
-            return [self::FORCE_OPTION => static::forceOption()] + $this->values;
+            return [self::FORCE_OPTION => static::forceOption()] + $options;
         }
 
-        return $this->values;
+        return $options;
     }
 
     /**
@@ -200,19 +172,6 @@ class Select extends FormInput
         }
 
         return $options;
-    }
-
-    /**
-     * Creates an option array
-     *
-     * @param string      $label
-     * @param string|null $icon
-     *
-     * @return array
-     */
-    public static function option(string $label, ?string $icon = null)
-    {
-        return compact('label', 'icon');
     }
 
     /**
