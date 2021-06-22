@@ -104,7 +104,7 @@
          *
          * @return false|NumberFormatter
          */
-        public function getNumberFormatter($locale = 'de_DE')
+        public function getNumberFormatter(string $locale = 'de_DE')
         {
             $format = NumberFormatter::create($locale, NumberFormatter::CURRENCY);
 
@@ -128,7 +128,7 @@
             }
 
             return $this->getNumberFormatter()->formatCurrency(
-                static::parseValue( $value ),
+                static::parseValue($value),
                 $this->getUnit()
             );
         }
@@ -152,12 +152,12 @@
          *
          * @return float
          */
-        public static function parseValue( $value )
+        public static function parseValue($value)
         {
-            if ( is_float( $value ) ) {
+            if (is_float($value)) {
                 return $value;
             }
 
-            return floatval( str_replace( ',' , '.' , preg_replace( '/[^0-9,-]+/' , '' , $value ) ) );
+            return floatval(str_replace(',', '.', preg_replace('/[^0-9,-]+/', '', $value)));
         }
     }

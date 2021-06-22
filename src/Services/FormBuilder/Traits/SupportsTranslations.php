@@ -79,7 +79,9 @@
          */
         public function __call(string $name, array $arguments)
         {
-            if ($return = $this->resolveTranslationMethod($name, $arguments)) {
+            $return = $this->resolveTranslationMethod($name, $arguments);
+
+            if ($return !== null) {
                 return $return;
             }
 

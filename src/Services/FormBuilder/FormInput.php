@@ -171,7 +171,7 @@
             // todo maybe use static cache
             $traits = collect(class_uses(static::class))->map(
                 function ($value) {
-                    return (string)(Str::of($value)->classBasename()->lower()->replaceFirst('supports',''));
+                    return (string)(Str::of($value)->classBasename()->lower()->replaceFirst('supports', ''));
                 }
             )->toArray();
 

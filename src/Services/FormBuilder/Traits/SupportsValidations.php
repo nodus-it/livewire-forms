@@ -56,13 +56,11 @@
             foreach ($rules as $key => $rule) {
                 // Rewrite Unique Rule
                 if (
-                    $model != null && isset($model->id) && $model->id != null && str_contains(
-                        $rule,
-                        'unique'
-                    ) && substr_count(
-                             $rule,
-                             ','
-                         ) == 1
+                    $model !== null &&
+                    isset($model->id) &&
+                    $model->id !== null &&
+                    str_contains($rule, 'unique') &&
+                    substr_count($rule, ',') === 1
                 ) {
                     [$table, $column] = explode(',', $rule);
 
@@ -72,7 +70,7 @@
                         $table = last($table);
                     }
 
-                    if ($model->getTable() == $table) {
+                    if ($model->getTable() === $table) {
                         $rules[ $key ] = $rule . ',' . $model->id;
                     }
                 }

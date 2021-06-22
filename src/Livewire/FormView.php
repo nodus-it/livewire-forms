@@ -124,7 +124,7 @@ abstract class FormView extends Component
     public function mount($modelOrArray = null, string $postMode = null)
     {
         $this->initialRender = true;
-        $this->postMode = $postMode ?? (($modelOrArray !== null) ? self::POST_MODE_UPDATE : self::POST_MODE_CREATE);
+        $this->postMode = $postMode ?? ($modelOrArray !== null ? self::POST_MODE_UPDATE : self::POST_MODE_CREATE);
 
         $this->loadValuesByModelOrArray($modelOrArray);
     }
@@ -362,7 +362,7 @@ abstract class FormView extends Component
      * @return string
      * @throws Exception
      */
-    public final function onSubmit()
+    final public function onSubmit()
     {
         $this->prepareInputs();
 
@@ -378,11 +378,15 @@ abstract class FormView extends Component
         // Custom post handling
         if (method_exists($this, 'submitCreate') && $this->isCreateMode()) {
             return $this->submitCreate($values);
-        } elseif (method_exists($this, 'submitUpdate') && $this->isUpdateMode()) {
+        }
+
+        if (method_exists($this, 'submitUpdate') && $this->isUpdateMode()) {
             $model = $this->model::query()->findOrFail($this->modelId);
 
             return $this->submitUpdate($values, $model);
-        } elseif (method_exists($this, 'submit')) {
+        }
+
+        if (method_exists($this, 'submit')) {
             return $this->submit($values);
         }
 
