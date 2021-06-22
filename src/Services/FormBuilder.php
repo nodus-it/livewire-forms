@@ -2,6 +2,7 @@
 
 namespace Nodus\Packages\LivewireForms\Services;
 
+use App\Services\Vendor\LivewireForms\Radio;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Checkbox;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Code;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Color;
@@ -10,10 +11,10 @@ use Nodus\Packages\LivewireForms\Services\FormBuilder\DateTime;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Decimal;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\File;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Hidden;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Html;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Number;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Password;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\RichTextarea;
-use Nodus\Packages\LivewireForms\Services\FormBuilder\Html;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Select;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Text;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Textarea;
@@ -180,6 +181,19 @@ trait FormBuilder
     public function addCheckbox(string $name, string $label = null)
     {
         return $this->addInput(Checkbox::class, $name, $label);
+    }
+
+    /**
+     * Adds an radio input group
+     *
+     * @param string      $name
+     * @param string|null $label
+     *
+     * @return Radio
+     */
+    public function addRadio(string $name, string $label = null)
+    {
+        return $this->addInput(Radio::class, $name, $label);
     }
 
     /**
