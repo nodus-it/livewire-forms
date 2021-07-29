@@ -120,6 +120,13 @@ abstract class FormView extends Component
     protected string $saveButtonClasses = 'btn btn-primary';
 
     /**
+     * Save button icon CSS classes (null = no icon)
+     *
+     * @var string|null
+     */
+    protected ?string $saveButtonIconClasses = null;
+
+    /**
      * On component mount handler
      *
      * @param Model|array|null $modelOrArray
@@ -572,6 +579,30 @@ abstract class FormView extends Component
     public function getSaveButtonClasses()
     {
         return $this->saveButtonClasses;
+    }
+
+    /**
+     * Overwrites the save button icon CSS classes
+     *
+     * @param string|null $classes
+     *
+     * @return $this
+     */
+    public function setSaveButtonIconClasses(?string $classes)
+    {
+        $this->saveButtonIconClasses = $classes;
+
+        return $this;
+    }
+
+    /**
+     * Returns the save button icon CSS classes
+     *
+     * @return string
+     */
+    public function getSaveButtonIconClasses()
+    {
+        return $this->saveButtonIconClasses;
     }
 
     /**
