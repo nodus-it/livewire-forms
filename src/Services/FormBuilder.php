@@ -249,7 +249,7 @@ trait FormBuilder
      */
     public function addSection(string $label, ?string $id = null)
     {
-        return $this->addHtml('<h3>' . trans($label) . '</h3><hr/>', $id);
+        return $this->addHtml('<h3 class="nodus-section">' . trans($label) . '</h3><hr/>', $id);
     }
 
     /**
