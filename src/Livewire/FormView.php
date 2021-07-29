@@ -113,6 +113,13 @@ abstract class FormView extends Component
     protected string $saveButtonLabel = 'nodus.packages.livewire-forms::forms.general.save';
 
     /**
+     * Save button CSS classes
+     *
+     * @var string
+     */
+    protected string $saveButtonClasses = 'btn btn-primary';
+
+    /**
      * On component mount handler
      *
      * @param Model|array|null $modelOrArray
@@ -527,6 +534,44 @@ abstract class FormView extends Component
     public function getSaveButtonLabel()
     {
         return $this->saveButtonLabel;
+    }
+
+    /**
+     * Adds the given classes to the existing save button CSS classes
+     *
+     * @param string $classes
+     *
+     * @return $this
+     */
+    public function addSaveButtonClasses(string $classes)
+    {
+        $this->saveButtonClasses .= ' ' . $classes;
+
+        return $this;
+    }
+
+    /**
+     * Overwrites the save button CSS classes
+     *
+     * @param string $classes
+     *
+     * @return $this
+     */
+    public function setSaveButtonClasses(string $classes)
+    {
+        $this->saveButtonClasses = $classes;
+
+        return $this;
+    }
+
+    /**
+     * Returns the save button CSS classes
+     *
+     * @return string
+     */
+    public function getSaveButtonClasses()
+    {
+        return $this->saveButtonClasses;
     }
 
     /**
