@@ -7,7 +7,6 @@
            data-decimals="{{ $input->getDecimals() }}"
            data-unit="{{ $input->getUnit() }}"
     >
-    @include('nodus.packages.livewire-forms::livewire.'.config('livewire-forms.theme').'.components.hint')
     @include('nodus.packages.livewire-forms::livewire.'.config('livewire-forms.theme').'.components.validation')
 </div>
 
