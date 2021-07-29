@@ -10,7 +10,7 @@
     @include('nodus.packages.livewire-forms::livewire.'.config('livewire-forms.theme').'.components.validation')
 </div>
 
-@push('javascript')
+@push(config('livewire-forms.view_stack_js'))
     <script {!! $input->getNonceAttribute() !!}>
         new Nodus.DecimalInput('#{{ $input->getId(true) }}')
     </script>
