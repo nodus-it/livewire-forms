@@ -6,6 +6,7 @@
     use Illuminate\Support\Facades\Validator;
     use Illuminate\Support\ServiceProvider;
     use Nodus\Packages\LivewireForms\Controllers\JavaScriptAssets;
+    use Nodus\Packages\LivewireForms\Services\FormBuilder\Select;
 
     class LivewireFormsServiceProvider extends ServiceProvider
     {
@@ -46,6 +47,13 @@
                 'float',
                 function ($attribute, $value, $parameters, $validator) {
                     return preg_match('/^\d*(\.\d+)?$/', $value);
+                }
+            );
+
+            Validator::extend(
+                'required_option',
+                function ($attribute, $value, $parameters, $validator) {
+                    return $value != Select::FORCE_OPTION;
                 }
             );
         }

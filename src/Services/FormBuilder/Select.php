@@ -2,8 +2,8 @@
 
 namespace Nodus\Packages\LivewireForms\Services\FormBuilder;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDefaultValue;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsHint;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsMultiple;
@@ -33,7 +33,9 @@ class Select extends FormInput
     use SupportsDefaultValue {
         getDefaultValue as parentGetDefaultValue;
     }
-    use SupportsValidations;
+    use SupportsValidations {
+        rewriteValidationRules as parentRewriteValidationRules;
+    }
     use SupportsHint;
     use SupportsTranslations;
     use SupportsOptions {
@@ -185,5 +187,25 @@ class Select extends FormInput
             trans('nodus.packages.livewire-forms::forms.options.force'),
             'fas fa-fw fa-question-circle text-danger'
         );
+    }
+
+    /**
+     * Checks and rewrites the unique validation rule
+     *
+     * @param Model|null $model
+     *
+     * @return string
+     */
+    public function rewriteValidationRules($model = null)
+    {
+        if ($this->getForceOption() === true) {
+            if (empty($this->validations)) {
+                $this->validations = 'required_option';
+            } else {
+                $this->validations .= '|required_option';
+            }
+        }
+
+        return $this->parentRewriteValidationRules($model);
     }
 }
