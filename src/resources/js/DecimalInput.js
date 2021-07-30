@@ -12,15 +12,6 @@ var Nodus = Nodus || {};
  */
 Nodus.DecimalInput = class {
     /**
-     * Data Key Getter
-     *
-     * @return {string}
-     */
-    static get DATA_KEY() {
-        return 'Nodus.DecimalInput';
-    }
-
-    /**
      * DecimalInput Constructor
      *
      * @param element
@@ -36,14 +27,6 @@ Nodus.DecimalInput = class {
             decimals: options.decimals || this.element.getAttribute( 'data-decimals' ) || Nodus.DecimalInput.DEFAULTS.decimals,
             unit: options.unit || this.element.getAttribute( 'data-unit' ) || Nodus.DecimalInput.DEFAULTS.unit,
         };
-
-        // todo
-        /*const instance = Nodus.DecimalInput.instance( this.element );
-        if ( instance !== null ) {
-            return instance;
-        }
-
-        Nodus.Data.set( this.element, this.constructor.DATA_KEY, this );*/
 
         // Event Handlers
         this.element.addEventListener( 'focus', this.onFocusHandler.bind( this ) );
@@ -147,18 +130,6 @@ Nodus.DecimalInput = class {
             this.onFocusHandler( { target: this.element } );
             this.onBlurHandler( { target: this.element } );
         }
-    }
-
-    /**
-     * Get instance by element function
-     *
-     * @param element
-     *
-     * @return {*}
-     */
-    static instance( element ) {
-        // todo
-        //return Nodus.Data.get( element, Nodus.DecimalInput.DATA_KEY )
     }
 };
 

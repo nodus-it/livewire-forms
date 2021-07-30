@@ -2,6 +2,8 @@
 
     namespace Tests\Unit\InputTests;
 
+    use Illuminate\Support\Facades\Validator;
+    use Illuminate\Validation\ValidationException;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Select;
     use Tests\Unit\TestCase;
 
@@ -58,11 +60,18 @@
             $options = [0 => Select::option('test_label')];
             $input = Select::create('select_input')->setOptions($options);
 
-
-            $this->assertSame($options,$input->getOptions());
+            $this->assertSame($options, $input->getOptions());
             $this->assertInstanceOf(Select::class, $input->setForceOption());
-            $this->assertArrayHasKey(Select::FORCE_OPTION,$input->getOptions());
-            $this->assertSame(Select::FORCE_OPTION,$input->getDefaultValue());
+            $this->assertArrayHasKey(Select::FORCE_OPTION, $input->getOptions());
+            $this->assertSame(Select::FORCE_OPTION, $input->getDefaultValue());
+            $this->assertSame(true, $input->getForceOption());
+            $this->assertStringContainsString('required_option', $input->rewriteValidationRules());
+
+            $input = Select::create('select_input')
+                ->setOptions($options)
+                ->setForceOption()
+                ->setValidations('required');
+            $this->assertStringContainsString('|required_option', $input->rewriteValidationRules());
         }
 
         public function testPreRenderMutator()
@@ -88,5 +97,12 @@
             $this->assertSame([],$input->preRenderMutator(null));
             $this->assertSame([1],$input->preRenderMutator(1));
             $this->assertSame([1],$input->preRenderMutator([1]));
+        }
+
+        public function testRequiredOptionValidationRule()
+        {
+            $this->assertArrayHasKey('input', Validator::validate(['input' => 0], ['input' => 'required_option']));
+            $this->expectException(ValidationException::class);
+            $this->assertArrayHasKey('input', Validator::validate(['input' => Select::FORCE_OPTION], ['input' => 'required_option']));
         }
     }

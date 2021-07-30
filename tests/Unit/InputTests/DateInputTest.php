@@ -45,5 +45,8 @@
             $this->assertSame('2020-01-23',$input->preRenderMutator('23.01.2020'));
             $this->assertSame('2020-01-23',$input->preRenderMutator('2020-01-23'));
             $this->assertSame('2020-01-23',$input->preRenderMutator(Carbon::createFromDate(2020,01,23)));
+
+            // special case for older safari versions, this behaviour will be deprecated in future
+            $this->assertSame('23.01.20201',$input->preRenderMutator('23.01.20201'));
         }
     }

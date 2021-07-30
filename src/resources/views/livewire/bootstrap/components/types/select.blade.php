@@ -18,6 +18,8 @@
     @include('nodus.packages.livewire-forms::livewire.'.config('livewire-forms.theme').'.components.validation')
 </div>
 
+{{-- Todo improve JS handling in order to support dynamic options and improve validation state visibility --}}
+{{-- @see https://github.com/livewire/livewire/issues/45#issuecomment-520155799 --}}
 <script {!! $input->getNonceAttribute() !!}>
     (function(){
         function init() {

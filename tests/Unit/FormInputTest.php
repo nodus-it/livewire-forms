@@ -19,6 +19,11 @@
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Textarea;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Time;
 
+    function nonceTest()
+    {
+        return 'test123';
+    }
+
     class FormInputTest extends TestCase
     {
         public function testFormInputCreate()
@@ -61,5 +66,16 @@
 
             $this->assertIsString($input->render());
             $this->assertIsString($input->__toString());
+        }
+
+        public function testNonceSupport()
+        {
+            $input = new Text('test_input', 'test');
+
+            // usage of a random integrated php function with static output to simulate a nonce callable
+            config()->set('livewire-forms.csp_nonce', 'php_sapi_name');
+
+            $this->assertTrue(is_callable(config('livewire-forms.csp_nonce')));
+            $this->assertSame('nonce="' . php_sapi_name() . '"', $input->getNonceAttribute());
         }
     }
