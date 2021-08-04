@@ -4,13 +4,13 @@
             @if($input->getType() == 'hidden')
                 <input type="hidden" name="{{ $input->getName() }}" value="{{$input->getValue()}}">
             @elseif($input->getType() == 'html')
-                <div class="col-{{ $input->getSize() }}">
+                <div class="col-sm-{{ $input->getSize() }}">
                     <div id="{{ $input->getId(true) }}">
                         {!! $input->getLabel() !!}
                     </div>
                 </div>
             @else
-                <div class="col-{{ $input->getSize() }}">
+                <div class="col-sm-{{ $input->getSize() }}">
                     <label for="{{ $input->getId() }}">{{ $input->getLabel() }}</label>
                     @include('nodus.packages.livewire-forms::livewire.'.config('livewire-forms.theme').'.components.hint')
                     {!! $input->render($initialRender) !!}
