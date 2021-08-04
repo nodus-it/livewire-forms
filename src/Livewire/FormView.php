@@ -64,6 +64,13 @@ abstract class FormView extends Component
     protected array $rules = [];
 
     /**
+     * Custom validation messages (prefixed with the fieldname e.g "first_name.required")
+     *
+     * @var array
+     */
+    protected array $messages = [];
+
+    /**
      * Path of the custom view to be used
      *
      * @var string|null
@@ -330,6 +337,25 @@ abstract class FormView extends Component
         $this->prepareInputs();
 
         $this->validateOnly($propertyName, null, [], $this->getCustomValidationAttributes());
+    }
+
+    /**
+     * Returns the custom messages and add the right prefix in case it isn't already added
+     *
+     * @return array
+     */
+    protected function getMessages()
+    {
+        $messages = parent::getMessages();
+
+        foreach ($messages as $key => $message) {
+            if (!Str::startsWith($key, 'values.')) {
+                $messages[ 'values.' . $key ] = $message;
+                unset($messages[ $key ]);
+            }
+        }
+
+        return $messages;
     }
 
     /**
