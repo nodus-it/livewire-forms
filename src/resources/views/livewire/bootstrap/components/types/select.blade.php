@@ -23,7 +23,11 @@
 <script {!! $input->getNonceAttribute() !!}>
     (function(){
         function init() {
-            $('#{{ $input->getId(true) }}_container').find('.selectpicker').selectpicker();
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+                $('#{{ $input->getId(true) }}_container').find('.selectpicker').selectpicker('mobile');
+            } else {
+                $('#{{ $input->getId(true) }}_container').find('.selectpicker').selectpicker();
+            }
         }
 
         @if($initialRender===true)
