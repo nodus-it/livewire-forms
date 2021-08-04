@@ -2,6 +2,7 @@
 
     namespace Nodus\Packages\LivewireForms\Services\FormBuilder;
 
+    use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsInputMode;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsPlaceholder;
     use NumberFormatter;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDefaultValue;
@@ -21,6 +22,7 @@
         use SupportsSize;
         use SupportsHint;
         use SupportsPlaceholder;
+        use SupportsInputMode;
 
         /**
          * Number of decimals to be shown of the decimal value

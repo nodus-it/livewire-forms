@@ -6,6 +6,7 @@
            wire:model.lazy="{{ $input->getViewId() }}"
            data-decimals="{{ $input->getDecimals() }}"
            data-unit="{{ $input->getUnit() }}"
+           @if($input::supports('inputMode') && $input->getInputMode() !== null) inputmode="{{ $input->getInputMode() }}" @endif
     >
     @include('nodus.packages.livewire-forms::livewire.'.config('livewire-forms.theme').'.components.validation')
 </div>

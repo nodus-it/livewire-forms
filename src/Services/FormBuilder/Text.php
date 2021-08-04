@@ -4,6 +4,7 @@
 
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDefaultValue;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsHint;
+    use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsInputMode;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsMultiple;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsPlaceholder;
     use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsSize;
@@ -21,4 +22,5 @@
         use SupportsSize;
         use SupportsHint;
         use SupportsPlaceholder;
+        use SupportsInputMode;
     }
