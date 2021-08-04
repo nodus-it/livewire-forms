@@ -58,7 +58,13 @@ Nodus.DecimalInput = class {
             return;
         }
 
-        e.target.value = String( this.parseInputString( e.target.value ) ).replace( /[.]+/, "," );
+        let value = String( this.parseInputString( e.target.value ) ).replace( /[.]+/, "," );
+
+        if (value === '0') {
+            value = '';
+        }
+
+        e.target.value = value;
     }
 
     /**
@@ -68,9 +74,12 @@ Nodus.DecimalInput = class {
      */
     onBlurHandler( e ) {
         let options;
+        let value;
 
         if ( e.target.value.length === 0 ) {
-            return;
+            value = 0;
+        } else {
+            value = e.target.value;
         }
 
         if ( this.options.unit === null || this.isValidCurrency() === false ) {
@@ -86,7 +95,7 @@ Nodus.DecimalInput = class {
             }
         }
 
-        let value = this.parseInputString( e.target.value ).toLocaleString( undefined, options );
+        value = this.parseInputString( value ).toLocaleString( undefined, options );
 
         if ( this.options.unit !== null && this.isValidCurrency() === false ) {
             value += ' ' + this.options.unit;
