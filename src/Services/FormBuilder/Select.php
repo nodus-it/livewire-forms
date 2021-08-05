@@ -58,6 +58,13 @@ class Select extends FormInput
     protected bool $forceOption = false;
 
     /**
+     * Icon CSS classes for the force option
+     *
+     * @var string
+     */
+    protected ?string $forceOptionIconClasses = null;
+
+    /**
      * Translations array
      *
      * @var array|string[]
@@ -91,7 +98,7 @@ class Select extends FormInput
         $options = $this->parentGetOptions();
 
         if ($this->forceOption === true) {
-            return [self::FORCE_OPTION => static::forceOption()] + $options;
+            return [self::FORCE_OPTION => $this->forceOption()] + $options;
         }
 
         return $options;
@@ -116,13 +123,15 @@ class Select extends FormInput
     /**
      * Sets the force option flag
      *
-     * @param bool $forceOption
+     * @param bool        $forceOption
+     * @param string|null $iconClasses
      *
      * @return $this
      */
-    public function setForceOption(bool $forceOption = true)
+    public function setForceOption(bool $forceOption = true, ?string $iconClasses = 'fas fa-fw fa-question-circle text-danger nodus-force-icon')
     {
         $this->forceOption = $forceOption;
+        $this->forceOptionIconClasses = $iconClasses;
 
         return $this;
     }
@@ -181,11 +190,11 @@ class Select extends FormInput
      *
      * @return array
      */
-    private static function forceOption()
+    private function forceOption()
     {
         return static::option(
             trans('nodus.packages.livewire-forms::forms.options.force'),
-            'fas fa-fw fa-question-circle text-danger'
+            $this->forceOptionIconClasses
         );
     }
 
