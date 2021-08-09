@@ -10,7 +10,9 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Validation\Validator;
 use Livewire\Component;
+use Livewire\Livewire;
 use Nodus\Packages\LivewireCore\SupportsAdditionalViewParameters;
 use Nodus\Packages\LivewireForms\Services\FormBuilder;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\FormInput;
@@ -397,6 +399,22 @@ abstract class FormView extends Component
     }
 
     /**
+     * Applies the mutators and validates the form values
+     *
+     * @param array $values
+     *
+     * @return array
+     */
+    protected function validateValues(array $values): array
+    {
+        // todo the pre validation mutators are basically called twice due to the prepareForValidation method
+        $values = $this->applyPreValidationMutators($values);
+        $this->validate(null, [], $this->getCustomValidationAttributes());
+
+        return $this->applyPostValidationMutators($values);
+    }
+
+    /**
      * On form submit handler
      *
      * @return string
@@ -406,14 +424,11 @@ abstract class FormView extends Component
     {
         $this->prepareInputs();
 
-        // Filter values
-        $values = $this->filterValues($this->getValues());
+        $values = $this->validateValues(
+            $this->filterValues($this->getValues())
+        );
 
-        // Validations & mutators
-        // todo the pre validation mutators are basically called twice due to the prepareForValidation method
-        $values = $this->applyPreValidationMutators($values);
-        $this->validate(null, [], $this->getCustomValidationAttributes());
-        $values = $this->applyPostValidationMutators($values);
+        $this->registerSubmitValidationExceptionHandler();
 
         // Custom post handling
         if (method_exists($this, 'submitCreate') && $this->isCreateMode()) {
@@ -465,6 +480,26 @@ abstract class FormView extends Component
     protected function returnResponse()
     {
         return redirect()->back();
+    }
+
+    /**
+     * Registers the custom submit validation exception handler
+     */
+    protected function registerSubmitValidationExceptionHandler()
+    {
+        Livewire::listen('failed-validation', function (Validator $validator) {
+            $this->submitValidationExceptionHandler($validator);
+        });
+    }
+
+    /**
+     * Custom submit validation exception handler
+     *
+     * @param Validator $validator
+     */
+    protected function submitValidationExceptionHandler(Validator $validator)
+    {
+        // overwrite
     }
 
     /**
