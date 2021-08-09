@@ -1,6 +1,6 @@
 {
   "name": "nodus-it/livewire-forms",
-  "description": "A awesome package for easy dynamic forms with livewire",
+  "description": "A awesome package for easy dynamic forms with livewire and bootstrap",
   "license": "MIT",
   "type": "library",
   "authors": [
@@ -19,7 +19,7 @@
   ],
   "require": {
     "php": "^7.4 || ^8.0",
-    "nodus-it/livewire-core": "dev-master",
+    "nodus-it/livewire-core": "0.1.*",
     "ext-intl": "*"
   },
   "require-dev": {
