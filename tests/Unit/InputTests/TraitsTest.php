@@ -61,12 +61,12 @@
         public function testSupportsValidations()
         {
             $input = new Text('text_input');
-            $this->assertSame('',$input->getValidations());
+            $this->assertSame([],$input->getValidations());
             $this->assertInstanceOf(Text::class,$input->setValidations('required'));
-            $this->assertSame('required',$input->getValidations());
+            $this->assertContains('required',$input->getValidations());
 
             $this->assertInstanceOf(Text::class,$input->setValidations('unique:mysql.test,id'));
-            $this->assertSame('unique:mysql.test,id,1',$input->rewriteValidationRules(new TestModel(['id' => 1])));
+            $this->assertContains('unique:mysql.test,id,1',$input->rewriteValidationRules(new TestModel(['id' => 1])));
         }
 
         public function validTranslations()

@@ -22,7 +22,7 @@
             $this->assertSame('decimal',$input->getType());
             $this->assertSame('values.decimal_input',$input->getViewId());
             $this->assertSame(null,$input->getHint());
-            $this->assertSame('',$input->getValidations());
+            $this->assertSame([],$input->getValidations());
             $this->assertSame(6,$input->getSize());
             $this->assertSame(0.0,$input->getDefaultValue());
             $this->assertSame(0.0,$input->getValue());

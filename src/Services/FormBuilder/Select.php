@@ -203,16 +203,12 @@ class Select extends FormInput
      *
      * @param Model|null $model
      *
-     * @return string
+     * @return array
      */
     public function rewriteValidationRules($model = null)
     {
         if ($this->getForceOption() === true) {
-            if (empty($this->validations)) {
-                $this->validations = 'required_option';
-            } else {
-                $this->validations .= '|required_option';
-            }
+            $this->validations[] = 'required_option';
         }
 
         return $this->parentRewriteValidationRules($model);

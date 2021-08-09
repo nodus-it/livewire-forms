@@ -19,7 +19,7 @@
             $this->assertSame('select',$input->getType());
             $this->assertSame('values.select_input',$input->getViewId());
             $this->assertSame(null,$input->getHint());
-            $this->assertSame('',$input->getValidations());
+            $this->assertSame([],$input->getValidations());
             $this->assertSame(6,$input->getSize());
             $this->assertSame(null,$input->getDefaultValue());
             $this->assertSame(null,$input->getValue());
@@ -65,13 +65,13 @@
             $this->assertArrayHasKey(Select::FORCE_OPTION, $input->getOptions());
             $this->assertSame(Select::FORCE_OPTION, $input->getDefaultValue());
             $this->assertSame(true, $input->getForceOption());
-            $this->assertStringContainsString('required_option', $input->rewriteValidationRules());
+            $this->assertContains('required_option', $input->rewriteValidationRules());
 
             $input = Select::create('select_input')
                 ->setOptions($options)
                 ->setForceOption()
                 ->setValidations('required');
-            $this->assertStringContainsString('|required_option', $input->rewriteValidationRules());
+            $this->assertContains('required_option', $input->rewriteValidationRules());
         }
 
         public function testPreRenderMutator()

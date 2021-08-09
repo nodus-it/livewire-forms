@@ -17,7 +17,7 @@
             $this->assertSame('text',$input->getType());
             $this->assertSame('values.text_input',$input->getViewId());
             $this->assertSame(null,$input->getHint());
-            $this->assertSame('',$input->getValidations());
+            $this->assertSame([],$input->getValidations());
             $this->assertSame(6,$input->getSize());
             $this->assertSame(null,$input->getDefaultValue());
             $this->assertSame(null,$input->getValue());
