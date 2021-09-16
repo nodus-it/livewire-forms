@@ -99,6 +99,16 @@
             $this->assertSame([1],$input->preRenderMutator([1]));
         }
 
+        public function testPostValidationMutator()
+        {
+            $input = new Select('select_input');
+
+            $this->assertSame(null, $input->postValidationMutator(null));
+            $this->assertSame('', $input->postValidationMutator(''));
+            $this->assertSame(1, $input->postValidationMutator(1));
+            $this->assertSame(null, $input->postValidationMutator(Select::NULL_OPTION));
+        }
+
         public function testRequiredOptionValidationRule()
         {
             $this->assertArrayHasKey('input', Validator::validate(['input' => 0], ['input' => 'required_option']));
