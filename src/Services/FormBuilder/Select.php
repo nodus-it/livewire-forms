@@ -175,7 +175,7 @@ class Select extends FormInput
      */
     public function postValidationMutator($options)
     {
-        if ($options === Select::NULL_OPTION) {
+        if (intval($options) === Select::NULL_OPTION) {
             return null;
         }
 

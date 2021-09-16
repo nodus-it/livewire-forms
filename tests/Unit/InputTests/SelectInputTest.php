@@ -106,6 +106,7 @@
             $this->assertSame(null, $input->postValidationMutator(null));
             $this->assertSame('', $input->postValidationMutator(''));
             $this->assertSame(1, $input->postValidationMutator(1));
+            $this->assertSame(null, $input->postValidationMutator((string)Select::NULL_OPTION));
             $this->assertSame(null, $input->postValidationMutator(Select::NULL_OPTION));
         }
 
