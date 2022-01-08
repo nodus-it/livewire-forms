@@ -14,7 +14,7 @@ trait SupportsInputMode
      *
      * @var string[]
      */
-    protected $allowedInputModes = [
+    protected array $allowedInputModes = [
         'none',
         'text',
         'decimal',

@@ -60,7 +60,7 @@ class Select extends FormInput
     /**
      * Icon CSS classes for the force option
      *
-     * @var string
+     * @var string|null
      */
     protected ?string $forceOptionIconClasses = null;
 
@@ -111,8 +111,6 @@ class Select extends FormInput
      */
     public function getDefaultValue()
     {
-        // Wenn die Force Option aktiviert ist und der Default Value nicht geändert
-        // wurde ist der Default Value die Force Option
         if ($this->getForceOption() === true && $this->value === null) {
             return Select::FORCE_OPTION;
         }

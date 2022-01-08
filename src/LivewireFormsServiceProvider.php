@@ -45,14 +45,14 @@
         {
             Validator::extend(
                 'float',
-                function ($attribute, $value, $parameters, $validator) {
+                function ($attribute, $value) {
                     return preg_match('/^\d*(\.\d+)?$/', $value);
                 }
             );
 
             Validator::extend(
                 'required_option',
-                function ($attribute, $value, $parameters, $validator) {
+                function ($attribute, $value) {
                     return $value != Select::FORCE_OPTION;
                 }
             );

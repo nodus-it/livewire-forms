@@ -4,6 +4,8 @@ namespace Nodus\Packages\LivewireForms\Livewire;
 
 use ArrayAccess;
 use Exception;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
@@ -153,7 +155,7 @@ abstract class FormView extends Component
     }
 
     /**
-     * Returns whether or not the form is in create mode
+     * Returns whether the form is in create mode
      *
      * @return bool
      */
@@ -163,7 +165,7 @@ abstract class FormView extends Component
     }
 
     /**
-     * Returns whether or not the form is in update mode
+     * Returns whether the form is in update mode
      *
      * @return bool
      */
@@ -173,7 +175,7 @@ abstract class FormView extends Component
     }
 
     /**
-     * Returns the underlaying model instance (but uses everytime an new query)
+     * Returns the underlaying model instance (but uses everytime a new query)
      *
      * @return Model|null
      */
@@ -300,14 +302,14 @@ abstract class FormView extends Component
             $this->setValue($key, $relation->pluck('id')->toArray());
         }
 
-        // We load all attributes because some inputs could be added later dynamically so we may need them.
-        // Therefore we filter unessecarry values only later in the onSubmit method.
+        // We load all attributes because some inputs could be added later dynamically, so we may need them.
+        // Therefore, we filter unessecarry values only later in the onSubmit method.
         $values = [];
         foreach ($model->getAttributes() as $key => $value) {
             $values[$key] = $model->getAttribute($key);
         }
 
-        // Also we cannot use getAttributes here directly because on these values the casts aren't applied yet
+        // Also, we cannot use getAttributes here directly because on these values the casts aren't applied yet
         $this->setValues($values);
 
         if ($model->exists) {
@@ -417,8 +419,8 @@ abstract class FormView extends Component
     /**
      * On form submit handler
      *
-     * @return string
      * @throws Exception
+     * @return RedirectResponse
      */
     final public function onSubmit()
     {
@@ -454,8 +456,8 @@ abstract class FormView extends Component
      *
      * @param array $values
      *
-     * @return string
      * @throws Exception
+     * @return RedirectResponse
      */
     protected function defaultSubmit(array $values)
     {
@@ -709,11 +711,15 @@ abstract class FormView extends Component
     /**
      * Creates a FormInput instance by the given data and adds it to the form
      *
-     * @param string      $class
-     * @param string      $name
-     * @param string|null $label
+     * @param string                                  $class
+     * @param string                                  $name
+     * @param string|null                             $label
      *
      * @return FormInput
+     *
+     * @psalm-template RealInstanceType of object
+     * @psalm-param    class-string<RealInstanceType> $class
+     * @psalm-return   RealInstanceType
      */
     protected function addInput(string $class, string $name, ?string $label = null)
     {
@@ -725,7 +731,7 @@ abstract class FormView extends Component
     }
 
     /**
-     * Adds an given FormInput instance to the form
+     * Adds a given FormInput instance to the form
      *
      * @param FormInput $input
      *
@@ -820,8 +826,8 @@ abstract class FormView extends Component
     /**
      * Renders the form view
      *
-     * @return string
      * @throws Throwable
+     * @return Factory|View
      */
     public function render()
     {

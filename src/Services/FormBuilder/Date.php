@@ -1,74 +1,75 @@
 <?php
 
-    namespace Nodus\Packages\LivewireForms\Services\FormBuilder;
+namespace Nodus\Packages\LivewireForms\Services\FormBuilder;
 
-    use Illuminate\Support\Carbon;
-    use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDefaultValue;
-    use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsHint;
-    use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsPlaceholder;
-    use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsSize;
-    use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsValidations;
+use Illuminate\Support\Carbon;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDefaultValue;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsHint;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsPlaceholder;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsSize;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsValidations;
+use Throwable;
+
+/**
+ * Date input class
+ *
+ * @package  Nodus\Packages\LivewireForms\Services\FormBuilder
+ */
+class Date extends FormInput
+{
+    use SupportsDefaultValue;
+    use SupportsValidations;
+    use SupportsSize;
+    use SupportsHint;
+    use SupportsPlaceholder;
 
     /**
-     * Date input class
+     * Date constructor.
      *
-     * @package  Nodus\Packages\LivewireForms\Services\FormBuilder
+     * @param string      $name
+     * @param string|null $label
      */
-    class Date extends FormInput
+    public function __construct(string $name, ?string $label = null)
     {
-        use SupportsDefaultValue;
-        use SupportsValidations;
-        use SupportsSize;
-        use SupportsHint;
-        use SupportsPlaceholder;
+        // Todo only as fallback for browsers like safari, see https://caniuse.com/input-datetime
+        $this->setPlaceholder('YYYY-MM-DD');
 
-        /**
-         * Date constructor.
-         *
-         * @param string $name
-         * @param string|null $label
-         */
-        public function __construct(string $name, ?string $label = null)
-        {
-            // Todo only as fallback for browsers like safari, see https://caniuse.com/input-datetime
-            $this->setPlaceholder('YYYY-MM-DD');
+        parent::__construct($name, $label);
+    }
 
-            parent::__construct($name, $label);
+    /**
+     * Post validation mutator handler
+     *
+     * @param string|null $date
+     *
+     * @return Carbon|null
+     */
+    public function postValidationMutator(?string $date)
+    {
+        if (empty($date)) {
+            return null;
         }
 
-        /**
-         * Post validation mutator handler
-         *
-         * @param string|null $date
-         *
-         * @return Carbon|false
-         */
-        public function postValidationMutator(?string $date)
-        {
-            if (empty($date)) {
-                return null;
-            }
+        return Carbon::parse($date);
+    }
 
-            return Carbon::parse($date);
+    /**
+     * Pre render mutator handler
+     *
+     * @param Carbon|string|null $date
+     *
+     * @return string|null
+     */
+    public function preRenderMutator($date)
+    {
+        if (empty($date)) {
+            return null;
         }
 
-        /**
-         * Pre render mutator handler
-         *
-         * @param Carbon|string|null $date
-         *
-         * @return string|null
-         */
-        public function preRenderMutator($date)
-        {
-            if (empty($date)) {
-                return null;
-            }
-
-            try {
-                return Carbon::parse($date)->format('Y-m-d');
-            } catch (\Throwable $e) {
-                return $date;
-            }
+        try {
+            return Carbon::parse($date)->format('Y-m-d');
+        } catch (Throwable $e) {
+            return $date;
         }
     }
+}

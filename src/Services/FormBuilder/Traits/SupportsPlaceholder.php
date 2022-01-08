@@ -1,68 +1,68 @@
 <?php
 
-    namespace Nodus\Packages\LivewireForms\Services\FormBuilder\Traits;
+namespace Nodus\Packages\LivewireForms\Services\FormBuilder\Traits;
+
+/**
+ * Supports placeholder form input trait
+ *
+ * @package Nodus\Packages\LivewireForms\Services\FormBuilder\Traits
+ */
+trait SupportsPlaceholder
+{
+    /**
+     * Placeholder
+     *
+     * @var string|null
+     */
+    protected ?string $placeholder = null;
 
     /**
-     * Supports placeholder form input trait
+     * Returns the translated placeholder
      *
-     * @package Nodus\Packages\LivewireForms\Services\FormBuilder\Traits
+     * @return array|string|null
      */
-    trait SupportsPlaceholder
+    public function getPlaceholder()
     {
-        /**
-         * Placeholder
-         *
-         * @var string|null
-         */
-        protected ?string $placeholder = null;
-
-        /**
-         * Returns the translated placeholder
-         *
-         * @return int
-         */
-        public function getPlaceholder()
-        {
-            if ($this->placeholder === null) {
-                return $this->getLabel();
-            }
-
-            if (empty($this->placeholder)) {
-                return null;
-            }
-
-            return trans($this->placeholder);
+        if ($this->placeholder === null) {
+            return $this->getLabel();
         }
 
-        /**
-         * Sets the input placeholder
-         *
-         * @param string $placeholder
-         *
-         * @return $this
-         */
-        public function setPlaceholder(string $placeholder)
-        {
-            $this->placeholder = $placeholder;
-
-            return $this;
+        if (empty($this->placeholder)) {
+            return null;
         }
 
-        /**
-         * Returns if a placeholder exists
-         *
-         * @return bool
-         */
-        public function hasPlaceholder()
-        {
-            if ($this->placeholder === null) {
-                return true;
-            }
+        return trans($this->placeholder);
+    }
 
-            if (empty($this->placeholder)) {
-                return false;
-            }
+    /**
+     * Sets the input placeholder
+     *
+     * @param string $placeholder
+     *
+     * @return $this
+     */
+    public function setPlaceholder(string $placeholder)
+    {
+        $this->placeholder = $placeholder;
 
+        return $this;
+    }
+
+    /**
+     * Returns if a placeholder exists
+     *
+     * @return bool
+     */
+    public function hasPlaceholder()
+    {
+        if ($this->placeholder === null) {
             return true;
         }
+
+        if (empty($this->placeholder)) {
+            return false;
+        }
+
+        return true;
     }
+}

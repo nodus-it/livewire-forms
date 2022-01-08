@@ -41,7 +41,7 @@ class Checkbox extends FormInput
      */
     public function getValue($value = null)
     {
-        if ( !empty($value) || $value === false) {
+        if (!empty($value) || $value === false) {
             return $value;
         }
 

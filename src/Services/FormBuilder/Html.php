@@ -11,8 +11,8 @@ class Html extends FormInput
     /**
      * Html constructor.
      *
-     * @param string      $id
-     * @param string|null $content
+     * @param string|null $id
+     * @param string      $content
      */
     public function __construct(?string $id, string $content)
     {

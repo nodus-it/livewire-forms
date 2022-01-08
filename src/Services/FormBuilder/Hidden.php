@@ -17,7 +17,7 @@ class Hidden extends FormInput
      * Hidden constructor.
      *
      * @param string $name
-     * @param        $value
+     * @param string $value
      */
     public function __construct(string $name, string $value)
     {

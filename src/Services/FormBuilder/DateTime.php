@@ -52,11 +52,11 @@ class DateTime extends FormInput
             $value = $this->getDefaultValue();
         }
 
-        if ( !empty($value) && !is_array($value)) {
+        if (!empty($value) && !is_array($value)) {
             $value = Carbon::parse($value);
         }
 
-        if ( !is_array($value)) {
+        if (!is_array($value)) {
             return [
                 'date'     => null,
                 'time'     => null,

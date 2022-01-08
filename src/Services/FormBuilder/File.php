@@ -34,9 +34,9 @@ class File extends FormInput
      *
      * @param string $acceptFormats
      *
+     * @return $this
      * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#htmlattrdefaccept
      *
-     * @return $this
      */
     public function setAcceptFormats(string $acceptFormats)
     {
@@ -48,7 +48,7 @@ class File extends FormInput
     /**
      * Returns the accepted file formats
      *
-     * @return bool
+     * @return string|null
      */
     public function getAcceptFormats()
     {
@@ -60,7 +60,7 @@ class File extends FormInput
      *
      * @param TemporaryUploadedFile|string|null $value
      *
-     * @return string|null
+     * @return TemporaryUploadedFile|null
      */
     public function preRenderMutator($value)
     {

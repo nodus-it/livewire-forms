@@ -1,6 +1,6 @@
 {
   "name": "nodus-it/livewire-forms",
-  "description": "A awesome package for easy dynamic forms with livewire and bootstrap",
+  "description": "A awesome package for easy dynamic forms with Laravel Livewire and Bootstrap v4",
   "license": "MIT",
   "type": "library",
   "authors": [

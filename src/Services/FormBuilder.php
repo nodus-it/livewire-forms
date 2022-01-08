@@ -24,11 +24,13 @@ use Nodus\Packages\LivewireForms\Services\FormBuilder\Time;
  * FormBuilder Trait
  *
  * @package Nodus\Packages\LivewireDatatables\Services
+ *
+ * @property array $inputs
  */
 trait FormBuilder
 {
     /**
-     * Adds an text input
+     * Adds a text input
      *
      * @param string      $name
      * @param string|null $label
@@ -41,7 +43,7 @@ trait FormBuilder
     }
 
     /**
-     * Adds an color input
+     * Adds a color input
      *
      * @param string      $name
      * @param string|null $label
@@ -54,7 +56,7 @@ trait FormBuilder
     }
 
     /**
-     * Adds an password input
+     * Adds a password input
      *
      * @param string      $name
      * @param string|null $label
@@ -67,7 +69,7 @@ trait FormBuilder
     }
 
     /**
-     * Adds an file input
+     * Adds a file input
      *
      * @param string      $name
      * @param string|null $label
@@ -80,7 +82,7 @@ trait FormBuilder
     }
 
     /**
-     * Adds an number input
+     * Adds a number input
      *
      * @param string      $name
      * @param string|null $label
@@ -93,7 +95,7 @@ trait FormBuilder
     }
 
     /**
-     * Adds an textarea input
+     * Adds a textarea input
      *
      * @param string      $name
      * @param string|null $label
@@ -106,7 +108,7 @@ trait FormBuilder
     }
 
     /**
-     * Adds an date input
+     * Adds a date input
      *
      * @param string      $name
      * @param string|null $label
@@ -119,7 +121,7 @@ trait FormBuilder
     }
 
     /**
-     * Adds an time input
+     * Adds a time input
      *
      * @param string      $name
      * @param string|null $label
@@ -132,7 +134,7 @@ trait FormBuilder
     }
 
     /**
-     * Adds an date time input
+     * Adds a date time input
      *
      * @param string      $name
      * @param string|null $label
@@ -158,7 +160,7 @@ trait FormBuilder
     }
 
     /**
-     * Adds an select input
+     * Adds a select input
      *
      * @param string      $name
      * @param string|null $label
@@ -171,7 +173,7 @@ trait FormBuilder
     }
 
     /**
-     * Adds an checkbox input
+     * Adds a checkbox input
      *
      * @param string      $name
      * @param string|null $label
@@ -184,7 +186,7 @@ trait FormBuilder
     }
 
     /**
-     * Adds an radio input group
+     * Adds a radio input group
      *
      * @param string      $name
      * @param string|null $label
@@ -197,7 +199,7 @@ trait FormBuilder
     }
 
     /**
-     * Adds an rich textarea input
+     * Adds a rich textarea input
      *
      * @param string      $name
      * @param string|null $label
@@ -210,7 +212,7 @@ trait FormBuilder
     }
 
     /**
-     * Adds an code editor input
+     * Adds a code editor input
      *
      * @param string      $name
      * @param string|null $label
@@ -240,7 +242,7 @@ trait FormBuilder
     }
 
     /**
-     * Adds an Section delimiter with headline
+     * Adds a Section delimiter with headline
      *
      * @param string      $label
      * @param string|null $id
