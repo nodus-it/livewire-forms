@@ -1,16 +1,17 @@
 <?php
 
-    namespace Tests\Unit;
+namespace Nodus\Packages\LivewireForms\Tests\Unit;
 
-    use Nodus\Packages\LivewireForms\Controllers\JavaScriptAssets;
+use Nodus\Packages\LivewireForms\Controllers\JavaScriptAssets;
 
-    class JavascriptAssetsTest extends TestCase
+class JavascriptAssetsTest extends TestCase
+{
+    public function testSource()
     {
-        public function testSource() {
-            $controller = new JavaScriptAssets();
-            $response = $controller->source();
+        $controller = new JavaScriptAssets();
+        $response = $controller->source();
 
-            $this->assertSame(200,$response->getStatusCode());
-            $this->assertSame('application/javascript; charset=utf-8',$response->headers->get('Content-Type'));
-        }
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame('application/javascript; charset=utf-8', $response->headers->get('Content-Type'));
     }
+}

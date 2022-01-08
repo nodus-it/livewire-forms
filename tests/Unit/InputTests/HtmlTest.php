@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Unit\InputTests;
+namespace Nodus\Packages\LivewireForms\Tests\Unit\InputTests;
 
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Html;
-use Tests\Unit\TestCase;
+use Nodus\Packages\LivewireForms\Tests\Unit\TestCase;
 
 class HtmlTest extends TestCase
 {

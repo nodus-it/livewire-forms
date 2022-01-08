@@ -1,61 +1,78 @@
 <?php
 
-    namespace Tests\Unit;
+namespace Nodus\Packages\LivewireForms\Tests\Unit;
 
-    use Livewire\LivewireServiceProvider;
-    use Illuminate\Support\Facades\Artisan;
-    use Nodus\Packages\LivewireForms\LivewireFormsServiceProvider;
-    use Orchestra\Testbench\TestCase as BaseTestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Route;
+use Livewire\LivewireServiceProvider;
+use Illuminate\Support\Facades\Artisan;
+use Nodus\Packages\LivewireForms\LivewireFormsServiceProvider;
+use Orchestra\Testbench\TestCase as BaseTestCase;
 
-    class TestCase extends BaseTestCase
+class TestCase extends BaseTestCase
+{
+    use RefreshDatabase;
+
+    public function setUp(): void
     {
-        public function setUp(): void
-        {
-            $this->afterApplicationCreated(function () {
-                $this->makeACleanSlate();
-            });
+        parent::setUp();
 
-            $this->beforeApplicationDestroyed(function () {
-                $this->makeACleanSlate();
-            });
+        $this->afterApplicationCreated(function () {
+            $this->cleanUp();
+        });
 
-            parent::setUp();
-        }
+        $this->beforeApplicationDestroyed(function () {
+            $this->cleanUp();
+        });
 
-        public function makeACleanSlate()
-        {
-            Artisan::call('view:clear');
-        }
+        $this->loadMigrationsFrom(__DIR__ . '/../data/database/migrations');
+        $this->withFactories(__DIR__ . '/../data/database/factories');
 
-        protected function getPackageProviders($app)
-        {
-            return [
-                LivewireServiceProvider::class,
-                LivewireFormsServiceProvider::class,
-            ];
-        }
-
-        protected function getEnvironmentSetUp($app)
-        {
-            $app[ 'config' ]->set(
-                'view.paths',
-                [
-                    __DIR__ . '/views',
-                    resource_path('views'),
-                ]
-            );
-
-            $app[ 'config' ]->set('app.key', 'base64:Hupx3yAySikrM2/edkZQNQHslgDWYfiBfCuSThJ5SK8=');
-            $app[ 'config' ]->set('app.locale', 'en');
-            $app[ 'config' ]->set('app.fallback_locale', 'de');
-            $app[ 'config' ]->set('database.default', 'sqlite');
-            $app[ 'config' ]->set(
-                'database.connections.sqlite',
-                [
-                    'driver'   => 'sqlite',
-                    'database' => ':memory:',
-                    'prefix'   => '',
-                ]
-            );
-        }
+        /**
+         * Fake Routes
+         */
+        Route::get(
+            'user/{id}',
+            function ($id) {
+                return 'user.detais:' . $id;
+            }
+        )->name('users.details');
     }
+
+    public function cleanUp()
+    {
+        Artisan::call('view:clear');
+    }
+
+    protected function getPackageProviders($app)
+    {
+        return [
+            LivewireServiceProvider::class,
+            LivewireFormsServiceProvider::class,
+        ];
+    }
+
+    protected function getEnvironmentSetUp($app)
+    {
+        $app[ 'config' ]->set(
+            'view.paths',
+            [
+                __DIR__ . '/views',
+                resource_path('views'),
+            ]
+        );
+
+        $app[ 'config' ]->set('app.key', 'base64:Hupx3yAySikrM2/edkZQNQHslgDWYfiBfCuSThJ5SK8=');
+        $app[ 'config' ]->set('app.locale', 'en');
+        $app[ 'config' ]->set('app.fallback_locale', 'de');
+        $app[ 'config' ]->set('database.default', 'sqlite');
+        $app[ 'config' ]->set(
+            'database.connections.sqlite',
+            [
+                'driver' => 'sqlite',
+                'database' => ':memory:',
+                'prefix' => '',
+            ]
+        );
+    }
+}
