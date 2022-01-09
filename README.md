@@ -2,8 +2,10 @@
 [![License](https://poser.pugx.org/nodus-it/livewire-forms/license)](//packagist.org/packages/nodus-it/livewire-forms)
 [![Latest Stable Version](https://poser.pugx.org/nodus-it/livewire-forms/v/stable)](//packagist.org/packages/nodus-it/livewire-forms)
 [![Total Downloads](https://poser.pugx.org/nodus-it/livewire-forms/downloads)](//packagist.org/packages/nodus-it/livewire-forms)
+[![Build Status](https://travis-ci.com/nodus-it/livewire-datatables.svg?branch=master)](https://travis-ci.com/nodus-it/livewire-forms)
+[![codecov](https://codecov.io/gh/nodus-it/livewire-datatables/branch/master/graph/badge.svg)](https://codecov.io/gh/nodus-it/livewire-forms)
 
-_An awesome package for easy dynamic forms with **Laravel Livewire** and **Bootstrap**._
+_An awesome package for easy dynamic forms with **Laravel Livewire** and **Bootstrap v4**._
 
 Some special input types may require external javascript dependencies (besides Bootstrap).
 

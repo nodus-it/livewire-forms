@@ -70,9 +70,9 @@ class FormInputTest extends TestCase
         $input = new Text('test_input', 'test');
 
         // usage of a random integrated php function with static output to simulate a nonce callable
-        config()->set('livewire-forms.csp_nonce', 'php_sapi_name');
+        config()->set('livewire-core.csp_nonce', 'php_sapi_name');
 
-        $this->assertTrue(is_callable(config('livewire-forms.csp_nonce')));
+        $this->assertTrue(is_callable(config('livewire-core.csp_nonce')));
         $this->assertSame('nonce="' . php_sapi_name() . '"', $input->getNonceAttribute());
     }
 }

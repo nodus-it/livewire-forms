@@ -157,7 +157,7 @@ abstract class FormInput
      */
     public function getNonceAttribute()
     {
-        $nonce = config('livewire-forms.csp_nonce');
+        $nonce = config('livewire-core.csp_nonce');
 
         if (!is_callable($nonce)) {
             return '';
