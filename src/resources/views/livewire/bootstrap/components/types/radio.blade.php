@@ -1,4 +1,4 @@
-<div class="nodus-form-control" id="{{ $input->getId(true) }}_container" >
+<div class="nodus-form-control nodus-form-control-radio" id="{{ $input->getId(true) }}_container" data-id="{{ $input->getId(true) }}">
     <div class="btn-group btn-group-toggle flex-wrap" data-toggle="buttons">
         @foreach($input->getOptions() as $key => $option)
             <label class="btn btn-primary @if($this->values[$input->getId()] === $key) active @endif">

@@ -1,4 +1,4 @@
-<div class="nodus-form-control" id="{{ $input->getId(true) }}_container">
+<div class="nodus-form-control nodus-form-control-file" id="{{ $input->getId(true) }}_container" data-id="{{ $input->getId(true) }}">
     <input type="{{$input->getType()}}"
            name="{{ $input->getName() }}"
            @if($input->getAcceptFormats() !== null) accept="{{ $input->getAcceptFormats() }}"  @endif

@@ -14,7 +14,8 @@ class CreateUsersTable extends Migration
                 $table->id();
                 $table->timestamps();
                 $table->string('first_name', 64);
-                $table->string('last_name', 16);
+                $table->string('last_name', 16)->nullable();
+                $table->date('birthday')->nullable();
                 $table->string('email');
                 $table->boolean('admin');
             }

@@ -5,6 +5,7 @@ namespace Nodus\Packages\LivewireForms\Services\FormBuilder;
 use Illuminate\Support\Carbon;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDefaultValue;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsHint;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsMinMax;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsSize;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsValidations;
 
@@ -19,6 +20,7 @@ class Time extends FormInput
     use SupportsValidations;
     use SupportsSize;
     use SupportsHint;
+    use SupportsMinMax;
 
     /**
      * Post validation mutator handler
@@ -51,6 +53,4 @@ class Time extends FormInput
 
         return Carbon::parse($time)->format('H:i:s');
     }
-
-    // Todo add seconds (step) support
 }

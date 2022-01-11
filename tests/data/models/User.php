@@ -16,7 +16,10 @@ class User extends Model
         'last_name',
         'email',
         'admin',
+        'birthday',
     ];
+
+    protected $dates = ['birthday'];
 
     public function posts()
     {

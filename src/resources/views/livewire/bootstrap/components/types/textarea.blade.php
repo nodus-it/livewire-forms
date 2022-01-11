@@ -1,4 +1,4 @@
-<div class="nodus-form-control" id="{{ $input->getId(true) }}_container">
+<div class="nodus-form-control nodus-form-control-textarea" id="{{ $input->getId(true) }}_container" data-id="{{ $input->getId(true) }}">
     <textarea name="{{ $input->getName() }}"
               @if($input->hasPlaceholder()) placeholder="{{ $input->getPlaceholder() }}" @endif
               class="form-control @if(isset($errors) && $errors->has($input->getViewId())) is-invalid @endif"

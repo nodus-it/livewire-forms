@@ -13,5 +13,6 @@ class UserTestForm extends FormView
         $this->addText('email')
             ->setValidations('required|email');
         $this->addCheckbox('admin');
+        $this->addDate('birthday');
     }
 }

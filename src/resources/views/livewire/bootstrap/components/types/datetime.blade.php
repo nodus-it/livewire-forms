@@ -1,4 +1,4 @@
-<div class="nodus-form-control">
+<div class="nodus-form-control nodus-form-control-datetime" id="{{ $input->getId(true) }}_container" data-id="{{ $input->getId(true) }}">
     <div class="input-group">
         <input type="date"
                name="{{ $input->getName() }}_date"

@@ -1,4 +1,4 @@
-<form class="livewire-formview" wire:submit.prevent="onSubmit">
+<form class="livewire-formview" id="{{$this->getFormId()}}" wire:submit.prevent="onSubmit">
     <div class="row">
         @foreach($this->getInputs() as $input)
             @if($input->getType() == 'hidden')
@@ -24,3 +24,9 @@
         </div>
     </div>
 </form>
+
+@push(config('livewire-core.blade_stacks.scripts'))
+    <script @nonce>
+        new Nodus.FormView('#{{$this->getFormId()}}').init();
+    </script>
+@endpush

@@ -5,6 +5,7 @@ namespace Nodus\Packages\LivewireForms\Tests\Unit\InputTests;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Date;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Number;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Select;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Text;
 use Nodus\Packages\LivewireForms\Tests\Unit\TestCase;
@@ -133,6 +134,23 @@ class TraitsTest extends TestCase
 
         $this->assertInstanceOf(Text::class, $input->setInputMode('invalid-mode'));
         $this->assertSame('text', $input->getInputMode());
+    }
+
+    public function testSupportsMinMax()
+    {
+        $input = new Number('number_input');
+        $this->assertNull($input->getMin());
+        $this->assertNull($input->getMax());
+        $this->assertNull($input->getStep());
+
+        $this->assertInstanceOf(Number::class, $input->setMin(0));
+        $this->assertSame(0, $input->getMin());
+
+        $this->assertInstanceOf(Number::class, $input->setMax(100));
+        $this->assertSame(100, $input->getMax());
+
+        $this->assertInstanceOf(Number::class, $input->setStep(1));
+        $this->assertSame(1, $input->getStep());
     }
 }
 

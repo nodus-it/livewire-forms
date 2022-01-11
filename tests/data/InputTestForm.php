@@ -2,6 +2,7 @@
 
 namespace Nodus\Packages\LivewireForms\Tests\data;
 
+use Illuminate\Validation\Validator;
 use Nodus\Packages\LivewireForms\Livewire\FormView;
 
 class InputTestForm extends FormView
@@ -34,5 +35,20 @@ class InputTestForm extends FormView
             ->setValidations('required');
         $this->addText('min_input')
             ->setValidations('required|min:5');
+    }
+
+    public function submit(array $values)
+    {
+        \Illuminate\Support\Facades\Validator::make(
+            $values,
+            ['required_input' => 'string|min:5']
+        )->validate();
+    }
+
+    protected function submitValidationExceptionHandler(Validator $validator)
+    {
+        $fields = array_keys($validator->failed());
+
+        session()->put('validation-errors', $fields);
     }
 }

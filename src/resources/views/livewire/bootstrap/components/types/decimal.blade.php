@@ -1,4 +1,4 @@
-<div class="nodus-form-control" id="{{ $input->getId(true) }}_container">
+<div class="nodus-form-control nodus-form-control-decimal" id="{{ $input->getId(true) }}_container" data-id="{{ $input->getId(true) }}">
     <input type="text"
            id="{{ $input->getId(true) }}"
            name="{{ $input->getName() }}"
@@ -10,9 +10,3 @@
     >
     @include('nodus.packages.livewire-forms::livewire.'.config('livewire-forms.theme').'.components.validation')
 </div>
-
-@push(config('livewire-core.blade_stacks.scripts'))
-    <script {!! $input->getNonceAttribute() !!}>
-        new Nodus.DecimalInput('#{{ $input->getId(true) }}')
-    </script>
-@endpush

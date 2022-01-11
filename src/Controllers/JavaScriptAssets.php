@@ -10,7 +10,8 @@
         {
             return $this->pretendResponseIsFile(
                 [
-                    __DIR__ . '/../resources/js/DecimalInput.js'
+                    __DIR__ . '/../resources/js/DecimalInput.js',
+                    __DIR__ . '/../resources/js/FormView.js',
                 ]
             );
         }

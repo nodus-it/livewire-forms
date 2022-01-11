@@ -43,6 +43,13 @@ abstract class FormView extends Component
     public const POST_MODE_UPDATE = 'update';
 
     /**
+     * ID of the form
+     *
+     * @var string
+     */
+    public string $formId;
+
+    /**
      * Array of input values
      *
      * WARNING: Do not use this directly!
@@ -95,6 +102,8 @@ abstract class FormView extends Component
      */
     public ?int $modelId = null;
 
+    protected ?Model $modelInstance = null;
+
     /**
      * Post handling mode (create or update)
      *
@@ -121,21 +130,21 @@ abstract class FormView extends Component
      *
      * @var string
      */
-    protected string $saveButtonLabel = 'nodus.packages.livewire-forms::forms.general.save';
+    public string $saveButtonLabel = 'nodus.packages.livewire-forms::forms.general.save';
 
     /**
      * Save button CSS classes
      *
      * @var string
      */
-    protected string $saveButtonClasses = 'btn btn-primary';
+    public string $saveButtonClasses = 'btn btn-primary';
 
     /**
      * Save button icon CSS classes (null = no icon)
      *
      * @var string|null
      */
-    protected ?string $saveButtonIconClasses = null;
+    public ?string $saveButtonIconClasses = null;
 
     /**
      * On component mount handler
@@ -148,10 +157,31 @@ abstract class FormView extends Component
      */
     public function mount($modelOrArray = null, string $postMode = null)
     {
+        $this->formId = $this->generateFormId();
         $this->initialRender = true;
         $this->postMode = $postMode ?? ($modelOrArray !== null ? self::POST_MODE_UPDATE : self::POST_MODE_CREATE);
 
         $this->loadValuesByModelOrArray($modelOrArray);
+    }
+
+    /**
+     * Generates a new form ID
+     *
+     * @return string
+     */
+    protected function generateFormId(): string
+    {
+        return 'form-' . Str::random();
+    }
+
+    /**
+     * Returns the form ID
+     *
+     * @return string
+     */
+    public function getFormId(): string
+    {
+        return $this->formId;
     }
 
     /**
@@ -181,14 +211,19 @@ abstract class FormView extends Component
      */
     public function getModel()
     {
-        // todo would caching here worth a try or is it not possible due to the nature of livewire?
         if ($this->modelId === null ||
             $this->model === null ||
             !is_a($this->model, Model::class, true)) {
             return null;
         }
 
-        return $this->model::query()->findOrFail($this->modelId);
+        if ($this->modelInstance !== null) {
+            return $this->modelInstance;
+        }
+
+        $this->modelInstance = $this->model::query()->findOrFail($this->modelId);
+
+        return $this->modelInstance;
     }
 
     /**
@@ -403,17 +438,14 @@ abstract class FormView extends Component
     /**
      * Applies the mutators and validates the form values
      *
-     * @param array $values
-     *
      * @return array
      */
-    protected function validateValues(array $values): array
+    protected function getValidatedValues(): array
     {
-        // todo the pre validation mutators are basically called twice due to the prepareForValidation method
-        $values = $this->applyPreValidationMutators($values);
-        $this->validate(null, [], $this->getCustomValidationAttributes());
-
-        return $this->applyPostValidationMutators($values);
+        // The pre validation mutators are already called in the prepareForValidation method (see validate call)
+        return $this->applyPostValidationMutators(
+            $this->validate(null, [], $this->getCustomValidationAttributes())['values']
+        );
     }
 
     /**
@@ -426,9 +458,7 @@ abstract class FormView extends Component
     {
         $this->prepareInputs();
 
-        $values = $this->validateValues(
-            $this->filterValues($this->getValues())
-        );
+        $values = $this->getValidatedValues();
 
         $this->registerSubmitValidationExceptionHandler();
 
@@ -498,6 +528,8 @@ abstract class FormView extends Component
      * Custom submit validation exception handler
      *
      * @param Validator $validator
+     *
+     * @codeCoverageIgnore
      */
     protected function submitValidationExceptionHandler(Validator $validator)
     {
@@ -513,7 +545,9 @@ abstract class FormView extends Component
      */
     public function prepareForValidation($attributes)
     {
-        $attributes[ 'values' ] = $this->applyPreValidationMutators($attributes[ 'values' ]);
+        $attributes[ 'values' ] = $this->applyPreValidationMutators(
+            $this->filterValues($attributes[ 'values' ])
+        );
 
         return $attributes;
     }

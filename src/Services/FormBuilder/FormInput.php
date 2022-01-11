@@ -150,22 +150,6 @@ abstract class FormInput
         return 'values.' . $this->getId();
     }
 
-    /**
-     * Returns the nonce attribute for inline styles and scripts in case a CSP nonce is set
-     *
-     * @return string
-     */
-    public function getNonceAttribute()
-    {
-        $nonce = config('livewire-core.csp_nonce');
-
-        if (!is_callable($nonce)) {
-            return '';
-        }
-
-        return 'nonce="' . $nonce() . '"';
-    }
-
     public static function supports(string $feature)
     {
         // todo maybe use static cache

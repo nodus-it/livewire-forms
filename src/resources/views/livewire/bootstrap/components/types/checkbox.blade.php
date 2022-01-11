@@ -1,4 +1,4 @@
-<div class="nodus-form-control" id="{{ $input->getId(true) }}_container">
+<div class="nodus-form-control nodus-form-control-checkbox" id="{{ $input->getId(true) }}_container" data-id="{{ $input->getId(true) }}">
     <div class="custom-control custom-switch">
         <input type="checkbox"
                name="{{ $input->getName() }}"

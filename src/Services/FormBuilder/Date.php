@@ -5,6 +5,7 @@ namespace Nodus\Packages\LivewireForms\Services\FormBuilder;
 use Illuminate\Support\Carbon;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDefaultValue;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsHint;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsMinMax;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsPlaceholder;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsSize;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsValidations;
@@ -22,6 +23,7 @@ class Date extends FormInput
     use SupportsSize;
     use SupportsHint;
     use SupportsPlaceholder;
+    use SupportsMinMax;
 
     /**
      * Date constructor.
@@ -31,7 +33,7 @@ class Date extends FormInput
      */
     public function __construct(string $name, ?string $label = null)
     {
-        // Todo only as fallback for browsers like safari, see https://caniuse.com/input-datetime
+        // Only as fallback for browsers like safari, see https://caniuse.com/input-datetime
         $this->setPlaceholder('YYYY-MM-DD');
 
         parent::__construct($name, $label);
