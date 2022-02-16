@@ -1,5 +1,5 @@
 <div class="nodus-form-control nodus-form-control-select" id="{{ $input->getId(true) }}_container" data-id="{{ $input->getId(true) }}">
-    <div wire:ignore>
+    <div>
         <select name="{{ $input->getName() }}"
                 id="{{ $input->getId(true) }}"
                 class="form-control selectpicker @if(isset($errors) && $errors->has($input->getViewId())) is-invalid @endif"

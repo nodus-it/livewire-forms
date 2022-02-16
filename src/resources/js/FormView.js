@@ -27,7 +27,22 @@ Nodus.FormView = class {
         // On livewire update -> reinitializing the inputs
         Livewire.hook('message.processed', function() {
             this.initInputs(false);
-        }.bind(this))
+        }.bind(this));
+
+        // On livewire DOM update destroy bootstrap selects
+        Livewire.hook('element.updating', (fromEl, toEl, component) => {
+            if (!fromEl.classList.contains('nodus-form-control-select')) {
+                return;
+            }
+
+            const select = fromEl.querySelector('select');
+
+            if (select === null || fromEl.getAttribute('data-init') !== 'true') {
+                return;
+            }
+
+            $(select).selectpicker('destroy');
+        });
     }
 
     getRelevantInputClasses() {
@@ -42,7 +57,6 @@ Nodus.FormView = class {
     }
 
     initInputs(initialRender = true) {
-        console.log(initialRender);
         this.livewireId = this.form.getAttribute('wire:id');
         this.livewire = window.livewire.find(this.livewireId);
 
@@ -122,8 +136,6 @@ Nodus.FormView = class {
     }
 
     initSelect(container) {
-        // Todo improve JS handling in order to support dynamic options and improve validation state visibility
-        // @see https://github.com/livewire/livewire/issues/45#issuecomment-520155799
         const id = container.getAttribute('data-id');
         const input = $('#' + id);
 
