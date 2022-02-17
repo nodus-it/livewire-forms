@@ -58,14 +58,26 @@ class File extends FormInput
     /**
      * Pre render mutator handler
      *
-     * @param TemporaryUploadedFile|string|null $value
+     * @param TemporaryUploadedFile|TemporaryUploadedFile[]|string|null $value
      *
-     * @return TemporaryUploadedFile|null
+     * @return TemporaryUploadedFile|null|TemporaryUploadedFile[]
      */
     public function preRenderMutator($value)
     {
-        if (!$value instanceof TemporaryUploadedFile) {
-            return null;
+        if ($this->getMultiple() === true) {
+            if (is_array($value)) {
+                foreach ($value as $key => $file) {
+                    if (!$file instanceof TemporaryUploadedFile) {
+                        $value[$key] = null;
+                    }
+                }
+            } else {
+                return [];
+            }
+        } else {
+            if (!$value instanceof TemporaryUploadedFile) {
+                return null;
+            }
         }
 
         return $value;

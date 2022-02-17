@@ -1,6 +1,7 @@
 <div class="nodus-form-control nodus-form-control-file" id="{{ $input->getId(true) }}_container" data-id="{{ $input->getId(true) }}">
     <input type="{{$input->getType()}}"
            name="{{ $input->getName() }}"
+           @if($input->getMultiple()) multiple @endif
            @if($input->getAcceptFormats() !== null) accept="{{ $input->getAcceptFormats() }}"  @endif
            @if($input::supports('placeholder') && $input->hasPlaceholder()) placeholder="{{ $input->getPlaceholder() }}" @endif
            class="form-control @if(isset($errors) && $errors->has($input->getViewId())) is-invalid @endif"
