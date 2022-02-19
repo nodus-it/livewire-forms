@@ -18,12 +18,12 @@
     }
   ],
   "require": {
-    "php": "^7.4 || ^8.0 || ^8.1",
+    "php": "^8.0 || ^8.1",
     "nodus-it/livewire-core": "dev-refactorings",
     "ext-intl": "*"
   },
   "require-dev": {
-    "orchestra/testbench": "^6.4",
+    "orchestra/testbench": "^7.0",
     "phpunit/phpunit": "^9.4",
     "laravel/legacy-factories": "^1.0.4"
   },
