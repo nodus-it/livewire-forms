@@ -15,6 +15,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Validator;
 use Livewire\Component;
 use Livewire\Livewire;
+use Nodus\Packages\LivewireCore\Services\SupportsTranslationsByModel;
 use Nodus\Packages\LivewireCore\SupportsAdditionalViewParameters;
 use Nodus\Packages\LivewireForms\Services\FormBuilder;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\FormInput;
@@ -34,6 +35,7 @@ use Throwable;
 abstract class FormView extends Component
 {
     use FormBuilder;
+    use SupportsTranslationsByModel;
     use SupportsAdditionalViewParameters;
 
     /**
@@ -102,6 +104,11 @@ abstract class FormView extends Component
      */
     public ?int $modelId = null;
 
+    /**
+     * Model instance cache
+     *
+     * @var Model|null
+     */
     protected ?Model $modelInstance = null;
 
     /**
@@ -110,13 +117,6 @@ abstract class FormView extends Component
      * @var string
      */
     public string $postMode = self::POST_MODE_CREATE;
-
-    /**
-     * Custom translation prefix
-     *
-     * @var string|null
-     */
-    protected ?string $translationPrefix = null;
 
     /**
      * Initial render flag
@@ -155,7 +155,7 @@ abstract class FormView extends Component
      * @throws Exception
      * @return void
      */
-    public function mount($modelOrArray = null, string $postMode = null)
+    public function mount(Model|array|null $modelOrArray = null, string $postMode = null)
     {
         $this->formId = $this->generateFormId();
         $this->initialRender = true;
@@ -259,7 +259,7 @@ abstract class FormView extends Component
      *
      * @return array
      */
-    public function setValue(string $key, $value)
+    public function setValue(string $key, mixed $value)
     {
         return Arr::set($this->values, $key, $value);
     }
@@ -291,10 +291,10 @@ abstract class FormView extends Component
      *
      * @param Model|array|null $modelOrArray
      *
-     * @return void
      * @throws Exception
+     * @return void
      */
-    protected function loadValuesByModelOrArray($modelOrArray)
+    protected function loadValuesByModelOrArray(Model|array|null $modelOrArray)
     {
         if ($modelOrArray === null) {
             $this->postMode = self::POST_MODE_CREATE;
@@ -703,46 +703,6 @@ abstract class FormView extends Component
     }
 
     /**
-     * Sets the translation prefix
-     *
-     * @param string|null $prefix
-     *
-     * @return $this
-     */
-    protected function setTranslationPrefix(?string $prefix)
-    {
-        $this->translationPrefix = $prefix;
-
-        return $this;
-    }
-
-    /**
-     * Returns the translation prefix
-     *
-     * @return string
-     */
-    protected function getTranslationPrefix()
-    {
-        if ($this->translationPrefix === null) {
-            return Str::plural(Str::snake(Str::afterLast($this->model, '\\'))) . '.fields';
-        }
-
-        return $this->translationPrefix;
-    }
-
-    /**
-     * Generates a default translation string, based on model and column name
-     *
-     * @param string $lang Column name
-     *
-     * @return string
-     */
-    protected function getTranslationStringByModel(string $lang)
-    {
-        return $this->getTranslationPrefix() . '.' . $lang;
-    }
-
-    /**
      * Creates a FormInput instance by the given data and adds it to the form
      *
      * @param string                                  $class
@@ -758,7 +718,7 @@ abstract class FormView extends Component
     protected function addInput(string $class, string $name, ?string $label = null)
     {
         if ($label === null) {
-            $label = $this->getTranslationStringByModel($name);
+            $label = $this->getTranslationStringByModel('fields.' . $name);
         }
 
         return $this->addFormInput(new $class($name, $label));
