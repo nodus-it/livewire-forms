@@ -165,13 +165,13 @@ class Select extends FormInput
     }
 
     /**
-     * Post validation mutator handler
+     * Pre validation mutator handler
      *
      * @param $options
      *
      * @return mixed|null
      */
-    public function postValidationMutator($options)
+    public function preValidationMutator($options)
     {
         if (intval($options) === Select::NULL_OPTION) {
             return null;
