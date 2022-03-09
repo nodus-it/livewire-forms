@@ -99,15 +99,15 @@ class SelectInputTest extends TestCase
         $this->assertSame([1], $input->preRenderMutator([1]));
     }
 
-    public function testPostValidationMutator()
+    public function testPreValidationMutator()
     {
         $input = new Select('select_input');
 
-        $this->assertSame(null, $input->postValidationMutator(null));
-        $this->assertSame('', $input->postValidationMutator(''));
-        $this->assertSame(1, $input->postValidationMutator(1));
-        $this->assertSame(null, $input->postValidationMutator((string)Select::NULL_OPTION));
-        $this->assertSame(null, $input->postValidationMutator(Select::NULL_OPTION));
+        $this->assertSame(null, $input->preValidationMutator(null));
+        $this->assertSame('', $input->preValidationMutator(''));
+        $this->assertSame(1, $input->preValidationMutator(1));
+        $this->assertSame(null, $input->preValidationMutator((string)Select::NULL_OPTION));
+        $this->assertSame(null, $input->preValidationMutator(Select::NULL_OPTION));
     }
 
     public function testRequiredOptionValidationRule()
