@@ -38,11 +38,11 @@ class SelectInputTest extends TestCase
             ['' => Select::option('test_label2')],
         ];
 
-        $this->assertArrayHasKey(0, Select::castNullSelectOptions($options[ 0 ]));
-        $this->assertArrayNotHasKey(Select::NULL_OPTION, Select::castNullSelectOptions($options[ 0 ]));
+        $this->assertArrayHasKey(0, Select::castNullSelectOptions($options[0]));
+        $this->assertArrayNotHasKey(Select::NULL_OPTION, Select::castNullSelectOptions($options[0]));
 
-        $this->assertArrayNotHasKey('', Select::castNullSelectOptions($options[ 1 ]));
-        $this->assertArrayHasKey(Select::NULL_OPTION, Select::castNullSelectOptions($options[ 1 ]));
+        $this->assertArrayNotHasKey('', Select::castNullSelectOptions($options[1]));
+        $this->assertArrayHasKey(Select::NULL_OPTION, Select::castNullSelectOptions($options[1]));
     }
 
     public function testSetOptions()
@@ -53,6 +53,18 @@ class SelectInputTest extends TestCase
         $this->assertSame([], $input->getOptions());
         $this->assertInstanceOf(Select::class, $input->setOptions($options));
         $this->assertSame($options, $input->getOptions());
+    }
+
+    public function testSetDefault()
+    {
+        $input = new Select('select_input');
+        $options = [0 => Select::option('test_label')];
+
+        $this->assertInstanceOf(Select::class, $input->setOptions($options));
+        $input->setDefaultValue(0);
+        $this->assertSame(0, $input->getValue());
+        $input->setDefaultValue(1);
+        $this->assertSame(null, $input->getValue());
     }
 
     public function testSetForceOption()

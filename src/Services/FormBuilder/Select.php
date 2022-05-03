@@ -115,7 +115,14 @@ class Select extends FormInput
             return Select::FORCE_OPTION;
         }
 
-        return $this->parentGetDefaultValue();
+        $default = $this->parentGetDefaultValue();
+
+        // only values that are in the options array are allowed as defaults
+        if (!is_array($default) && !isset($this->options[$default])) {
+            return null;
+        }
+
+        return $default;
     }
 
     /**
