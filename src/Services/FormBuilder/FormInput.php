@@ -33,6 +33,13 @@ abstract class FormInput
     protected string $id;
 
     /**
+     * HTML Flag for Label
+     *
+     * @var bool
+     */
+    private bool $htmlLabel = false;
+
+    /**
      * FormElement constructor.
      *
      * @param string $name
@@ -122,6 +129,28 @@ abstract class FormInput
     public function getLabel()
     {
         return trans($this->label);
+    }
+
+    /**
+     * Activates HTML for the label
+     *
+     * @return $this
+     */
+    public function setLabelHtml()
+    {
+        $this->htmlLabel = true;
+
+        return $this;
+    }
+
+    /**
+     * Returns HTML flag for label
+     *
+     * @return bool
+     */
+    public function hasHtmlLabel()
+    {
+        return $this->htmlLabel;
     }
 
     /**

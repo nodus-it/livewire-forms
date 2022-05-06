@@ -11,7 +11,13 @@
                 </div>
             @else
                 <div class="col-sm-{{ $input->getSize() }}">
-                    <label for="{{ $input->getId() }}">{{ $input->getLabel() }}</label>
+                    <label for="{{ $input->getId() }}">
+                        @if($input->hasHtmlLabel())
+                            {!! $input->getLabel() !!}
+                        @else
+                            {{ $input->getLabel() }}
+                        @endif
+                    </label>
                     @include('nodus.packages.livewire-forms::livewire.'.config('livewire-forms.theme').'.components.hint')
                     {!! $input->render($initialRender) !!}
                 </div>
