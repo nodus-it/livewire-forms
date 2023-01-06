@@ -11,13 +11,15 @@
                 </div>
             @else
                 <div class="col-sm-{{ $input->getSize() }}">
-                    <label for="{{ $input->getId() }}">
-                        @if($input->hasHtmlLabel())
-                            {!! $input->getLabel() !!}
-                        @else
-                            {{ $input->getLabel() }}
-                        @endif
-                    </label>
+                    @if($input::supports('LabelPosition') && $input->getLabelPosition() === 'top')
+                        <label for="{{ $input->getId() }}" class="nodus-form-label-top">
+                            @if($input->hasHtmlLabel())
+                                {!! $input->getLabel() !!}
+                            @else
+                                {{ $input->getLabel() }}
+                            @endif
+                        </label>
+                    @endif
                     @include('nodus.packages.livewire-forms::livewire.'.config('livewire-forms.theme').'.components.hint')
                     {!! $input->render($initialRender) !!}
                 </div>
