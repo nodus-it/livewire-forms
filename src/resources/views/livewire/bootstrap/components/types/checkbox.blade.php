@@ -6,7 +6,7 @@
                id="{{ $input->getId(true) }}"
                wire:model.{{config('livewire-forms.update_mode')}}="{{ $input->getViewId() }}">
         <label class="custom-control-label nodus-form-label-right" for="{{ $input->getId(true) }}">
-            @if($input->getLabelMode() === 'right')
+            @if($input->getLabelPosition() === 'right')
                 @if($input->hasHtmlLabel())
                     {!! $input->getLabel() !!}
                 @else
