@@ -23,7 +23,7 @@ trait SupportsOptions
      *
      * @return $this
      */
-    public function setOptions(array $options)
+    public function setOptions(array $options): static
     {
         $this->options = $options;
 
@@ -48,7 +48,7 @@ trait SupportsOptions
      *
      * @return array
      */
-    public static function option(string $label, ?string $icon = null)
+    public static function option(string $label, ?string $icon = null): array
     {
         return compact('label', 'icon');
     }

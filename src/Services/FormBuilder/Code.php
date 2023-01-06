@@ -20,20 +20,20 @@ class Code extends FormInput
     use SupportsHint;
 
     /**
-     * Syntax Hightlight mode
+     * Syntax Highlight mode
      *
      * @var string|null
      */
     protected ?string $mode = null;
 
     /**
-     * Sets the syntax hightlight mode
+     * Sets the syntax highlight mode
      *
      * @param string $mode
      *
      * @return $this
      */
-    public function setMode(string $mode)
+    public function setMode(string $mode): static
     {
         $this->mode = $mode;
 
@@ -45,7 +45,7 @@ class Code extends FormInput
      *
      * @return string|null
      */
-    public function getMode()
+    public function getMode(): ?string
     {
         return $this->mode;
     }

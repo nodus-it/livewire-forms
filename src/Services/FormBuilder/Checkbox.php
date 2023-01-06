@@ -41,7 +41,7 @@ class Checkbox extends FormInput
      *
      * @return mixed|string
      */
-    public function getValue($value = null)
+    public function getValue(mixed $value = null): mixed
     {
         if (!empty($value) || $value === false) {
             return $value;

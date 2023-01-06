@@ -29,7 +29,7 @@ class Time extends FormInput
      *
      * @return Carbon|null
      */
-    public function postValidationMutator(?string $time)
+    public function postValidationMutator(?string $time): ?Carbon
     {
         if (empty($time)) {
             return null;
@@ -45,7 +45,7 @@ class Time extends FormInput
      *
      * @return string|null
      */
-    public function preRenderMutator($time)
+    public function preRenderMutator($time): ?string
     {
         if (empty($time)) {
             return null;

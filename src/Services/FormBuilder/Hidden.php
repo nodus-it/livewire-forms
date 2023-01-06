@@ -29,12 +29,12 @@ class Hidden extends FormInput
     /**
      * Creates a new form input instance
      *
-     * @param string|null $name
+     * @param string      $name
      * @param string|null $value
      *
-     * @return FormInput|static
+     * @return static
      */
-    public static function create(string $name, string $value = null)
+    public static function create(string $name, string $value = null): static
     {
         return new static($name, $value);
     }

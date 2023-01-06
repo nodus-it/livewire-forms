@@ -19,9 +19,9 @@ trait SupportsPlaceholder
     /**
      * Returns the translated placeholder
      *
-     * @return array|string|null
+     * @return string|null
      */
-    public function getPlaceholder()
+    public function getPlaceholder(): string|null
     {
         if ($this->placeholder === null) {
             return $this->getLabel();
@@ -41,7 +41,7 @@ trait SupportsPlaceholder
      *
      * @return $this
      */
-    public function setPlaceholder(string $placeholder)
+    public function setPlaceholder(string $placeholder): static
     {
         $this->placeholder = $placeholder;
 
@@ -53,7 +53,7 @@ trait SupportsPlaceholder
      *
      * @return bool
      */
-    public function hasPlaceholder()
+    public function hasPlaceholder(): bool
     {
         if ($this->placeholder === null) {
             return true;

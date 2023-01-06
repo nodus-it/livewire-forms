@@ -21,7 +21,7 @@ trait SupportsTranslations
      *
      * @return $this
      */
-    public function setTranslation(string $key, string $translation)
+    public function setTranslation(string $key, string $translation): static
     {
         $this->translations[ $key ] = $translation;
 
@@ -33,9 +33,9 @@ trait SupportsTranslations
      *
      * @param string $key
      *
-     * @return string
+     * @return string|null
      */
-    public function getTranslation(string $key)
+    public function getTranslation(string $key): ?string
     {
         if (!isset($this->translations[ $key ])) {
             return null;
@@ -50,9 +50,9 @@ trait SupportsTranslations
      * @param string $name
      * @param array  $arguments
      *
-     * @return SupportsTranslations|string|null
+     * @return static|string|null
      */
-    protected function resolveTranslationMethod(string $name, array $arguments)
+    protected function resolveTranslationMethod(string $name, array $arguments): string|static|null
     {
         if (!Str::endsWith($name, 'Text')) {
             return null;

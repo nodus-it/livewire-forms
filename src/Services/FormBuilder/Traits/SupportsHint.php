@@ -21,7 +21,7 @@ trait SupportsHint
      *
      * @return string|null
      */
-    public function getHint()
+    public function getHint(): ?string
     {
         if ($this->hint === null) {
             return null;
@@ -37,7 +37,7 @@ trait SupportsHint
      *
      * @return $this
      */
-    public function setHint(string $hint)
+    public function setHint(string $hint): static
     {
         $this->hint = $hint;
 

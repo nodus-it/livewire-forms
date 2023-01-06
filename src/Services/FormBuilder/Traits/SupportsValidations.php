@@ -23,7 +23,7 @@ trait SupportsValidations
      *
      * @return string
      */
-    public function getValidations()
+    public function getValidations(): string
     {
         return $this->validations;
     }
@@ -35,7 +35,7 @@ trait SupportsValidations
      *
      * @return $this
      */
-    public function setValidations(string $validations)
+    public function setValidations(string $validations): static
     {
         $this->validations = $validations;
 
@@ -49,7 +49,7 @@ trait SupportsValidations
      *
      * @return string
      */
-    public function rewriteValidationRules(Model $model = null)
+    public function rewriteValidationRules(Model $model = null): string
     {
         $rules = explode('|', $this->validations);
 

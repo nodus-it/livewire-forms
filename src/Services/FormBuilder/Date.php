@@ -46,7 +46,7 @@ class Date extends FormInput
      *
      * @return Carbon|null
      */
-    public function postValidationMutator(?string $date)
+    public function postValidationMutator(?string $date): ?Carbon
     {
         if (empty($date)) {
             return null;
@@ -70,7 +70,7 @@ class Date extends FormInput
 
         try {
             return Carbon::parse($date)->format('Y-m-d');
-        } catch (Throwable $e) {
+        } catch (Throwable) {
             return $date;
         }
     }

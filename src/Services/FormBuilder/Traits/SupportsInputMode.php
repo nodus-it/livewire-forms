@@ -37,7 +37,7 @@ trait SupportsInputMode
      *
      * @return string|null
      */
-    public function getInputMode()
+    public function getInputMode(): ?string
     {
         return $this->inputMode;
     }
@@ -49,7 +49,7 @@ trait SupportsInputMode
      *
      * @return $this
      */
-    public function setInputMode(?string $inputMode)
+    public function setInputMode(?string $inputMode): static
     {
         // Invalid input modes defaults to "text"
         if ($inputMode !== null && !in_array($inputMode, $this->allowedInputModes)) {

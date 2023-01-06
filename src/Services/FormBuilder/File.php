@@ -36,9 +36,8 @@ class File extends FormInput
      *
      * @return $this
      * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#htmlattrdefaccept
-     *
      */
-    public function setAcceptFormats(string $acceptFormats)
+    public function setAcceptFormats(string $acceptFormats): static
     {
         $this->acceptFormats = $acceptFormats;
 
@@ -50,7 +49,7 @@ class File extends FormInput
      *
      * @return string|null
      */
-    public function getAcceptFormats()
+    public function getAcceptFormats(): ?string
     {
         return $this->acceptFormats;
     }

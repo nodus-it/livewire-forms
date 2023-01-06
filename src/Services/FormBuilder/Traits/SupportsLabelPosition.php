@@ -31,7 +31,7 @@ trait SupportsLabelPosition
      *
      * @return $this
      */
-    public function setLabelRight(): self
+    public function setLabelRight(): static
     {
         $this->labelPosition = 'right';
 
@@ -43,7 +43,7 @@ trait SupportsLabelPosition
      *
      * @return $this
      */
-    public function setLabelTop(): self
+    public function setLabelTop(): static
     {
         $this->labelPosition = 'top';
 

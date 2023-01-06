@@ -49,7 +49,7 @@ class Password extends FormInput
      *
      * @return string|null
      */
-    public function preRenderMutator($password)
+    public function preRenderMutator(?string $password): ?string
     {
         if (empty($password)) {
             return null;

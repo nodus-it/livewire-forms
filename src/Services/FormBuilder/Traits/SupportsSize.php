@@ -21,7 +21,7 @@ trait SupportsSize
      *
      * @return int
      */
-    public function getSize()
+    public function getSize(): int
     {
         if (config('livewire-forms.theme') === 'bootstrap') {
             return $this->size * 3;
@@ -37,7 +37,7 @@ trait SupportsSize
      *
      * @return $this
      */
-    public function setSize(int $size)
+    public function setSize(int $size): static
     {
         $this->size = min(4, max(1, $size));
 
