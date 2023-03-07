@@ -376,6 +376,11 @@ abstract class FormView extends Component
         $this->prepareInputs();
 
         $this->validateOnly($propertyName, null, [], $this->getCustomValidationAttributes());
+
+        // In case we have added array validations, we check them here separately
+        if (isset($this->rules[$propertyName . '.*'])) {
+            $this->validateOnly($propertyName . '.*', null, [], $this->getCustomValidationAttributes());
+        }
     }
 
     /**
@@ -408,6 +413,19 @@ abstract class FormView extends Component
 
         foreach ($this->getRealInputs() as $input) {
             $customAttributes[ 'values.' . $input->getId() ] = $input->getLabel();
+
+            // Define for the array validations for each item in the value a custom attribute label
+            if (in_array(FormBuilder\Traits\SupportsArrayValidations::class, class_uses($input))) {
+                $value = $this->getValue($input->getId());
+
+                if (!is_array($value)) {
+                    continue;
+                }
+
+                foreach (range(0, count($value)) as $i) {
+                    $customAttributes['values.' . $input->getId() . '.' . $i] = $input->getLabel() . ' #' . ($i + 1);
+                }
+            }
         }
 
         return $customAttributes;
@@ -765,13 +783,19 @@ abstract class FormView extends Component
                 $this->setValue($key, null);
             }
 
-            if (in_array(SupportsValidations::class, class_uses($input))) {
+            $inputTraits = class_uses($input);
+
+            if (in_array(SupportsValidations::class, $inputTraits)) {
                 $this->rules[$input->getViewId()] = $input->rewriteValidationRules($model);
             } else {
                 $this->rules[$input->getViewId()] = [];
             }
 
-            if (in_array(SupportsDefaultValue::class, class_uses($input))) {
+            if (in_array(FormBuilder\Traits\SupportsArrayValidations::class, $inputTraits)) {
+                $this->rules[$input->getViewId() . '.*'] = $input->getArrayValidations();
+            }
+
+            if (in_array(SupportsDefaultValue::class, $inputTraits)) {
                 $this->setValue($key, $input->getValue($this->getValue($key)));
             }
         }
@@ -782,7 +806,7 @@ abstract class FormView extends Component
     /**
      * Returns the array with all registered real inputs (excludes html)
      *
-     * @return array
+     * @return array|FormInput[]
      */
     public function getRealInputs(): array
     {

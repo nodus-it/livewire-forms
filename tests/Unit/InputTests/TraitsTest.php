@@ -4,7 +4,9 @@ namespace Nodus\Packages\LivewireForms\Tests\Unit\InputTests;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use InvalidArgumentException;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Date;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\File;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Number;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Select;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Text;
@@ -90,7 +92,7 @@ class TraitsTest extends TestCase
         $input = Select::create('select_input');
 
         if ($trans === null) {
-            $this->expectException(\InvalidArgumentException::class);
+            $this->expectException(InvalidArgumentException::class);
         }
 
         $this->assertSame(
@@ -105,7 +107,7 @@ class TraitsTest extends TestCase
     {
         $input = Select::create('select_input');
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $input->_randomMethodText();
     }
 
@@ -151,6 +153,15 @@ class TraitsTest extends TestCase
 
         $this->assertInstanceOf(Number::class, $input->setStep(1));
         $this->assertSame(1, $input->getStep());
+    }
+
+
+    public function testSupportsArrayValidations()
+    {
+        $input = new File('file_input');
+        $this->assertSame('', $input->getArrayValidations());
+        $this->assertInstanceOf(File::class, $input->setArrayValidations('file|mimetypes:video/avi'));
+        $this->assertSame('file|mimetypes:video/avi', $input->getArrayValidations());
     }
 }
 
