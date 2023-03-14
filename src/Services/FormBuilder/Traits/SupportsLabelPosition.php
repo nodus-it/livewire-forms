@@ -2,6 +2,8 @@
 
 namespace Nodus\Packages\LivewireForms\Services\FormBuilder\Traits;
 
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Support\LabelPosition;
+
 /**
  * Supports label position form input trait
  *
@@ -14,14 +16,14 @@ trait SupportsLabelPosition
      *
      * @var string
      */
-    protected string $labelPosition = 'top';
+    protected LabelPosition $labelPosition = LabelPosition::Top;
 
     /**
      * Returns the current label position
      *
-     * @return string
+     * @return LabelPosition
      */
-    public function getLabelPosition(): string
+    public function getLabelPosition(): LabelPosition
     {
         return $this->labelPosition;
     }
@@ -33,7 +35,7 @@ trait SupportsLabelPosition
      */
     public function setLabelRight(): static
     {
-        $this->labelPosition = 'right';
+        $this->labelPosition = LabelPosition::Right;
 
         return $this;
     }
@@ -45,7 +47,7 @@ trait SupportsLabelPosition
      */
     public function setLabelTop(): static
     {
-        $this->labelPosition = 'top';
+        $this->labelPosition = LabelPosition::Top;
 
         return $this;
     }

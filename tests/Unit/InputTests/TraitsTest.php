@@ -5,10 +5,12 @@ namespace Nodus\Packages\LivewireForms\Tests\Unit\InputTests;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Checkbox;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Date;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\File;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Number;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Select;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Support\LabelPosition;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Text;
 use Nodus\Packages\LivewireForms\Tests\TestCase;
 
@@ -161,6 +163,16 @@ class TraitsTest extends TestCase
         $this->assertSame('', $input->getArrayValidations());
         $this->assertInstanceOf(File::class, $input->setArrayValidations('file|mimetypes:video/avi'));
         $this->assertSame('file|mimetypes:video/avi', $input->getArrayValidations());
+    }
+
+    public function testSupportLabelPosition()
+    {
+        $input = new Checkbox('checkbox');
+        $this->assertSame(LabelPosition::Top, $input->getLabelPosition());
+        $this->assertInstanceOf(Checkbox::class, $input->setLabelRight());
+        $this->assertSame(LabelPosition::Right, $input->getLabelPosition());
+        $this->assertInstanceOf(Checkbox::class, $input->setLabelTop());
+        $this->assertSame(LabelPosition::Top, $input->getLabelPosition());
     }
 }
 
