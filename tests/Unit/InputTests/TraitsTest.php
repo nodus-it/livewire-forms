@@ -10,6 +10,7 @@ use Nodus\Packages\LivewireForms\Services\FormBuilder\Date;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\File;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Number;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Select;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Support\InputMode;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Support\LabelPosition;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Text;
 use Nodus\Packages\LivewireForms\Tests\TestCase;
@@ -134,10 +135,13 @@ class TraitsTest extends TestCase
         $this->assertNull($input->getInputMode());
 
         $this->assertInstanceOf(Text::class, $input->setInputMode('email'));
-        $this->assertSame('email', $input->getInputMode());
+        $this->assertSame(InputMode::Email, $input->getInputMode());
+
+        $this->assertInstanceOf(Text::class, $input->setInputMode(InputMode::Numeric));
+        $this->assertSame(InputMode::Numeric, $input->getInputMode());
 
         $this->assertInstanceOf(Text::class, $input->setInputMode('invalid-mode'));
-        $this->assertSame('text', $input->getInputMode());
+        $this->assertSame(InputMode::Text, $input->getInputMode());
     }
 
     public function testSupportsMinMax()

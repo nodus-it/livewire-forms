@@ -2,6 +2,8 @@
 
 namespace Nodus\Packages\LivewireForms\Services\FormBuilder\Traits;
 
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Support\InputMode;
+
 /**
  * Supports input mode form input trait
  *
@@ -10,34 +12,18 @@ namespace Nodus\Packages\LivewireForms\Services\FormBuilder\Traits;
 trait SupportsInputMode
 {
     /**
-     * Array of all allowed input modes
-     *
-     * @var string[]
-     */
-    protected array $allowedInputModes = [
-        'none',
-        'text',
-        'decimal',
-        'numeric',
-        'tel',
-        'search',
-        'email',
-        'url',
-    ];
-
-    /**
      * Input mode
      *
-     * @var string|null
+     * @var InputMode|null
      */
-    protected ?string $inputMode = null;
+    protected ?InputMode $inputMode = null;
 
     /**
      * Returns the input mode
      *
      * @return string|null
      */
-    public function getInputMode(): ?string
+    public function getInputMode(): ?InputMode
     {
         return $this->inputMode;
     }
@@ -49,11 +35,10 @@ trait SupportsInputMode
      *
      * @return $this
      */
-    public function setInputMode(?string $inputMode): static
+    public function setInputMode(InputMode|string|null $inputMode): static
     {
-        // Invalid input modes defaults to "text"
-        if ($inputMode !== null && !in_array($inputMode, $this->allowedInputModes)) {
-            $inputMode = 'text';
+        if (is_string($inputMode)) {
+            $inputMode = InputMode::tryFrom($inputMode) ?? InputMode::Text;
         }
 
         $this->inputMode = $inputMode;
