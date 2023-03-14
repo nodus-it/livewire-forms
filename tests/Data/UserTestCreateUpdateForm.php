@@ -1,9 +1,9 @@
 <?php
 
-namespace Nodus\Packages\LivewireForms\Tests\data;
+namespace Nodus\Packages\LivewireForms\Tests\Data;
 
 use Illuminate\Database\Eloquent\Model;
-use Nodus\Packages\LivewireForms\Tests\data\models\User;
+use Nodus\Packages\LivewireForms\Tests\Data\Models\User;
 
 class UserTestCreateUpdateForm extends UserTestForm
 {

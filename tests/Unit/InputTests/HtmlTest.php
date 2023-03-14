@@ -3,7 +3,7 @@
 namespace Nodus\Packages\LivewireForms\Tests\Unit\InputTests;
 
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Html;
-use Nodus\Packages\LivewireForms\Tests\Unit\TestCase;
+use Nodus\Packages\LivewireForms\Tests\TestCase;
 
 class HtmlTest extends TestCase
 {

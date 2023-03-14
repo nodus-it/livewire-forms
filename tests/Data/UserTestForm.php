@@ -1,6 +1,6 @@
 <?php
 
-namespace Nodus\Packages\LivewireForms\Tests\data;
+namespace Nodus\Packages\LivewireForms\Tests\Data;
 
 use Nodus\Packages\LivewireForms\Livewire\FormView;
 

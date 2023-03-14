@@ -5,7 +5,7 @@ namespace Nodus\Packages\LivewireForms\Tests\Unit\InputTests;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Decimal;
-use Nodus\Packages\LivewireForms\Tests\Unit\TestCase;
+use Nodus\Packages\LivewireForms\Tests\TestCase;
 
 class DecimalInputTest extends TestCase
 {

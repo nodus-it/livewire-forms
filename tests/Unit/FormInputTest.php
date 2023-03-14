@@ -15,6 +15,7 @@ use Nodus\Packages\LivewireForms\Services\FormBuilder\Select;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Text;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Textarea;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Time;
+use Nodus\Packages\LivewireForms\Tests\TestCase;
 
 class FormInputTest extends TestCase
 {

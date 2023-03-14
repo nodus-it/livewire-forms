@@ -4,7 +4,7 @@ namespace Nodus\Packages\LivewireForms\Tests\Unit\InputTests;
 
 use Livewire\TemporaryUploadedFile;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\File;
-use Nodus\Packages\LivewireForms\Tests\Unit\TestCase;
+use Nodus\Packages\LivewireForms\Tests\TestCase;
 
 class FileInputTest extends TestCase
 {

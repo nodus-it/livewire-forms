@@ -3,6 +3,7 @@
 namespace Nodus\Packages\LivewireForms\Tests\Unit;
 
 use Nodus\Packages\LivewireForms\Controllers\JavaScriptAssets;
+use Nodus\Packages\LivewireForms\Tests\TestCase;
 
 class JavascriptAssetsTest extends TestCase
 {

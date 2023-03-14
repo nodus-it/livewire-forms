@@ -10,7 +10,7 @@ use Nodus\Packages\LivewireForms\Services\FormBuilder\File;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Number;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Select;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Text;
-use Nodus\Packages\LivewireForms\Tests\Unit\TestCase;
+use Nodus\Packages\LivewireForms\Tests\TestCase;
 
 class TraitsTest extends TestCase
 {
@@ -154,7 +154,6 @@ class TraitsTest extends TestCase
         $this->assertInstanceOf(Number::class, $input->setStep(1));
         $this->assertSame(1, $input->getStep());
     }
-
 
     public function testSupportsArrayValidations()
     {

@@ -19,6 +19,7 @@ use Nodus\Packages\LivewireCore\Services\SupportsTranslationsByModel;
 use Nodus\Packages\LivewireCore\SupportsAdditionalViewParameters;
 use Nodus\Packages\LivewireForms\Services\FormBuilder;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\FormInput;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsArrayValidations;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDefaultValue;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsValidations;
 use Throwable;
@@ -791,7 +792,7 @@ abstract class FormView extends Component
                 $this->rules[$input->getViewId()] = [];
             }
 
-            if (in_array(FormBuilder\Traits\SupportsArrayValidations::class, $inputTraits)) {
+            if (in_array(SupportsArrayValidations::class, $inputTraits)) {
                 $this->rules[$input->getViewId() . '.*'] = $input->getArrayValidations();
             }
 
