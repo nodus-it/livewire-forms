@@ -44,5 +44,12 @@ class FileInputTest extends TestCase
         $this->assertSame(null, $input->preRenderMutator(null));
         $this->assertSame(null, $input->preRenderMutator('/test/path/file.txt'));
         $this->assertSame($upload, $input->preRenderMutator($upload));
+
+        $input->setMultiple();
+        $this->assertSame([], $input->preRenderMutator(null));
+        $this->assertSame([], $input->preRenderMutator('/test/path/file.txt'));
+        $this->assertSame([], $input->preRenderMutator(['/test/path/file.txt']));
+        $this->assertSame([], $input->preRenderMutator($upload));
+        $this->assertSame([$upload], $input->preRenderMutator([$upload]));
     }
 }

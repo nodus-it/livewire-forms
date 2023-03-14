@@ -60,4 +60,12 @@ class FormInputTest extends TestCase
         $this->assertIsString($input->render());
         $this->assertIsString($input->__toString());
     }
+
+    public function testHtmlLabel()
+    {
+        $input = new Text('text_input');
+        $this->assertFalse($input->hasHtmlLabel());
+        $input->setLabelHtml();
+        $this->assertTrue($input->hasHtmlLabel());
+    }
 }
