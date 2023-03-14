@@ -17,35 +17,49 @@ Nodus.DecimalInput = class {
      * @param element
      * @param options
      */
-    constructor( element, options = {} ) {
-        if ( typeof element === 'string' ) {
-            element = document.querySelector( element );
+    constructor(element, options = {}) {
+        if (typeof element === 'string') {
+            element = document.querySelector(element);
         }
 
         this.element = element;
         this.options = {
-            decimals: options.decimals || this.element.getAttribute( 'data-decimals' ) || Nodus.DecimalInput.DEFAULTS.decimals,
-            unit: options.unit || this.element.getAttribute( 'data-unit' ) || Nodus.DecimalInput.DEFAULTS.unit,
+            decimals: options.decimals || this.element.getAttribute('data-decimals') || Nodus.DecimalInput.DEFAULTS.decimals,
+            unit: options.unit || this.element.getAttribute('data-unit') || Nodus.DecimalInput.DEFAULTS.unit,
         };
 
         // Event Handlers
-        this.element.addEventListener( 'focus', this.onFocusHandler.bind( this ) );
-        this.element.addEventListener( 'blur', this.onBlurHandler.bind( this ) );
+        this.element.addEventListener('focus', this.onFocusHandler.bind(this));
+        this.element.addEventListener('blur', this.onBlurHandler.bind(this));
 
         // Trigger formatting for preset values
-        if ( this.element.value.length > 0 ) {
-            this.onFocusHandler( { target: this.element } );
-            this.onBlurHandler( { target: this.element } );
+        if (this.element.value.length > 0) {
+            this.onFocusHandler({target: this.element});
+            this.onBlurHandler({target: this.element});
         }
     }
 
     /**
-     * Returns whether or not the configured unit is a valid currency
+     * Returns whether the configured unit is a valid currency
      *
      * @return {boolean}
      */
     isValidCurrency() {
-        return [ 'EUR', 'USD', 'CHF', 'DKK', 'PLN', 'CZK' ].includes( this.options.unit );
+        return [
+            'AED', 'AFN', 'ALL', 'AMD', 'ANG', 'AOA', 'ARS', 'AUD', 'AWG', 'AZN', 'BAM', 'BBD', 'BDT', 'BGN',
+            'BHD', 'BIF', 'BMD', 'BND', 'BOB', 'BOV', 'BRL', 'BSD', 'BTN', 'BWP', 'BYR', 'BZD', 'CAD', 'CDF',
+            'CHE', 'CHF', 'CHW', 'CLF', 'CLP', 'CNY', 'COP', 'COU', 'CRC', 'CUC', 'CUP', 'CVE', 'CZK', 'DJF',
+            'DKK', 'DOP', 'DZD', 'EGP', 'ERN', 'ETB', 'EUR', 'FJD', 'FKP', 'GBP', 'GEL', 'GHS', 'GIP', 'GMD',
+            'GNF', 'GTQ', 'GYD', 'HKD', 'HNL', 'HRK', 'HTG', 'HUF', 'IDR', 'ILS', 'INR', 'IQD', 'IRR', 'ISK',
+            'JMD', 'JOD', 'JPY', 'KES', 'KGS', 'KHR', 'KMF', 'KPW', 'KRW', 'KWD', 'KYD', 'KZT', 'LAK', 'LBP',
+            'LKR', 'LRD', 'LSL', 'LTL', 'LVL', 'LYD', 'MAD', 'MDL', 'MGA', 'MKD', 'MMK', 'MNT', 'MOP', 'MRO',
+            'MUR', 'MVR', 'MWK', 'MXN', 'MXV', 'MYR', 'MZN', 'NAD', 'NGN', 'NIO', 'NOK', 'NPR', 'NZD', 'OMR',
+            'PAB', 'PEN', 'PGK', 'PHP', 'PKR', 'PLN', 'PYG', 'QAR', 'RON', 'RSD', 'RUB', 'RWF', 'SAR', 'SBD',
+            'SCR', 'SDG', 'SEK', 'SGD', 'SHP', 'SLL', 'SOS', 'SRD', 'SSP', 'STD', 'SYP', 'SZL', 'THB', 'TJS',
+            'TMT', 'TND', 'TOP', 'TRY', 'TTD', 'TWD', 'TZS', 'UAH', 'UGX', 'USD', 'USN', 'USS', 'UYI', 'UYU',
+            'UZS', 'VEF', 'VND', 'VUV', 'WST', 'XAF', 'XAG', 'XAU', 'XBA', 'XBB', 'XBC', 'XBD', 'XCD', 'XDR',
+            'XOF', 'XPD', 'XPF', 'XPT', 'XTS', 'XXX', 'YER', 'ZAR', 'ZMW',
+        ].includes(this.options.unit);
     }
 
     /**
@@ -53,12 +67,12 @@ Nodus.DecimalInput = class {
      *
      * @param e
      */
-    onFocusHandler( e ) {
-        if ( e.target.value.length === 0 ) {
+    onFocusHandler(e) {
+        if (e.target.value.length === 0) {
             return;
         }
 
-        let value = String( this.parseInputString( e.target.value ) ).replace( /[.]+/, "," );
+        let value = String(this.parseInputString(e.target.value)).replace(/[.]+/, ",");
 
         if (value === '0') {
             value = '';
@@ -72,17 +86,17 @@ Nodus.DecimalInput = class {
      *
      * @param e
      */
-    onBlurHandler( e ) {
+    onBlurHandler(e) {
         let options;
         let value;
 
-        if ( e.target.value.length === 0 ) {
+        if (e.target.value.length === 0) {
             value = 0;
         } else {
             value = e.target.value;
         }
 
-        if ( this.options.unit === null || this.isValidCurrency() === false ) {
+        if (this.options.unit === null || this.isValidCurrency() === false) {
             options = {
                 maximumFractionDigits: this.options.decimals,
             }
@@ -95,9 +109,9 @@ Nodus.DecimalInput = class {
             }
         }
 
-        value = this.parseInputString( value ).toLocaleString( undefined, options );
+        value = this.parseInputString(value).toLocaleString(undefined, options);
 
-        if ( this.options.unit !== null && this.isValidCurrency() === false ) {
+        if (this.options.unit !== null && this.options.unit !== '_NO_UNIT' && this.isValidCurrency() === false) {
             value += ' ' + this.options.unit;
         }
 
@@ -111,8 +125,8 @@ Nodus.DecimalInput = class {
      *
      * @return {number}
      */
-    parseInputString( s ) {
-        return Number( String( s ).replace( /[^0-9,-]+/g, "" ).replace( /[,]+/, "." ) );
+    parseInputString(s) {
+        return Number(String(s).replace(/[^0-9,-]+/g, "").replace(/,+/, "."));
     }
 
     /**
@@ -121,23 +135,23 @@ Nodus.DecimalInput = class {
      * @return {number}
      */
     getValue() {
-        return this.parseInputString( this.element.value );
+        return this.parseInputString(this.element.value);
     }
 
     /**
      * Sets the current numeric value
      * @param value
      */
-    setValue( value ) {
-        if ( isNumeric( value ) ) {
-            value = value.toLocaleString( undefined, { maximumFractionDigits: this.options.decimals } );
+    setValue(value) {
+        if (!isNaN(value)) {
+            value = value.toLocaleString(undefined, {maximumFractionDigits: this.options.decimals});
         }
 
         this.element.value = value;
 
-        if ( (typeof value === 'string' && value.length > 0) || isNumeric( value ) ) {
-            this.onFocusHandler( { target: this.element } );
-            this.onBlurHandler( { target: this.element } );
+        if ((typeof value === 'string' && value.length > 0) || !isNaN(value)) {
+            this.onFocusHandler({target: this.element});
+            this.onBlurHandler({target: this.element});
         }
     }
 };
