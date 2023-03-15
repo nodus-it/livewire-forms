@@ -11,6 +11,8 @@ All notable changes to `livewire-forms` will be documented in this file
 - Added ``addNewLine`` shortcut to the form builder
 - Label positions, currencies and input modes are now represented by enums
 - Improved the decimal Input so beside currencies all sorts of custom units are possible now
+- The force option of selects has no longer any effect in multi selects 
+- Fixed the invalid value problem for dynamically changing select options
 
 ## 0.6.0 - 2022-12-18
 

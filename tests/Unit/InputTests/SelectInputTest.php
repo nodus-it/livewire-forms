@@ -116,10 +116,37 @@ class SelectInputTest extends TestCase
         $input = new Select('select_input');
 
         $this->assertSame(null, $input->preValidationMutator(null));
-        $this->assertSame('', $input->preValidationMutator(''));
-        $this->assertSame(1, $input->preValidationMutator(1));
+        $this->assertSame(null, $input->preValidationMutator(''));
+        $this->assertSame(null, $input->preValidationMutator(1));
         $this->assertSame(null, $input->preValidationMutator((string)Select::NULL_OPTION));
         $this->assertSame(null, $input->preValidationMutator(Select::NULL_OPTION));
+        $this->assertSame(null, $input->preValidationMutator(Select::FORCE_OPTION));
+        $this->assertSame(null, $input->preValidationMutator('x'));
+
+        $input->setOptions(['x' => Select::option('x'), 'y' => Select::option('y')]);
+
+        $this->assertSame(null, $input->preValidationMutator(null));
+        $this->assertSame(null, $input->preValidationMutator(''));
+        $this->assertSame(null, $input->preValidationMutator(1));
+        $this->assertSame(null, $input->preValidationMutator((string)Select::NULL_OPTION));
+        $this->assertSame(null, $input->preValidationMutator(Select::NULL_OPTION));
+        $this->assertSame(null, $input->preValidationMutator(Select::FORCE_OPTION));
+        $this->assertSame('x', $input->preValidationMutator('x'));
+        $this->assertSame('y', $input->preValidationMutator('y'));
+
+        $input->setForceOption();
+        $this->assertSame(Select::FORCE_OPTION, $input->preValidationMutator(Select::FORCE_OPTION));
+
+        $input->setMultiple();
+        $this->assertSame([], $input->preValidationMutator(null));
+        $this->assertSame([], $input->preValidationMutator(''));
+        $this->assertSame([], $input->preValidationMutator(1));
+        $this->assertSame([null], $input->preValidationMutator((string)Select::NULL_OPTION));
+        $this->assertSame([null], $input->preValidationMutator([Select::NULL_OPTION]));
+        $this->assertSame([], $input->preValidationMutator(Select::FORCE_OPTION));
+        $this->assertSame(['x'], $input->preValidationMutator(['x']));
+        $this->assertSame(['x', 'y'], $input->preValidationMutator(['x', 'y']));
+        $this->assertSame(['x', 'y'], $input->preValidationMutator([Select::FORCE_OPTION, 'x', 'y', 'z']));
     }
 
     public function testRequiredOptionValidationRule()

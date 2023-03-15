@@ -118,6 +118,8 @@ public function submitCreate(array $values)
 ````
 
 ## Roadmap/TODO
+- File input
+  - chunked upload handling (https://fly.io/laravel-bytes/multi-file-upload-livewire/)
 - All Inputs
   - improve multiple support
   - check if we should support more properties
