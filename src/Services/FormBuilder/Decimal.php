@@ -148,12 +148,12 @@ class Decimal extends FormInput
         $formatter = $this->getNumberFormatter();
 
         if ($this->isCurrency()) {
-            return $formatter->formatCurrency(static::parseValue($value), $this->getUnit()->value);
+            return $formatter->formatCurrency($this->parseValue($value), $this->getUnit()->value);
         } elseif (!empty($this->getUnit())) {
             $unit = ' ' . $this->getUnit();
         }
 
-        return $formatter->format(static::parseValue($value)) . $unit;
+        return $formatter->format($this->parseValue($value)) . $unit;
     }
 
     /**
@@ -165,7 +165,7 @@ class Decimal extends FormInput
      */
     public function preValidationMutator(string $decimal): float
     {
-        return static::parseValue($decimal);
+        return $this->parseValue($decimal);
     }
 
     /**
@@ -175,10 +175,14 @@ class Decimal extends FormInput
      *
      * @return float
      */
-    public static function parseValue($value): float
+    public function parseValue($value): float
     {
         if (is_float($value)) {
             return $value;
+        }
+
+        if (!$this->isCurrency() && $this->getUnit() !== null) {
+            $value = str_replace($this->getUnit(), '', $value);
         }
 
         return floatval(str_replace(',', '.', preg_replace('/[^0-9,-]+/', '', $value)));

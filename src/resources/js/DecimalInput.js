@@ -126,6 +126,10 @@ Nodus.DecimalInput = class {
      * @return {number}
      */
     parseInputString(s) {
+        if (this.options.unit !== null && this.options.unit !== '_NO_UNIT' && this.isValidCurrency() === false) {
+            s = String(s).replace(this.options.unit, "")
+        }
+
         return Number(String(s).replace(/[^0-9,-]+/g, "").replace(/,+/, "."));
     }
 

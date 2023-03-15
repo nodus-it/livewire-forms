@@ -37,15 +37,20 @@ class DecimalInputTest extends TestCase
 
     public function testParseValue()
     {
-        $this->assertSame(0.0, Decimal::parseValue(0));
-        $this->assertSame(10.5, Decimal::parseValue(10.5));
+        $input = new Decimal('decimal_input');
+        $this->assertSame(0.0, $input->parseValue(0));
+        $this->assertSame(10.5, $input->parseValue(10.5));
 
-        $this->assertSame(0.0, Decimal::parseValue(''));
-        $this->assertSame(0.0, Decimal::parseValue('0'));
-        $this->assertSame(5.0, Decimal::parseValue('5'));
-        $this->assertSame(10.5, Decimal::parseValue('10,5'));
-        $this->assertSame(1500.0, Decimal::parseValue('1.500'));
-        $this->assertSame(1234.56, Decimal::parseValue('1.234,56 €'));
+        $this->assertSame(0.0, $input->parseValue(''));
+        $this->assertSame(0.0, $input->parseValue('0'));
+        $this->assertSame(5.0, $input->parseValue('5'));
+        $this->assertSame(10.5, $input->parseValue('10,5'));
+        $this->assertSame(1500.0, $input->parseValue('1.500'));
+        $this->assertSame(1234.56, $input->parseValue('1.234,56 €'));
+        $this->assertSame(1234.56, $input->parseValue('1.234,56 m²'));
+
+        $input->setUnit('custom_unit_with_numbers123');
+        $this->assertSame(1234.56, $input->parseValue('1.234,56 custom_unit_with_numbers123'));
     }
 
     public function testPreRenderMutator()
