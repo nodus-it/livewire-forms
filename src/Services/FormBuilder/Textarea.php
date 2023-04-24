@@ -20,4 +20,35 @@ class Textarea extends FormInput
     use SupportsSize;
     use SupportsHint;
     use SupportsPlaceholder;
+
+    /**
+     * Rows count
+     * 
+     * @var int|null 
+     */
+    protected ?int $rows = null;
+
+    /**
+     * Sets the display height of the textarea in rows
+     * 
+     * @param int $rows
+     *                 
+     * @return $this
+     */
+    public function setRows(int $rows): static
+    {
+        $this->rows = $rows;
+
+        return $this;
+    }
+
+    /**
+     * Returns the display height of the textarea in rows
+     * 
+     * @return int|null
+     */
+    public function getRows(): ?int
+    {
+        return $this->rows;
+    }
 }
