@@ -66,6 +66,12 @@ Nodus.FormView = class {
                 return;
             }
 
+            const staticContainer = container.querySelector('.nodus-form-container-static');
+            if (staticContainer !== null && staticContainer.hasAttribute('data-init') && staticContainer.getAttribute('data-init') === 'true') {
+                console.log('Already initialized', staticContainer);
+                return;
+            }
+
             console.log('Init form control: ', container);
 
             if (container.classList.contains('nodus-form-control-select')) {
@@ -74,11 +80,15 @@ Nodus.FormView = class {
                 this.initDecimal(container);
             } else if (container.classList.contains('nodus-form-control-code')) {
                 this.initCode(container);
-            } else if (container.classList.contains('nodus-form-control-richtextarea') && initialRender === true) {
+            } else if (container.classList.contains('nodus-form-control-richtextarea')) {
                 this.initRichtextArea(container);
             }
 
             container.setAttribute('data-init', 'true');
+
+            if (staticContainer !== null) {
+                staticContainer.setAttribute('data-init', 'true');
+            }
         }.bind(this));
     }
 
