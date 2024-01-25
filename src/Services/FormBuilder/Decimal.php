@@ -129,6 +129,10 @@ class Decimal extends FormInput
             $value = 0;
         }
 
+        if (strlen($this->getUnit()) !== 3) {
+            return $this->getNumberFormatter()->format(static::parseValue($value)) . $this->getUnit();
+        }
+
         return $this->getNumberFormatter()->formatCurrency(
             static::parseValue($value),
             $this->getUnit()
