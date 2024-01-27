@@ -21,12 +21,13 @@ Nodus.FormView = class {
 
         // Initial render form initializing
         document.addEventListener('livewire:load', function() {
-            this.initInputs(true);
+            this.initInputs();
         }.bind(this));
 
         // On livewire update -> reinitializing the inputs
+        // ToDo: for dynamically added/removed forms we need to unbind the event listener
         Livewire.hook('message.processed', function() {
-            this.initInputs(false);
+            this.initInputs();
         }.bind(this));
 
         // On livewire DOM update destroy bootstrap selects
@@ -56,13 +57,25 @@ Nodus.FormView = class {
         return classes.join(', ');
     }
 
-    initInputs(initialRender = true) {
+    initInputs() {
         this.livewireId = this.form.getAttribute('wire:id');
-        this.livewire = window.livewire.find(this.livewireId);
+
+        try {
+            this.livewire = window.livewire.find(this.livewireId);
+        } catch (e) {
+            console.warn('Could not find livewire component', this.livewireId);
+            return;
+        }
 
         this.form.querySelectorAll(this.getRelevantInputClasses()).forEach(function(container) {
             if (container.hasAttribute('data-init') && container.getAttribute('data-init') === 'true') {
                 console.log('Already initialized', container);
+                return;
+            }
+
+            const staticContainer = container.querySelector('.nodus-form-container-static');
+            if (staticContainer !== null && staticContainer.hasAttribute('data-init') && staticContainer.getAttribute('data-init') === 'true') {
+                console.log('Already initialized', staticContainer);
                 return;
             }
 
@@ -74,11 +87,15 @@ Nodus.FormView = class {
                 this.initDecimal(container);
             } else if (container.classList.contains('nodus-form-control-code')) {
                 this.initCode(container);
-            } else if (container.classList.contains('nodus-form-control-richtextarea') && initialRender === true) {
+            } else if (container.classList.contains('nodus-form-control-richtextarea')) {
                 this.initRichtextArea(container);
             }
 
             container.setAttribute('data-init', 'true');
+
+            if (staticContainer !== null) {
+                staticContainer.setAttribute('data-init', 'true');
+            }
         }.bind(this));
     }
 

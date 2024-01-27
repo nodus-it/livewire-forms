@@ -379,7 +379,7 @@ abstract class FormView extends Component
         $this->validateOnly($propertyName, null, [], $this->getCustomValidationAttributes());
 
         // In case we have added array validations, we check them here separately
-        if (isset($this->rules[$propertyName . '.*'])) {
+        if (isset($this->rules[$propertyName . '.*']) && !empty($this->rules[$propertyName . '.*'])) {
             $this->validateOnly($propertyName . '.*', null, [], $this->getCustomValidationAttributes());
         }
     }

@@ -121,7 +121,7 @@ class Decimal extends FormInput
      *
      * @return false|NumberFormatter
      */
-    public function getNumberFormatter(string $locale = 'de_DE'): bool|NumberFormatter
+    protected function getNumberFormatter(string $locale = 'de_DE'): bool|NumberFormatter
     {
         $format = NumberFormatter::create($locale, ($this->isCurrency()) ? NumberFormatter::CURRENCY : NumberFormatter::DECIMAL);
 
@@ -145,15 +145,16 @@ class Decimal extends FormInput
         }
 
         $unit = '';
+        $value = $this->parseValue($value);
         $formatter = $this->getNumberFormatter();
 
         if ($this->isCurrency()) {
-            return $formatter->formatCurrency($this->parseValue($value), $this->getUnit()->value);
+            return $formatter->formatCurrency($value, $this->getUnit()->value);
         } elseif (!empty($this->getUnit())) {
             $unit = ' ' . $this->getUnit();
         }
 
-        return $formatter->format($this->parseValue($value)) . $unit;
+        return $formatter->format($value) . $unit;
     }
 
     /**

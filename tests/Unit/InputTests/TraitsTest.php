@@ -75,7 +75,7 @@ class TraitsTest extends TestCase
         $this->assertSame('unique:mysql.test,id,1', $input->rewriteValidationRules(new TestModel(['id' => 1])));
     }
 
-    public function validTranslations()
+    public static function validTranslations()
     {
         return [
             ['DeselectAllText', 'deselect_all'],
