@@ -29,9 +29,9 @@ use Throwable;
  *
  * @package Nodus\Packages\LivewireForms\Livewire
  *
- * @method submit(array $values)
- * @method submitCreate(array $values)
- * @method submitUpdate(array $values, Model $model)
+ * @method mixed submit(array $values)
+ * @method mixed submitCreate(array $values)
+ * @method mixed submitUpdate(array $values, Model $model)
  */
 abstract class FormView extends Component
 {
@@ -296,7 +296,7 @@ abstract class FormView extends Component
      *
      * @param array $keyValueArray
      */
-    public function setValues(array $keyValueArray)
+    public function setValues(array $keyValueArray): void
     {
         foreach ($keyValueArray as $key => $value) {
             $this->setValue($key, $value);
@@ -398,7 +398,7 @@ abstract class FormView extends Component
      *
      * @throws ValidationException
      */
-    public function updated($propertyName)
+    public function updated($propertyName): void
     {
         $this->prepareInputs();
 
@@ -497,9 +497,9 @@ abstract class FormView extends Component
      * On form submit handler
      *
      * @throws Exception
-     * @return RedirectResponse
+     * @return mixed
      */
-    final public function onSubmit()
+    final public function onSubmit(): mixed
     {
         $this->prepareInputs();
 
@@ -578,7 +578,7 @@ abstract class FormView extends Component
      *
      * @codeCoverageIgnore
      */
-    protected function submitValidationExceptionHandler(Validator $validator)
+    protected function submitValidationExceptionHandler(Validator $validator): void
     {
         // overwrite
     }
@@ -652,7 +652,7 @@ abstract class FormView extends Component
     /**
      * Applies the pre render mutator handlers if such are defined
      */
-    private function applyPreRenderMutators()
+    private function applyPreRenderMutators(): void
     {
         foreach ($this->getRealInputs() as $input) {
             $key = $input->getId();
@@ -813,16 +813,19 @@ abstract class FormView extends Component
             $inputTraits = class_uses($input);
 
             if (in_array(SupportsValidations::class, $inputTraits)) {
+                /** @var SupportsValidations|FormInput $input */
                 $this->rules[$input->getViewId()] = $input->rewriteValidationRules($model);
             } else {
                 $this->rules[$input->getViewId()] = [];
             }
 
             if (in_array(SupportsArrayValidations::class, $inputTraits)) {
+                /** @var SupportsArrayValidations|FormInput $input */
                 $this->rules[$input->getViewId() . '.*'] = $input->getArrayValidations();
             }
 
             if (in_array(SupportsDefaultValue::class, $inputTraits)) {
+                /** @var SupportsDefaultValue|FormInput $input */
                 $this->setValue($key, $input->getValue($this->getRawValue($key)));
             }
         }

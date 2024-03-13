@@ -26,7 +26,7 @@ use function PHPUnit\Framework\assertInstanceOf;
 
 class FormBuilderTest extends TestCase
 {
-    public static function validInputs()
+    public static function validInputs(): array
     {
         return [
             [Text::class, 'addText'],
@@ -60,7 +60,7 @@ class FormBuilderTest extends TestCase
 
             public static string $expected;
 
-            public function inputs()
+            public function inputs(): void
             {
                 $method = func_get_arg(0);
 

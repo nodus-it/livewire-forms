@@ -7,12 +7,12 @@ use Nodus\Packages\LivewireForms\Tests\Data\Models\User;
 
 class UserTestCreateUpdateForm extends UserTestForm
 {
-    public function submitCreate(array $values)
+    public function submitCreate(array $values): void
     {
         User::query()->create($values);
     }
 
-    public function submitUpdate(array $values, Model $model)
+    public function submitUpdate(array $values, Model $model): void
     {
         $model->update($values);
     }

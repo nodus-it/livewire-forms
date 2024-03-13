@@ -49,4 +49,26 @@ class DateInputTest extends TestCase
         // special case for older safari versions, this behaviour will be deprecated in future
         $this->assertSame('23.01.20201', $input->preRenderMutator('23.01.20201'));
     }
+
+    public function testGetMin()
+    {
+        $input = new Date('date_input');
+
+        $this->assertSame(null, $input->getMin());
+        $this->assertInstanceOf(Date::class, $input->setMin('2020-01-23'));
+        $this->assertSame('2020-01-23', $input->getMin());
+        $this->assertInstanceOf(Date::class, $input->setMin(Carbon::create(2020, 1, 24)));
+        $this->assertSame('2020-01-24', $input->getMin());
+    }
+
+    public function testGetMax()
+    {
+        $input = new Date('date_input');
+
+        $this->assertSame(null, $input->getMax());
+        $this->assertInstanceOf(Date::class, $input->setMax('2020-01-23'));
+        $this->assertSame('2020-01-23', $input->getMax());
+        $this->assertInstanceOf(Date::class, $input->setMax(Carbon::create(2020, 1, 24)));
+        $this->assertSame('2020-01-24', $input->getMax());
+    }
 }

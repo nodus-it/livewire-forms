@@ -6,7 +6,7 @@ use Nodus\Packages\LivewireForms\Livewire\FormView;
 
 class UserTestForm extends FormView
 {
-    public function inputs()
+    public function inputs(): void
     {
         $this->addText('first_name')
             ->setValidations('required');

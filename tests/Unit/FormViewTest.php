@@ -21,11 +21,11 @@ class FormViewTest extends TestCase
 
         $component->runAction('render');
 
-        $this->assertArrayHasKey('text_input', $component->payload[ 'serverMemo' ][ 'data' ][ 'values' ]);
-        $this->assertNull($component->payload[ 'serverMemo' ][ 'data' ][ 'values' ][ 'text_input' ]);
-        $this->assertArrayHasKey('select_input', $component->payload[ 'serverMemo' ][ 'data' ][ 'values' ]);
-        $this->assertNull($component->payload[ 'serverMemo' ][ 'data' ][ 'values' ][ 'select_input' ]);
-        $this->assertArrayNotHasKey('select_input2', $component->payload[ 'serverMemo' ][ 'data' ][ 'values' ]);
+        $this->assertArrayHasKey('text_input', $component->payload['serverMemo']['data']['values']);
+        $this->assertNull($component->payload['serverMemo']['data']['values']['text_input']);
+        $this->assertArrayHasKey('select_input', $component->payload['serverMemo']['data']['values']);
+        $this->assertNull($component->payload['serverMemo']['data']['values']['select_input']);
+        $this->assertArrayNotHasKey('select_input2', $component->payload['serverMemo']['data']['values']);
     }
 
     public function testDefaultValues()
@@ -56,7 +56,7 @@ class FormViewTest extends TestCase
     public function testGetInput()
     {
         $view = new class() extends FormView {
-            public function inputs()
+            public function inputs(): void
             {
                 $this->addText('text_input');
             }
@@ -77,7 +77,7 @@ class FormViewTest extends TestCase
         );
 
         $view = new class() extends FormView {
-            public function inputs()
+            public function inputs(): void
             {
                 $this->addNewCustomInput('test_custom');
             }

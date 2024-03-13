@@ -7,7 +7,7 @@ use Nodus\Packages\LivewireForms\Livewire\FormView;
 
 class InputTestForm extends FormView
 {
-    public function inputs()
+    public function inputs(): void
     {
         $this->addCheckbox('checkbox_input');
         $this->addCode('code_input');
@@ -37,7 +37,7 @@ class InputTestForm extends FormView
             ->setValidations('required|min:5');
     }
 
-    public function submit(array $values)
+    public function submit(array $values): void
     {
         \Illuminate\Support\Facades\Validator::make(
             $values,
@@ -45,7 +45,7 @@ class InputTestForm extends FormView
         )->validate();
     }
 
-    protected function submitValidationExceptionHandler(Validator $validator)
+    protected function submitValidationExceptionHandler(Validator $validator): void
     {
         $fields = array_keys($validator->failed());
 
