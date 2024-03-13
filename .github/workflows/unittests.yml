@@ -9,11 +9,15 @@ jobs:
       matrix:
         php-versions: ['8.1', '8.2', '8.3']
     steps:
-    - uses: shivammathur/setup-php@v2
-      with:
-        php-version: ${{ matrix.php-versions }}
-    - uses: actions/checkout@v4
-    - name: Install Dependencies
-      run: composer install --no-ansi --no-interaction --prefer-dist
-    - name: Execute tests (Unit and Feature tests) via Pest PHP
-      run: vendor/bin/pest
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+      - uses: actions/checkout@v4
+      - name: Install Dependencies
+        run: composer install --no-ansi --no-interaction --prefer-dist
+      - name: Execute tests (Unit and Feature tests) via Pest PHP
+        run: vendor/bin/pest --coverage-cobertura coverage.xml
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV }}
