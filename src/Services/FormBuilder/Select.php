@@ -83,7 +83,7 @@ class Select extends FormInput
      *
      * @return $this
      */
-    public function setOptions(array $options)
+    public function setOptions(array $options): static
     {
         return $this->parentSetOptions(Select::castNullSelectOptions($options));
     }
@@ -93,7 +93,7 @@ class Select extends FormInput
      *
      * @return array
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         $options = $this->parentGetOptions();
 
@@ -109,7 +109,7 @@ class Select extends FormInput
      *
      * @return mixed
      */
-    public function getDefaultValue()
+    public function getDefaultValue(): mixed
     {
         if ($this->getForceOption() === true && $this->value === null) {
             return Select::FORCE_OPTION;
@@ -133,7 +133,7 @@ class Select extends FormInput
      *
      * @return $this
      */
-    public function setForceOption(bool $forceOption = true, ?string $iconClasses = 'fas fa-fw fa-question-circle text-danger nodus-force-icon')
+    public function setForceOption(bool $forceOption = true, ?string $iconClasses = 'fas fa-fw fa-question-circle text-danger nodus-force-icon'): static
     {
         $this->forceOption = $forceOption;
         $this->forceOptionIconClasses = $iconClasses;
@@ -146,7 +146,7 @@ class Select extends FormInput
      *
      * @return bool
      */
-    public function getForceOption()
+    public function getForceOption(): bool
     {
         return $this->forceOption;
     }
@@ -154,11 +154,11 @@ class Select extends FormInput
     /**
      * Pre render mutator handler
      *
-     * @param $options
+     * @param mixed $options
      *
-     * @return array|int|string|null
+     * @return mixed
      */
-    public function preRenderMutator($options)
+    public function preRenderMutator(mixed $options): mixed
     {
         if ($this->getMultiple()) {
             return Arr::wrap($options);
@@ -174,11 +174,11 @@ class Select extends FormInput
     /**
      * Pre validation mutator handler
      *
-     * @param $options
+     * @param mixed $options
      *
      * @return mixed|null
      */
-    public function preValidationMutator($options)
+    public function preValidationMutator(mixed $options): mixed
     {
         if (intval($options) === Select::NULL_OPTION) {
             return null;
@@ -194,7 +194,7 @@ class Select extends FormInput
      *
      * @return array
      */
-    public static function castNullSelectOptions(array $options)
+    public static function castNullSelectOptions(array $options): array
     {
         foreach ($options as $key => $option) {
             if ($key === "") {
@@ -211,7 +211,7 @@ class Select extends FormInput
      *
      * @return array
      */
-    private function forceOption()
+    private function forceOption(): array
     {
         return static::option(
             trans('nodus.packages.livewire-forms::forms.options.force'),
@@ -226,7 +226,7 @@ class Select extends FormInput
      *
      * @return string
      */
-    public function rewriteValidationRules($model = null)
+    public function rewriteValidationRules($model = null): string
     {
         if ($this->getForceOption() === true) {
             if (empty($this->validations)) {

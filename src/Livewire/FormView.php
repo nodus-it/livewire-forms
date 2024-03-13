@@ -77,7 +77,7 @@ abstract class FormView extends Component
     protected array $rules = [];
 
     /**
-     * Custom validation messages (prefixed with the fieldname e.g "first_name.required")
+     * Custom validation messages (prefixed with the field name e.g "first_name.required")
      *
      * @var array
      */
@@ -93,7 +93,7 @@ abstract class FormView extends Component
     /**
      * Model class (if the underlying data object is a model)
      *
-     * @var string|Model|null
+     * @var class-string<Model>|null
      */
     public ?string $model = null;
 
@@ -155,7 +155,7 @@ abstract class FormView extends Component
      * @throws Exception
      * @return void
      */
-    public function mount(Model|array|null $modelOrArray = null, string $postMode = null)
+    public function mount(Model|array|null $modelOrArray = null, string $postMode = null): void
     {
         $this->formId = $this->generateFormId();
         $this->initialRender = true;
@@ -189,7 +189,7 @@ abstract class FormView extends Component
      *
      * @return bool
      */
-    public function isCreateMode()
+    public function isCreateMode(): bool
     {
         return $this->postMode === self::POST_MODE_CREATE;
     }
@@ -199,17 +199,17 @@ abstract class FormView extends Component
      *
      * @return bool
      */
-    public function isUpdateMode()
+    public function isUpdateMode(): bool
     {
         return $this->postMode === self::POST_MODE_UPDATE;
     }
 
     /**
-     * Returns the underlaying model instance (but uses everytime a new query)
+     * Returns the underlying model instance (but uses everytime a new query)
      *
      * @return Model|null
      */
-    public function getModel()
+    public function getModel(): ?Model
     {
         if ($this->modelId === null ||
             $this->model === null ||
@@ -233,7 +233,7 @@ abstract class FormView extends Component
      *
      * @return bool
      */
-    public function hasValue(string $key)
+    public function hasValue(string $key): bool
     {
         return Arr::has($this->values, $key);
     }
@@ -259,7 +259,7 @@ abstract class FormView extends Component
      *
      * @return array
      */
-    public function setValue(string $key, mixed $value)
+    public function setValue(string $key, mixed $value): array
     {
         return Arr::set($this->values, $key, $value);
     }
@@ -281,7 +281,7 @@ abstract class FormView extends Component
      *
      * @return array
      */
-    public function getValues()
+    public function getValues(): array
     {
         return $this->values;
     }
@@ -294,7 +294,7 @@ abstract class FormView extends Component
      * @throws Exception
      * @return void
      */
-    protected function loadValuesByModelOrArray(Model|array|null $modelOrArray)
+    protected function loadValuesByModelOrArray(Model|array|null $modelOrArray): void
     {
         if ($modelOrArray === null) {
             $this->postMode = self::POST_MODE_CREATE;
@@ -324,7 +324,7 @@ abstract class FormView extends Component
      *
      * @return void
      */
-    protected function loadValuesByModel(Model $model)
+    protected function loadValuesByModel(Model $model): void
     {
         $this->model = get_class($model);
 
@@ -338,7 +338,7 @@ abstract class FormView extends Component
         }
 
         // We load all attributes because some inputs could be added later dynamically, so we may need them.
-        // Therefore, we filter unessecarry values only later in the onSubmit method.
+        // Therefore, we filter unnecessary values only later in the onSubmit method.
         $values = [];
         foreach ($model->getAttributes() as $key => $value) {
             $values[$key] = $model->getAttribute($key);
@@ -359,7 +359,7 @@ abstract class FormView extends Component
      *
      * @return void
      */
-    protected function loadValuesByArray(array $array)
+    protected function loadValuesByArray(array $array): void
     {
         $this->setValues($array);
     }
@@ -376,6 +376,11 @@ abstract class FormView extends Component
         $this->prepareInputs();
 
         $this->validateOnly($propertyName, null, [], $this->getCustomValidationAttributes());
+
+        // In case we have added array validations, we check them here separately
+        if (isset($this->rules[$propertyName . '.*']) && !empty($this->rules[$propertyName . '.*'])) {
+            $this->validateOnly($propertyName . '.*', null, [], $this->getCustomValidationAttributes());
+        }
     }
 
     /**
@@ -383,7 +388,7 @@ abstract class FormView extends Component
      *
      * @return array
      */
-    protected function getMessages()
+    protected function getMessages(): array
     {
         $messages = parent::getMessages();
 
@@ -402,12 +407,25 @@ abstract class FormView extends Component
      *
      * @return array
      */
-    protected function getCustomValidationAttributes()
+    protected function getCustomValidationAttributes(): array
     {
         $customAttributes = [];
 
         foreach ($this->getRealInputs() as $input) {
             $customAttributes[ 'values.' . $input->getId() ] = $input->getLabel();
+
+            // Define for the array validations for each item in the value a custom attribute label
+            if (in_array(FormBuilder\Traits\SupportsArrayValidations::class, class_uses($input))) {
+                $value = $this->getValue($input->getId());
+
+                if (!is_array($value)) {
+                    continue;
+                }
+
+                foreach (range(0, count($value)) as $i) {
+                    $customAttributes['values.' . $input->getId() . '.' . $i] = $input->getLabel() . ' #' . ($i + 1);
+                }
+            }
         }
 
         return $customAttributes;
@@ -516,8 +534,10 @@ abstract class FormView extends Component
 
     /**
      * Registers the custom submit validation exception handler
+     *
+     * @return void
      */
-    protected function registerSubmitValidationExceptionHandler()
+    protected function registerSubmitValidationExceptionHandler(): void
     {
         Livewire::listen('failed-validation', function (Validator $validator) {
             $this->submitValidationExceptionHandler($validator);
@@ -543,7 +563,7 @@ abstract class FormView extends Component
      *
      * @return array
      */
-    public function prepareForValidation($attributes)
+    public function prepareForValidation($attributes): array
     {
         $attributes[ 'values' ] = $this->applyPreValidationMutators(
             $this->filterValues($attributes[ 'values' ])
@@ -559,7 +579,7 @@ abstract class FormView extends Component
      *
      * @return array
      */
-    private function applyPreValidationMutators(array $values)
+    private function applyPreValidationMutators(array $values): array
     {
         foreach ($this->getRealInputs() as $input) {
             $key = $input->getId();
@@ -586,7 +606,7 @@ abstract class FormView extends Component
      *
      * @return array
      */
-    private function applyPostValidationMutators(array $values)
+    private function applyPostValidationMutators(array $values): array
     {
         foreach ($this->getRealInputs() as $input) {
             $key = $input->getId();
@@ -623,7 +643,7 @@ abstract class FormView extends Component
      *
      * @return $this
      */
-    public function setSaveButtonLabel(string $label)
+    public function setSaveButtonLabel(string $label): static
     {
         $this->saveButtonLabel = $label;
 
@@ -635,7 +655,7 @@ abstract class FormView extends Component
      *
      * @return string
      */
-    public function getSaveButtonLabel()
+    public function getSaveButtonLabel(): string
     {
         return $this->saveButtonLabel;
     }
@@ -647,7 +667,7 @@ abstract class FormView extends Component
      *
      * @return $this
      */
-    public function addSaveButtonClasses(string $classes)
+    public function addSaveButtonClasses(string $classes): static
     {
         $this->saveButtonClasses .= ' ' . $classes;
 
@@ -661,7 +681,7 @@ abstract class FormView extends Component
      *
      * @return $this
      */
-    public function setSaveButtonClasses(string $classes)
+    public function setSaveButtonClasses(string $classes): static
     {
         $this->saveButtonClasses = $classes;
 
@@ -673,7 +693,7 @@ abstract class FormView extends Component
      *
      * @return string
      */
-    public function getSaveButtonClasses()
+    public function getSaveButtonClasses(): string
     {
         return $this->saveButtonClasses;
     }
@@ -685,7 +705,7 @@ abstract class FormView extends Component
      *
      * @return $this
      */
-    public function setSaveButtonIconClasses(?string $classes)
+    public function setSaveButtonIconClasses(?string $classes): static
     {
         $this->saveButtonIconClasses = $classes;
 
@@ -695,9 +715,9 @@ abstract class FormView extends Component
     /**
      * Returns the save button icon CSS classes
      *
-     * @return string
+     * @return string|null
      */
-    public function getSaveButtonIconClasses()
+    public function getSaveButtonIconClasses(): ?string
     {
         return $this->saveButtonIconClasses;
     }
@@ -731,7 +751,7 @@ abstract class FormView extends Component
      *
      * @return FormInput
      */
-    private function addFormInput(FormInput $input)
+    private function addFormInput(FormInput $input): FormInput
     {
         $this->inputs[ $input->getId() ] = $input;
 
@@ -746,9 +766,11 @@ abstract class FormView extends Component
     abstract public function inputs();
 
     /**
-     * Handles some preperation stuff for initializing the registered inputs
+     * Handles some preparation stuff for initializing the registered inputs
+     *
+     * @return void
      */
-    protected function prepareInputs()
+    protected function prepareInputs(): void
     {
         $this->inputs();
 
@@ -761,13 +783,19 @@ abstract class FormView extends Component
                 $this->setValue($key, null);
             }
 
-            if (in_array(SupportsValidations::class, class_uses($input))) {
+            $inputTraits = class_uses($input);
+
+            if (in_array(SupportsValidations::class, $inputTraits)) {
                 $this->rules[$input->getViewId()] = $input->rewriteValidationRules($model);
             } else {
                 $this->rules[$input->getViewId()] = [];
             }
 
-            if (in_array(SupportsDefaultValue::class, class_uses($input))) {
+            if (in_array(FormBuilder\Traits\SupportsArrayValidations::class, $inputTraits)) {
+                $this->rules[$input->getViewId() . '.*'] = $input->getArrayValidations();
+            }
+
+            if (in_array(SupportsDefaultValue::class, $inputTraits)) {
                 $this->setValue($key, $input->getValue($this->getValue($key)));
             }
         }
@@ -778,9 +806,9 @@ abstract class FormView extends Component
     /**
      * Returns the array with all registered real inputs (excludes html)
      *
-     * @return array
+     * @return array|FormInput[]
      */
-    public function getRealInputs()
+    public function getRealInputs(): array
     {
         $inputs = [];
 
@@ -800,7 +828,7 @@ abstract class FormView extends Component
      *
      * @return array
      */
-    public function getInputs()
+    public function getInputs(): array
     {
         return $this->inputs;
     }
@@ -812,7 +840,7 @@ abstract class FormView extends Component
      *
      * @return FormInput|null
      */
-    public function getInput(string $identifier)
+    public function getInput(string $identifier): ?FormInput
     {
         return $this->inputs[ $identifier ] ?? null;
     }

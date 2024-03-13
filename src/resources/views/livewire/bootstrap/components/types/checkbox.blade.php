@@ -5,7 +5,16 @@
                class="custom-control-input"
                id="{{ $input->getId(true) }}"
                wire:model.{{config('livewire-forms.update_mode')}}="{{ $input->getViewId() }}">
-        <label class="custom-control-label" for="{{ $input->getId(true) }}"></label>
+        <label class="custom-control-label nodus-form-label-right" for="{{ $input->getId(true) }}">
+            @if($input->getLabelPosition() === 'right')
+                @if($input->hasHtmlLabel())
+                    {!! $input->getLabel() !!}
+                @else
+                    {{ $input->getLabel() }}
+                @endif
+                @include('nodus.packages.livewire-forms::livewire.'.config('livewire-forms.theme').'.components.hint')
+            @endif
+        </label>
     </div>
     @include('nodus.packages.livewire-forms::livewire.'.config('livewire-forms.theme').'.components.validation')
 </div>

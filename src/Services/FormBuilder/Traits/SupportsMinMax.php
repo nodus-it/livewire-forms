@@ -14,21 +14,21 @@ trait SupportsMinMax
      *
      * @var null|mixed
      */
-    protected $min = null;
+    protected mixed $min = null;
 
     /**
      * The maximum value of the input
      *
      * @var null|mixed
      */
-    protected $max = null;
+    protected mixed $max = null;
 
     /**
      * The step of the input value
      *
      * @var null|mixed|int
      */
-    protected $step = null;
+    protected mixed $step = null;
 
     /**
      * Sets the min value of the input
@@ -37,7 +37,7 @@ trait SupportsMinMax
      *
      * @return $this
      */
-    public function setMin($min)
+    public function setMin(mixed $min): static
     {
         $this->min = $min;
 
@@ -49,7 +49,7 @@ trait SupportsMinMax
      *
      * @return mixed|null
      */
-    public function getMin()
+    public function getMin(): mixed
     {
         return $this->min;
     }
@@ -61,7 +61,7 @@ trait SupportsMinMax
      *
      * @return $this
      */
-    public function setMax($max)
+    public function setMax(mixed $max): static
     {
         $this->max = $max;
 
@@ -73,7 +73,7 @@ trait SupportsMinMax
      *
      * @return mixed|null
      */
-    public function getMax()
+    public function getMax(): mixed
     {
         return $this->max;
     }
@@ -85,7 +85,7 @@ trait SupportsMinMax
      *
      * @return $this
      */
-    public function setStep($step)
+    public function setStep(mixed $step): static
     {
         $this->step = $step;
 
@@ -97,7 +97,7 @@ trait SupportsMinMax
      *
      * @return int|mixed|null
      */
-    public function getStep()
+    public function getStep(): mixed
     {
         return $this->step;
     }

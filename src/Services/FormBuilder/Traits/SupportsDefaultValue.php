@@ -18,7 +18,7 @@ trait SupportsDefaultValue
      *
      * @var null|mixed
      */
-    protected $value = null;
+    protected mixed $value = null;
 
     /**
      * Sets the default value
@@ -27,7 +27,7 @@ trait SupportsDefaultValue
      *
      * @return $this
      */
-    public function setDefaultValue($value)
+    public function setDefaultValue(mixed $value): static
     {
         if (($this instanceof Date || $this instanceof Time) && !$value instanceof Carbon) {
             $value = Carbon::parse($value);
@@ -45,7 +45,7 @@ trait SupportsDefaultValue
      *
      * @return mixed|string
      */
-    public function getValue($value = null)
+    public function getValue(mixed $value = null): mixed
     {
         if ($value !== '' && $value !== null) {
             return $value;
@@ -59,7 +59,7 @@ trait SupportsDefaultValue
      *
      * @return mixed
      */
-    public function getDefaultValue()
+    public function getDefaultValue(): mixed
     {
         return $this->value;
     }

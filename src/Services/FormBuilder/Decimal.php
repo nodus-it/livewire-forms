@@ -36,7 +36,7 @@ class Decimal extends FormInput
      *
      * @var string|null
      */
-    protected string $unit = 'EUR';
+    protected ?string $unit = 'EUR';
 
     /**
      * Decimal constructor.
@@ -58,7 +58,7 @@ class Decimal extends FormInput
      *
      * @return $this
      */
-    public function setDecimals(int $decimals)
+    public function setDecimals(int $decimals): static
     {
         $this->decimals = $decimals;
 
@@ -70,7 +70,7 @@ class Decimal extends FormInput
      *
      * @return int
      */
-    public function getDecimals()
+    public function getDecimals(): int
     {
         return $this->decimals;
     }
@@ -78,11 +78,11 @@ class Decimal extends FormInput
     /**
      * Set the unit to be shown after the decimal value
      *
-     * @param string $unit
+     * @param string|null $unit
      *
      * @return $this
      */
-    public function setUnit(string $unit)
+    public function setUnit(?string $unit): static
     {
         $this->unit = $unit;
 
@@ -94,7 +94,7 @@ class Decimal extends FormInput
      *
      * @return string|null
      */
-    public function getUnit()
+    public function getUnit(): ?string
     {
         return $this->unit;
     }
@@ -106,7 +106,7 @@ class Decimal extends FormInput
      *
      * @return false|NumberFormatter
      */
-    public function getNumberFormatter(string $locale = 'de_DE')
+    public function getNumberFormatter(string $locale = 'de_DE'): bool|NumberFormatter
     {
         $format = NumberFormatter::create($locale, NumberFormatter::CURRENCY);
 
@@ -123,10 +123,14 @@ class Decimal extends FormInput
      *
      * @return string|null
      */
-    public function preRenderMutator($value)
+    public function preRenderMutator($value): ?string
     {
         if (empty($value)) {
             $value = 0;
+        }
+
+        if (strlen($this->getUnit()) !== 3) {
+            return $this->getNumberFormatter()->format(static::parseValue($value)) . $this->getUnit();
         }
 
         return $this->getNumberFormatter()->formatCurrency(
@@ -142,7 +146,7 @@ class Decimal extends FormInput
      *
      * @return float
      */
-    public function preValidationMutator(string $decimal)
+    public function preValidationMutator(string $decimal): float
     {
         return static::parseValue($decimal);
     }
@@ -154,7 +158,7 @@ class Decimal extends FormInput
      *
      * @return float
      */
-    public static function parseValue($value)
+    public static function parseValue($value): float
     {
         if (is_float($value)) {
             return $value;

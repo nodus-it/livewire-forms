@@ -4,6 +4,7 @@ namespace Nodus\Packages\LivewireForms\Services\FormBuilder;
 
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDefaultValue;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsHint;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsLabelPosition;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsSize;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsValidations;
 
@@ -18,6 +19,7 @@ class Checkbox extends FormInput
     use SupportsDefaultValue;
     use SupportsValidations;
     use SupportsHint;
+    use SupportsLabelPosition;
 
     /**
      * Checkbox constructor
@@ -39,7 +41,7 @@ class Checkbox extends FormInput
      *
      * @return mixed|string
      */
-    public function getValue($value = null)
+    public function getValue(mixed $value = null): mixed
     {
         if (!empty($value) || $value === false) {
             return $value;

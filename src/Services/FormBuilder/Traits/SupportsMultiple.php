@@ -21,7 +21,7 @@ trait SupportsMultiple
      *
      * @return bool
      */
-    public function getMultiple()
+    public function getMultiple(): bool
     {
         return $this->multiple;
     }
@@ -33,7 +33,7 @@ trait SupportsMultiple
      *
      * @return $this
      */
-    public function setMultiple(bool $multiple = true)
+    public function setMultiple(bool $multiple = true): static
     {
         $this->multiple = $multiple;
 

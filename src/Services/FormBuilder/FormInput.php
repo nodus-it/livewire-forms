@@ -55,12 +55,12 @@ abstract class FormInput
     /**
      * Creates a new form input instance
      *
-     * @param null|string $label
      * @param string      $name
+     * @param null|string $label
      *
      * @return FormInput|static
      */
-    public static function create(string $name, ?string $label = null)
+    public static function create(string $name, ?string $label = null): static
     {
         return new static($name, $label);
     }
@@ -78,7 +78,7 @@ abstract class FormInput
      *
      * @return string
      */
-    public function getViewName()
+    public function getViewName(): string
     {
         $view = 'nodus.packages.livewire-forms::livewire.' . config('livewire-forms.theme') . '.components.types.' . $this->getType();
 
@@ -94,9 +94,9 @@ abstract class FormInput
      *
      * @param bool $initialRender
      *
-     * @return  string
+     * @return string
      */
-    public function render(bool $initialRender = false)
+    public function render(bool $initialRender = false): string
     {
         return view($this->getViewName(), ['input' => $this, 'initialRender' => $initialRender])->render();
     }
@@ -106,7 +106,7 @@ abstract class FormInput
      *
      * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return strtolower(class_basename(static::class));
     }
@@ -116,7 +116,7 @@ abstract class FormInput
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -126,7 +126,7 @@ abstract class FormInput
      *
      * @return string
      */
-    public function getLabel()
+    public function getLabel(): string
     {
         return trans($this->label);
     }
@@ -136,7 +136,7 @@ abstract class FormInput
      *
      * @return $this
      */
-    public function setLabelHtml()
+    public function setLabelHtml(): static
     {
         $this->htmlLabel = true;
 
@@ -148,7 +148,7 @@ abstract class FormInput
      *
      * @return bool
      */
-    public function hasHtmlLabel()
+    public function hasHtmlLabel(): bool
     {
         return $this->htmlLabel;
     }
@@ -160,7 +160,7 @@ abstract class FormInput
      *
      * @return string
      */
-    public function getId(bool $escape = false)
+    public function getId(bool $escape = false): string
     {
         if ($escape === true) {
             return str_replace('.', '__', $this->id);
@@ -174,12 +174,19 @@ abstract class FormInput
      *
      * @return string
      */
-    public function getViewId()
+    public function getViewId(): string
     {
         return 'values.' . $this->getId();
     }
 
-    public static function supports(string $feature)
+    /**
+     * Returns if the current input support a given feature (traits)
+     *
+     * @param string $feature
+     *
+     * @return bool
+     */
+    public static function supports(string $feature): bool
     {
         // todo maybe use static cache
         $traits = collect(class_uses(static::class))->map(

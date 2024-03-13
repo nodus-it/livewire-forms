@@ -3,6 +3,7 @@
 namespace Nodus\Packages\LivewireForms\Services\FormBuilder;
 
 use Livewire\TemporaryUploadedFile;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsArrayValidations;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsHint;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsMultiple;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsSize;
@@ -17,6 +18,7 @@ class File extends FormInput
 {
     use SupportsMultiple;
     use SupportsValidations;
+    use SupportsArrayValidations;
     use SupportsSize;
     use SupportsHint;
 
@@ -36,9 +38,8 @@ class File extends FormInput
      *
      * @return $this
      * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#htmlattrdefaccept
-     *
      */
-    public function setAcceptFormats(string $acceptFormats)
+    public function setAcceptFormats(string $acceptFormats): static
     {
         $this->acceptFormats = $acceptFormats;
 
@@ -50,7 +51,7 @@ class File extends FormInput
      *
      * @return string|null
      */
-    public function getAcceptFormats()
+    public function getAcceptFormats(): ?string
     {
         return $this->acceptFormats;
     }

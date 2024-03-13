@@ -2,11 +2,12 @@
 
     namespace Nodus\Packages\LivewireForms\Controllers;
 
+    use Illuminate\Http\Response;
     use Illuminate\Support\Arr;
 
     class JavaScriptAssets
     {
-        public function source()
+        public function source(): Response
         {
             return $this->pretendResponseIsFile(
                 [
@@ -16,20 +17,13 @@
             );
         }
 
-        protected function pretendResponseIsFile($files)
+        protected function pretendResponseIsFile($files): Response
         {
             $files = Arr::wrap($files);
             $content = '';
             $expires = strtotime('+1 year');
             $lastModified = filemtime($files[0]);//todo
             $cacheControl = 'public, max-age=31536000';
-
-            /*if ($this->matchesCache($lastModified)) {
-                return response()->make('', 304, [
-                    'Expires' => $this->httpDate($expires),
-                    'Cache-Control' => $cacheControl,
-                ]);
-            }*/
 
             foreach ($files as $file) {
                 $content .= file_get_contents($file);
@@ -47,14 +41,7 @@
             );
         }
 
-        /*protected function matchesCache($lastModified)
-        {
-            $ifModifiedSince = $_SERVER[ 'HTTP_IF_MODIFIED_SINCE' ] ?? '';
-
-            return @strtotime($ifModifiedSince) === $lastModified;
-        }*/
-
-        protected function httpDate($timestamp)
+        protected function httpDate($timestamp): string
         {
             return sprintf('%s GMT', gmdate('D, d M Y H:i:s', $timestamp));
         }

@@ -27,7 +27,7 @@ class DateTime extends FormInput
      *
      * @return Carbon|null
      */
-    public function preValidationMutator(?array $date)
+    public function preValidationMutator(?array $date): ?Carbon
     {
         if (empty($date)) {
             return null;
@@ -45,7 +45,7 @@ class DateTime extends FormInput
      *
      * @return array
      */
-    public function getArrayValue($value = null)
+    public function getArrayValue($value = null): array
     {
         if (empty($value)) {
             $value = $this->getDefaultValue();
@@ -73,7 +73,7 @@ class DateTime extends FormInput
      *
      * @return array
      */
-    public function getValue($value = null)
+    public function getValue(mixed $value = null): array
     {
         $value = $this->getArrayValue($value);
 
@@ -85,13 +85,13 @@ class DateTime extends FormInput
     }
 
     /**
-     * Returns the date value of the underlaying datetime
+     * Returns the date value of the underlying datetime
      *
      * @param Carbon|string|null $value
      *
      * @return string|null
      */
-    public function getDateValue($value = null)
+    public function getDateValue($value = null): ?string
     {
         if ($value === null) {
             return null;
@@ -101,13 +101,13 @@ class DateTime extends FormInput
     }
 
     /**
-     * Returns the time value of the underlaying datetime
+     * Returns the time value of the underlying datetime
      *
      * @param Carbon|string|null $value
      *
      * @return string|null
      */
-    public function getTimeValue($value = null)
+    public function getTimeValue($value = null): ?string
     {
         if ($value === null) {
             return null;

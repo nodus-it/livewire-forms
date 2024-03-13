@@ -46,7 +46,7 @@ class Date extends FormInput
      *
      * @return Carbon|null
      */
-    public function postValidationMutator(?string $date)
+    public function postValidationMutator(?string $date): ?Carbon
     {
         if (empty($date)) {
             return null;
@@ -70,8 +70,44 @@ class Date extends FormInput
 
         try {
             return Carbon::parse($date)->format('Y-m-d');
-        } catch (Throwable $e) {
+        } catch (Throwable) {
             return $date;
         }
+    }
+
+    /**
+     * Returns the max value of the input
+     *
+     * @return string|null
+     */
+    public function getMax(): ?string
+    {
+        if ($this->max === null) {
+            return null;
+        }
+
+        if (!$this->max instanceof Carbon) {
+            $this->max = Carbon::parse($this->max);
+        }
+
+        return $this->max->toDateString();
+    }
+
+    /**
+     * Returns the min value of the input
+     *
+     * @return string|null
+     */
+    public function getMin(): ?string
+    {
+        if ($this->min === null) {
+            return null;
+        }
+
+        if (!$this->min instanceof Carbon) {
+            $this->min = Carbon::parse($this->min);
+        }
+
+        return $this->min->toDateString();
     }
 }

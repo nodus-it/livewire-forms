@@ -2,7 +2,12 @@ language: php
 
 php:
   - 8.0
-  - 8.1.0
+  - 8.1
+  - 8.2
+
+install:
+  # Fix PHP 8.2 error
+  - if [[ $TRAVIS_PHP_VERSION = '8.2' ]]; then sudo apt-get install libonig4 libonig-dev; fi
 
 dist: bionic
 
