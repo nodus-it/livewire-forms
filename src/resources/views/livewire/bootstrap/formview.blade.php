@@ -18,9 +18,9 @@
                             @else
                                 {{ $input->getLabel() }}
                             @endif
+                            @include('nodus.packages.livewire-forms::livewire.'.config('livewire-forms.theme').'.components.hint')
                         </label>
                     @endif
-                    @include('nodus.packages.livewire-forms::livewire.'.config('livewire-forms.theme').'.components.hint')
                     {!! $input->render($initialRender) !!}
                 </div>
             @endif

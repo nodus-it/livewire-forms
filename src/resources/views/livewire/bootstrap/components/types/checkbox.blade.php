@@ -12,6 +12,7 @@
                 @else
                     {{ $input->getLabel() }}
                 @endif
+                @include('nodus.packages.livewire-forms::livewire.'.config('livewire-forms.theme').'.components.hint')
             @endif
         </label>
     </div>

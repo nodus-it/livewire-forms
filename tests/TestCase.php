@@ -18,17 +18,21 @@ class TestCase extends BaseTestCase
 
         $this->afterApplicationCreated($this->cleanUp(...));
         $this->beforeApplicationDestroyed($this->cleanUp(...));
-
-        $this->loadMigrationsFrom(__DIR__ . '/Data/Database/Migrations');
+        
         $this->withFactories(__DIR__ . '/Data/Database/Factories');
     }
 
-    public function cleanUp()
+    protected function defineDatabaseMigrations(): void
+    {
+        $this->loadMigrationsFrom(__DIR__ . '/Data/Database/Migrations');
+    }
+
+    public function cleanUp(): void
     {
         Artisan::call('view:clear');
     }
 
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
         return [
             LivewireServiceProvider::class,
@@ -36,7 +40,7 @@ class TestCase extends BaseTestCase
         ];
     }
 
-    protected function getEnvironmentSetUp($app)
+    protected function getEnvironmentSetUp($app): void
     {
         $app['config']->set(
             'view.paths',
