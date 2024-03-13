@@ -5,6 +5,7 @@ namespace Nodus\Packages\LivewireForms\Services;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Checkbox;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Code;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Color;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Currency;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Date;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\DateTime;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Decimal;
@@ -157,6 +158,19 @@ trait FormBuilder
     public function addDecimal(string $name, string $label = null): Decimal
     {
         return $this->addInput(Decimal::class, $name, $label);
+    }
+
+    /**
+     * Adds a currency input
+     *
+     * @param string      $name
+     * @param string|null $label
+     *
+     * @return Currency
+     */
+    public function addCurrency(string $name, string $label = null): Currency
+    {
+        return $this->addInput(Currency::class, $name, $label);
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace Nodus\Packages\LivewireForms\Services\FormBuilder;
 
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Support\Currency;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Support\InputMode;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDefaultValue;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsHint;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsInputMode;
@@ -37,7 +38,7 @@ class Decimal extends FormInput
      *
      * @var string|Currency|null
      */
-    protected Currency|string|null $unit = Currency::Euro;
+    protected Currency|string|null $unit = null;
 
     /**
      * Decimal constructor.
@@ -48,6 +49,7 @@ class Decimal extends FormInput
     public function __construct(string $name, ?string $label = null)
     {
         $this->setDefaultValue(0.0);
+        $this->setInputMode(InputMode::Decimal);
 
         parent::__construct($name, $label);
     }
@@ -164,7 +166,7 @@ class Decimal extends FormInput
      *
      * @return float
      */
-    public function preValidationMutator(string $decimal): float
+    public function preValidationMutator($decimal): float
     {
         return $this->parseValue($decimal);
     }

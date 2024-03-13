@@ -28,6 +28,10 @@ Nodus.DecimalInput = class {
             unit: options.unit || this.element.getAttribute('data-unit') || Nodus.DecimalInput.DEFAULTS.unit,
         };
 
+        if (this.options.unit === '_NO_UNIT') {
+            this.options.unit = null;
+        }
+
         // Event Handlers
         this.element.addEventListener('focus', this.onFocusHandler.bind(this));
         this.element.addEventListener('blur', this.onBlurHandler.bind(this));

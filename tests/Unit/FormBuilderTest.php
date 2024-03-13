@@ -6,6 +6,7 @@ use Nodus\Packages\LivewireForms\Livewire\FormView;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Checkbox;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Code;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Color;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Currency;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Date;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\DateTime;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Decimal;
@@ -38,6 +39,7 @@ class FormBuilderTest extends TestCase
             [Time::class, 'addTime'],
             [DateTime::class, 'addDateTime'],
             [Decimal::class, 'addDecimal'],
+            [Currency::class, 'addCurrency'],
             [Select::class, 'addSelect'],
             [Checkbox::class, 'addCheckbox'],
             [RichTextarea::class, 'addRichTextarea'],
