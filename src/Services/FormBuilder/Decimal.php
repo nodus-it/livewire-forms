@@ -2,6 +2,7 @@
 
 namespace Nodus\Packages\LivewireForms\Services\FormBuilder;
 
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Support\Currency;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDefaultValue;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsHint;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsInputMode;
@@ -34,9 +35,9 @@ class Decimal extends FormInput
     /**
      * The unit to be shown after the decimal value
      *
-     * @var string|null
+     * @var string|Currency|null
      */
-    protected ?string $unit = 'EUR';
+    protected Currency|string|null $unit = Currency::Euro;
 
     /**
      * Decimal constructor.
@@ -78,13 +79,17 @@ class Decimal extends FormInput
     /**
      * Set the unit to be shown after the decimal value
      *
-     * @param string|null $unit
+     * @param Currency|string|null $unit
      *
      * @return $this
      */
-    public function setUnit(?string $unit): static
+    public function setUnit(Currency|string|null $unit): static
     {
-        $this->unit = $unit;
+        if (is_string($unit)) {
+            $currency = Currency::tryFrom($unit);
+        }
+
+        $this->unit = $currency ?? $unit;
 
         return $this;
     }
@@ -92,11 +97,21 @@ class Decimal extends FormInput
     /**
      * Returns the unit code to be used after the decimal value
      *
-     * @return string|null
+     * @return Currency|string|null
      */
-    public function getUnit(): ?string
+    public function getUnit(): Currency|string|null
     {
         return $this->unit;
+    }
+
+    /**
+     * Returns whether the unit is a currency
+     *
+     * @return bool
+     */
+    public function isCurrency(): bool
+    {
+        return $this->unit instanceof Currency;
     }
 
     /**
@@ -106,9 +121,9 @@ class Decimal extends FormInput
      *
      * @return false|NumberFormatter
      */
-    public function getNumberFormatter(string $locale = 'de_DE'): bool|NumberFormatter
+    protected function getNumberFormatter(string $locale = 'de_DE'): bool|NumberFormatter
     {
-        $format = NumberFormatter::create($locale, NumberFormatter::CURRENCY);
+        $format = NumberFormatter::create($locale, ($this->isCurrency()) ? NumberFormatter::CURRENCY : NumberFormatter::DECIMAL);
 
         $format->setAttribute(NumberFormatter::MIN_FRACTION_DIGITS, $this->getDecimals());
         $format->setAttribute(NumberFormatter::MAX_FRACTION_DIGITS, $this->getDecimals());
@@ -129,14 +144,17 @@ class Decimal extends FormInput
             $value = 0;
         }
 
-        if (strlen($this->getUnit()) !== 3) {
-            return $this->getNumberFormatter()->format(static::parseValue($value)) . $this->getUnit();
+        $unit = '';
+        $value = $this->parseValue($value);
+        $formatter = $this->getNumberFormatter();
+
+        if ($this->isCurrency()) {
+            return $formatter->formatCurrency($value, $this->getUnit()->value);
+        } elseif (!empty($this->getUnit())) {
+            $unit = ' ' . $this->getUnit();
         }
 
-        return $this->getNumberFormatter()->formatCurrency(
-            static::parseValue($value),
-            $this->getUnit()
-        );
+        return $formatter->format($value) . $unit;
     }
 
     /**
@@ -148,7 +166,7 @@ class Decimal extends FormInput
      */
     public function preValidationMutator(string $decimal): float
     {
-        return static::parseValue($decimal);
+        return $this->parseValue($decimal);
     }
 
     /**
@@ -158,10 +176,14 @@ class Decimal extends FormInput
      *
      * @return float
      */
-    public static function parseValue($value): float
+    public function parseValue($value): float
     {
         if (is_float($value)) {
             return $value;
+        }
+
+        if (!$this->isCurrency() && $this->getUnit() !== null) {
+            $value = str_replace($this->getUnit(), '', $value);
         }
 
         return floatval(str_replace(',', '.', preg_replace('/[^0-9,-]+/', '', $value)));

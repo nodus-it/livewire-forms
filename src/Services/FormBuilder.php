@@ -270,4 +270,14 @@ trait FormBuilder
 
         return $this->addInput(Html::class, $id, $content);
     }
+
+    /**
+     * Adds a line break
+     *
+     * @return Html
+     */
+    public function addNewLine(): Html
+    {
+        return $this->addInput(Html::class, md5(rand()), '');
+    }
 }

@@ -98,7 +98,10 @@ abstract class FormInput
      */
     public function render(bool $initialRender = false): string
     {
-        return view($this->getViewName(), ['input' => $this, 'initialRender' => $initialRender])->render();
+        return view($this->getViewName())
+            ->with('input', $this)
+            ->with('initialRender', $initialRender)
+            ->render();
     }
 
     /**
@@ -180,6 +183,19 @@ abstract class FormInput
     }
 
     /**
+     * Returns an array with the keys of the error message bag
+     *
+     * @return array
+     */
+    public function getErrorKeys(): array
+    {
+        return [
+            $this->getViewId(),
+            $this->getViewId() . '.*',
+        ];
+    }
+
+    /**
      * Returns if the current input support a given feature (traits)
      *
      * @param string $feature
@@ -188,12 +204,13 @@ abstract class FormInput
      */
     public static function supports(string $feature): bool
     {
-        // todo maybe use static cache
-        $traits = collect(class_uses(static::class))->map(
-            function ($value) {
-                return (string)(Str::of($value)->classBasename()->lower()->replaceFirst('supports', ''));
-            }
-        )->toArray();
+        $traits = collect(class_uses(static::class))
+            ->map(fn ($value) => Str::of($value)
+                ->classBasename()
+                ->lower()
+                ->replaceFirst('supports', '')
+                ->toString()
+            )->toArray();
 
         return in_array(Str::lower($feature), $traits);
     }

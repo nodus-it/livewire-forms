@@ -2,7 +2,7 @@
     <div>
         <select name="{{ $input->getName() }}"
                 id="{{ $input->getId(true) }}"
-                class="form-control selectpicker @if(isset($errors) && $errors->has($input->getViewId())) is-invalid @endif"
+                class="form-control selectpicker @if(isset($errors) && $errors->hasAny($input->getErrorKeys())) is-invalid @endif"
                 @if($input->getMultiple()) multiple @endif
                 data-size="10"
                 data-live-search="true"

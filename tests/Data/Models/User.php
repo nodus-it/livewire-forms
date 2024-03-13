@@ -1,11 +1,11 @@
 <?php
 
-namespace Nodus\Packages\LivewireForms\Tests\data\models;
+namespace Nodus\Packages\LivewireForms\Tests\Data\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Nodus\Packages\LivewireForms\Tests\data\database\factories\UserFactory;
+use Nodus\Packages\LivewireForms\Tests\Data\Database\Factories\UserFactory;
 
 class User extends Model
 {

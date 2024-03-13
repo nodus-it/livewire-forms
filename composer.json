@@ -19,13 +19,14 @@
   ],
   "require": {
     "php": "^8.1",
-    "nodus-it/livewire-core": "^0.2",
+    "nodus-it/livewire-core": "~0.2",
     "ext-intl": "*"
   },
   "require-dev": {
-    "orchestra/testbench": "^7.0",
-    "phpunit/phpunit": "^9.4",
-    "laravel/legacy-factories": "^1.0.4"
+    "laravel/legacy-factories": "^1.0.4",
+    "orchestra/testbench": "^8.0",
+    "pestphp/pest": "^2.0",
+    "pestphp/pest-plugin-livewire": "^2.1"
   },
   "autoload": {
     "psr-4": {
@@ -38,14 +39,21 @@
     }
   },
   "scripts": {
-    "test": "vendor/bin/phpunit",
-    "test-coverage": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-html coverage"
+    "test": "vendor/bin/pest",
+    "test-coverage": "XDEBUG_MODE=coverage vendor/bin/pest --coverage --coverage-html coverage"
   },
   "extra": {
     "laravel": {
       "providers": [
         "Nodus\\Packages\\LivewireForms\\LivewireFormsServiceProvider"
       ]
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
     }
   }
 }

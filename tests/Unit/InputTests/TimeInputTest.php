@@ -5,7 +5,7 @@ namespace Nodus\Packages\LivewireForms\Tests\Unit\InputTests;
 use Carbon\Carbon;
 use Carbon\Exceptions\InvalidFormatException;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Time;
-use Nodus\Packages\LivewireForms\Tests\Unit\TestCase;
+use Nodus\Packages\LivewireForms\Tests\TestCase;
 
 class TimeInputTest extends TestCase
 {

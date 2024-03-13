@@ -4,7 +4,7 @@ namespace Nodus\Packages\LivewireForms\Tests\Unit\InputTests;
 
 use Livewire\TemporaryUploadedFile;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\File;
-use Nodus\Packages\LivewireForms\Tests\Unit\TestCase;
+use Nodus\Packages\LivewireForms\Tests\TestCase;
 
 class FileInputTest extends TestCase
 {
@@ -44,5 +44,12 @@ class FileInputTest extends TestCase
         $this->assertSame(null, $input->preRenderMutator(null));
         $this->assertSame(null, $input->preRenderMutator('/test/path/file.txt'));
         $this->assertSame($upload, $input->preRenderMutator($upload));
+
+        $input->setMultiple();
+        $this->assertSame([], $input->preRenderMutator(null));
+        $this->assertSame([], $input->preRenderMutator('/test/path/file.txt'));
+        $this->assertSame([], $input->preRenderMutator(['/test/path/file.txt']));
+        $this->assertSame([], $input->preRenderMutator($upload));
+        $this->assertSame([$upload], $input->preRenderMutator([$upload]));
     }
 }

@@ -5,12 +5,15 @@ namespace Nodus\Packages\LivewireForms\Tests\Unit\InputTests;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Checkbox;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Date;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\File;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Number;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Select;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Support\InputMode;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Support\LabelPosition;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Text;
-use Nodus\Packages\LivewireForms\Tests\Unit\TestCase;
+use Nodus\Packages\LivewireForms\Tests\TestCase;
 
 class TraitsTest extends TestCase
 {
@@ -72,7 +75,7 @@ class TraitsTest extends TestCase
         $this->assertSame('unique:mysql.test,id,1', $input->rewriteValidationRules(new TestModel(['id' => 1])));
     }
 
-    public function validTranslations()
+    public static function validTranslations()
     {
         return [
             ['DeselectAllText', 'deselect_all'],
@@ -132,10 +135,13 @@ class TraitsTest extends TestCase
         $this->assertNull($input->getInputMode());
 
         $this->assertInstanceOf(Text::class, $input->setInputMode('email'));
-        $this->assertSame('email', $input->getInputMode());
+        $this->assertSame(InputMode::Email, $input->getInputMode());
+
+        $this->assertInstanceOf(Text::class, $input->setInputMode(InputMode::Numeric));
+        $this->assertSame(InputMode::Numeric, $input->getInputMode());
 
         $this->assertInstanceOf(Text::class, $input->setInputMode('invalid-mode'));
-        $this->assertSame('text', $input->getInputMode());
+        $this->assertSame(InputMode::Text, $input->getInputMode());
     }
 
     public function testSupportsMinMax()
@@ -155,13 +161,22 @@ class TraitsTest extends TestCase
         $this->assertSame(1, $input->getStep());
     }
 
-
     public function testSupportsArrayValidations()
     {
         $input = new File('file_input');
         $this->assertSame('', $input->getArrayValidations());
         $this->assertInstanceOf(File::class, $input->setArrayValidations('file|mimetypes:video/avi'));
         $this->assertSame('file|mimetypes:video/avi', $input->getArrayValidations());
+    }
+
+    public function testSupportLabelPosition()
+    {
+        $input = new Checkbox('checkbox');
+        $this->assertSame(LabelPosition::Top, $input->getLabelPosition());
+        $this->assertInstanceOf(Checkbox::class, $input->setLabelRight());
+        $this->assertSame(LabelPosition::Right, $input->getLabelPosition());
+        $this->assertInstanceOf(Checkbox::class, $input->setLabelTop());
+        $this->assertSame(LabelPosition::Top, $input->getLabelPosition());
     }
 }
 

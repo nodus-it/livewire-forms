@@ -1,10 +1,11 @@
 @isset($errors)
-    <span class="feedback invalid-feedback d-block @if(!$errors->has($input->getViewId()) && !$errors->has($input->getViewId(). '.*')) invisible @endif">
+    <span class="feedback invalid-feedback d-block @if(!$errors->hasAny($input->getErrorKeys())) invisible @endif">
         @error($input->getViewId())
             {{ $message }}
-        @enderror
-        @error($input->getViewId() . '.*')
-        {{ $message }}
+        @else
+            @error($input->getViewId() . '.*')
+            {{ $message }}
+            @enderror
         @enderror
         &nbsp;
     </span>

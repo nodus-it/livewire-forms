@@ -5,7 +5,8 @@ namespace Nodus\Packages\LivewireForms\Tests\Unit\InputTests;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Decimal;
-use Nodus\Packages\LivewireForms\Tests\Unit\TestCase;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Support\Currency;
+use Nodus\Packages\LivewireForms\Tests\TestCase;
 
 class DecimalInputTest extends TestCase
 {
@@ -23,7 +24,7 @@ class DecimalInputTest extends TestCase
         $this->assertSame(6, $input->getSize());
         $this->assertSame(0.0, $input->getDefaultValue());
         $this->assertSame(0.0, $input->getValue());
-        $this->assertSame('EUR', $input->getUnit());
+        $this->assertSame(Currency::Euro, $input->getUnit());
         $this->assertSame(2, $input->getDecimals());
     }
 
@@ -36,15 +37,20 @@ class DecimalInputTest extends TestCase
 
     public function testParseValue()
     {
-        $this->assertSame(0.0, Decimal::parseValue(0));
-        $this->assertSame(10.5, Decimal::parseValue(10.5));
+        $input = new Decimal('decimal_input');
+        $this->assertSame(0.0, $input->parseValue(0));
+        $this->assertSame(10.5, $input->parseValue(10.5));
 
-        $this->assertSame(0.0, Decimal::parseValue(''));
-        $this->assertSame(0.0, Decimal::parseValue('0'));
-        $this->assertSame(5.0, Decimal::parseValue('5'));
-        $this->assertSame(10.5, Decimal::parseValue('10,5'));
-        $this->assertSame(1500.0, Decimal::parseValue('1.500'));
-        $this->assertSame(1234.56, Decimal::parseValue('1.234,56 €'));
+        $this->assertSame(0.0, $input->parseValue(''));
+        $this->assertSame(0.0, $input->parseValue('0'));
+        $this->assertSame(5.0, $input->parseValue('5'));
+        $this->assertSame(10.5, $input->parseValue('10,5'));
+        $this->assertSame(1500.0, $input->parseValue('1.500'));
+        $this->assertSame(1234.56, $input->parseValue('1.234,56 €'));
+        $this->assertSame(1234.56, $input->parseValue('1.234,56 m²'));
+
+        $input->setUnit('custom_unit_with_numbers123');
+        $this->assertSame(1234.56, $input->parseValue('1.234,56 custom_unit_with_numbers123'));
     }
 
     public function testPreRenderMutator()
@@ -57,15 +63,27 @@ class DecimalInputTest extends TestCase
         $this->assertSame('0,00' . $unit, $input->preRenderMutator('0'));
         $this->assertSame('1.234,56' . $unit, $input->preRenderMutator(1234.56));
         $this->assertSame('1.234,56' . $unit, $input->preRenderMutator('1.234,56 €'));
+
+        $unit = ' %';
+        $input->setUnit('%');
+        $this->assertSame('0,00' . $unit, $input->preRenderMutator(null));
+        $this->assertSame('0,00' . $unit, $input->preRenderMutator(''));
+        $this->assertSame('0,00' . $unit, $input->preRenderMutator('0'));
+        $this->assertSame('1.234,56' . $unit, $input->preRenderMutator(1234.56));
+        $this->assertSame('1.234,56' . $unit, $input->preRenderMutator('1.234,56 €'));
     }
 
     public function testSetUnit()
     {
         $input = new Decimal('decimal_input');
 
-        $this->assertSame('EUR', $input->getUnit());
+        $this->assertSame(Currency::Euro, $input->getUnit());
         $this->assertInstanceOf(Decimal::class, $input->setUnit('USD'));
-        $this->assertSame('USD', $input->getUnit());
+        $this->assertSame(Currency::US_Dollar, $input->getUnit());
+        $this->assertInstanceOf(Decimal::class, $input->setUnit(Currency::Yuan_Renminbi));
+        $this->assertSame(Currency::Yuan_Renminbi, $input->getUnit());
+        $this->assertInstanceOf(Decimal::class, $input->setUnit(null));
+        $this->assertSame(null, $input->getUnit());
     }
 
     public function testSetDecimals()

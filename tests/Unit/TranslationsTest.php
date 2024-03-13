@@ -4,6 +4,7 @@ namespace Nodus\Packages\LivewireForms\Tests\Unit;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Lang;
+use Nodus\Packages\LivewireForms\Tests\TestCase;
 
 class TranslationsTest extends TestCase
 {

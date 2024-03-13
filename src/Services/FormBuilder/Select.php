@@ -97,11 +97,23 @@ class Select extends FormInput
     {
         $options = $this->parentGetOptions();
 
-        if ($this->forceOption === true) {
+        if ($this->getForceOption() === true) {
             return [self::FORCE_OPTION => $this->forceOption()] + $options;
         }
 
         return $options;
+    }
+
+    /**
+     * Returns whether the given option key is a valid option
+     *
+     * @param mixed $optionKey
+     *
+     * @return bool
+     */
+    public function isValidOption(mixed $optionKey): bool
+    {
+        return isset($this->getOptions()[$optionKey]);
     }
 
     /**
@@ -118,7 +130,7 @@ class Select extends FormInput
         $default = $this->parentGetDefaultValue();
 
         // only values that are in the options array are allowed as defaults
-        if (!is_array($default) && !isset($this->options[$default])) {
+        if (!is_array($default) && !$this->isValidOption($default)) {
             return null;
         }
 
@@ -148,7 +160,7 @@ class Select extends FormInput
      */
     public function getForceOption(): bool
     {
-        return $this->forceOption;
+        return $this->forceOption === true && $this->getMultiple() === false;
     }
 
     /**
@@ -180,11 +192,45 @@ class Select extends FormInput
      */
     public function preValidationMutator(mixed $options): mixed
     {
-        if (intval($options) === Select::NULL_OPTION) {
+        $options = Arr::wrap($options);
+
+        foreach ($options as $key => $option) {
+            $option = $this->preValidationOptionMutator($option);
+
+            if ($option === false) {
+                unset($options[$key]);
+                continue;
+            }
+
+            $options[$key] = $option;
+        }
+
+        if ($this->getMultiple() === false) {
+            return Arr::first($options);
+        }
+
+        return array_values($options);
+    }
+
+    /**
+     * Pre validation mutator for a single given option
+     *
+     * @param string|int|null $option
+     *
+     * @return string|int|bool|null
+     */
+    public function preValidationOptionMutator(string|int|null $option): string|int|bool|null
+    {
+        if (intval($option) === Select::NULL_OPTION) {
             return null;
         }
 
-        return $options;
+        // only values that are in the options array are allowed
+        if (!$this->isValidOption($option)) {
+            return false;
+        }
+
+        return $option;
     }
 
     /**

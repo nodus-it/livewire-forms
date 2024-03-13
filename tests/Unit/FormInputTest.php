@@ -15,6 +15,7 @@ use Nodus\Packages\LivewireForms\Services\FormBuilder\Select;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Text;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Textarea;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Time;
+use Nodus\Packages\LivewireForms\Tests\TestCase;
 
 class FormInputTest extends TestCase
 {
@@ -58,5 +59,13 @@ class FormInputTest extends TestCase
 
         $this->assertIsString($input->render());
         $this->assertIsString($input->__toString());
+    }
+
+    public function testHtmlLabel()
+    {
+        $input = new Text('text_input');
+        $this->assertFalse($input->hasHtmlLabel());
+        $input->setLabelHtml();
+        $this->assertTrue($input->hasHtmlLabel());
     }
 }

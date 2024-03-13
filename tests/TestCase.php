@@ -1,11 +1,10 @@
 <?php
 
-namespace Nodus\Packages\LivewireForms\Tests\Unit;
+namespace Nodus\Packages\LivewireForms\Tests;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Route;
-use Livewire\LivewireServiceProvider;
 use Illuminate\Support\Facades\Artisan;
+use Livewire\LivewireServiceProvider;
 use Nodus\Packages\LivewireForms\LivewireFormsServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
@@ -17,31 +16,15 @@ class TestCase extends BaseTestCase
     {
         parent::setUp();
 
-        $this->afterApplicationCreated(function () {
-            $this->cleanUp();
-        });
-
-        $this->beforeApplicationDestroyed(function () {
-            $this->cleanUp();
-        });
-
-
-        $this->withFactories(__DIR__ . '/../data/database/factories');
-
-        /**
-         * Fake Routes
-         */
-        Route::get(
-            'user/{id}',
-            function ($id) {
-                return 'user.detais:' . $id;
-            }
-        )->name('users.details');
+        $this->afterApplicationCreated($this->cleanUp(...));
+        $this->beforeApplicationDestroyed($this->cleanUp(...));
+        
+        $this->withFactories(__DIR__ . '/Data/Database/Factories');
     }
 
     protected function defineDatabaseMigrations(): void
     {
-        $this->loadMigrationsFrom(__DIR__ . '/../data/database/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/Data/Database/Migrations');
     }
 
     public function cleanUp(): void

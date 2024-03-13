@@ -6,11 +6,12 @@ use Exception;
 use Livewire\Livewire;
 use Nodus\Packages\LivewireForms\Livewire\FormView;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Text;
-use Nodus\Packages\LivewireForms\Tests\data\InputTestForm;
-use Nodus\Packages\LivewireForms\Tests\data\models\User;
-use Nodus\Packages\LivewireForms\Tests\data\UserTestCreateUpdateForm;
-use Nodus\Packages\LivewireForms\Tests\data\UserTestForm;
-use Nodus\Packages\LivewireForms\Tests\data\UserTestSubmitForm;
+use Nodus\Packages\LivewireForms\Tests\Data\InputTestForm;
+use Nodus\Packages\LivewireForms\Tests\Data\Models\User;
+use Nodus\Packages\LivewireForms\Tests\Data\UserTestCreateUpdateForm;
+use Nodus\Packages\LivewireForms\Tests\Data\UserTestForm;
+use Nodus\Packages\LivewireForms\Tests\Data\UserTestSubmitForm;
+use Nodus\Packages\LivewireForms\Tests\TestCase;
 
 class FormViewTest extends TestCase
 {

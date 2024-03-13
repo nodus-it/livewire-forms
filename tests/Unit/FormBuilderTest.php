@@ -19,6 +19,9 @@ use Nodus\Packages\LivewireForms\Services\FormBuilder\Select;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Text;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Textarea;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Time;
+use Nodus\Packages\LivewireForms\Tests\TestCase;
+
+use function PHPUnit\Framework\assertInstanceOf;
 
 class FormBuilderTest extends TestCase
 {
@@ -41,6 +44,7 @@ class FormBuilderTest extends TestCase
             [Hidden::class, 'addHidden'],
             [Code::class, 'addCode'],
             [Html::class, 'addSection'],
+            [Html::class, 'addNewLine'],
             [Html::class, 'addHtml'],
         ];
     }
@@ -51,14 +55,24 @@ class FormBuilderTest extends TestCase
     public function testReturnTypes($expected, $method)
     {
         $view = new class() extends FormView {
+
+            public static string $expected;
+
             public function inputs()
             {
                 $method = func_get_arg(0);
 
                 $this->$method($method, $method);
+
+                assertInstanceOf(static::$expected, $this->$method($method, $method));
             }
         };
+        $view::$expected = $expected;
         $view->inputs($method);
+
+        if ($method === 'addNewLine') {
+            return;
+        }
 
         $this->assertInstanceOf($expected, $view->getInput($method));
     }

@@ -3,7 +3,7 @@
 namespace Nodus\Packages\LivewireForms\Tests\Unit\InputTests;
 
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Checkbox;
-use Nodus\Packages\LivewireForms\Tests\Unit\TestCase;
+use Nodus\Packages\LivewireForms\Tests\TestCase;
 
 class CheckboxInputTest extends TestCase
 {

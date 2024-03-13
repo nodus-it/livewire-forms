@@ -1,7 +1,7 @@
 # Livewire Forms
-[![License](https://poser.pugx.org/nodus-it/livewire-forms/license)](//packagist.org/packages/nodus-it/livewire-forms)
-[![Latest Stable Version](https://poser.pugx.org/nodus-it/livewire-forms/v/stable)](//packagist.org/packages/nodus-it/livewire-forms)
-[![Total Downloads](https://poser.pugx.org/nodus-it/livewire-forms/downloads)](//packagist.org/packages/nodus-it/livewire-forms)
+[![License](https://poser.pugx.org/nodus-it/livewire-forms/license)](https://packagist.org/packages/nodus-it/livewire-forms)
+[![Latest Stable Version](https://poser.pugx.org/nodus-it/livewire-forms/v/stable)](https://packagist.org/packages/nodus-it/livewire-forms)
+[![Total Downloads](https://poser.pugx.org/nodus-it/livewire-forms/downloads)](https://packagist.org/packages/nodus-it/livewire-forms)
 [![Build Status](https://travis-ci.com/nodus-it/livewire-datatables.svg?branch=master)](https://travis-ci.com/nodus-it/livewire-forms)
 [![codecov](https://codecov.io/gh/nodus-it/livewire-datatables/branch/master/graph/badge.svg)](https://codecov.io/gh/nodus-it/livewire-forms)
 
@@ -12,25 +12,47 @@ Some special input types may require external javascript dependencies (besides B
 The following inputs are currently supported:
 
 - Checkbox
-- Code (requires CodeMirror.js)
+- Code (requires [CodeMirror.js](https://codemirror.net/))
 - Color
 - Date
 - Datetime (composed of a date and a time input)
-- Decimal/Money (own implementation)
+- Decimal/Money (own implementation with currency and custom unit support)
 - File
 - Hidden
 - Number
 - Password
-- Radio
-- RichTextarea (requires Quill.js)
-- Select (requires bootstrap-select)
+- Radio (Bootstrap radio button group)
+- RichTextarea (requires [Quill.js](https://quilljs.com/))
+- Select (requires [bootstrap-select](https://developer.snapappointments.com/bootstrap-select/))
 - Text
 - Textarea
 - Time
-- _It is also possible to create your own custom input types_...
+- _It's also possible to create your own custom input types_...
 
+## Installation
+You can install the package via composer:
+````
+composer require nodus-it/livewire-forms
+````
+Include the JavaScript after the ``@livewireScripts`` directive on every page that will be using Livewire. 
+````html
+...
+<body>
+    ...
+    @livewireScripts
+    <script src="{{ asset( 'livewire-forms/livewire-forms.js' ) }}"></script>
+</body>
+</html>
+````
 
-**This package is currently under development, so be careful if you want to use this package in production.**
+You can publish the config file with:
+````
+php artisan vendor:publish --provider="Nodus\Packages\LivewireForms\LivewireFormsServiceProvider" --tag="livewire-forms:config"
+````
+You can publish the blade views with:
+````
+php artisan vendor:publish --provider="Nodus\Packages\LivewireForms\LivewireFormsServiceProvider" --tag="livewire-forms:views"
+````
 
 ## Usage
 ### Minimal form view example
@@ -96,6 +118,8 @@ public function submitCreate(array $values)
 ````
 
 ## Roadmap/TODO
+- File input
+  - chunked upload handling (https://fly.io/laravel-bytes/multi-file-upload-livewire/)
 - All Inputs
   - improve multiple support
   - check if we should support more properties
@@ -106,10 +130,17 @@ public function submitCreate(array $values)
 - Extensibility
   - override default classes (class overload)
   - external extensions (e.g. remote select)
-- JS Handling
-  - own JS class
-  - maybe own blade directive
+    - remote loading is not supported by bootstrap select
+    - maybe move to alternative select plugin package (e.g. https://github.com/orchidjs/tom-select)
 - Post Handling
   - Validation: add support for array validation rules
   - Improve validation exception handling if such is thrown inside the submit methods
 - Find another solution for the integration of external plugins like bootstrap-select than using "wire:ignore" due to several drawbacks that come with this, such as no possibility for dynamic select option updates.
+
+## Testing
+````
+composer test
+````
+
+## License
+The MIT License (MIT). Please see [License File](LICENCE) for more information.

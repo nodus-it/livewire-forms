@@ -11,7 +11,7 @@
                 </div>
             @else
                 <div class="col-sm-{{ $input->getSize() }}">
-                    @if(!$input::supports('LabelPosition') || $input->getLabelPosition() === 'top')
+                    @if(!$input::supports('LabelPosition') || $input->getLabelPosition() === \Nodus\Packages\LivewireForms\Services\FormBuilder\Support\LabelPosition::Top)
                         <label for="{{ $input->getId() }}" class="nodus-form-label-top">
                             @if($input->hasHtmlLabel())
                                 {!! $input->getLabel() !!}
