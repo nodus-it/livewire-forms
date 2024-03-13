@@ -202,4 +202,22 @@ class FormViewTest extends TestCase
         $this->expectException(Exception::class);
         Livewire::test(UserTestForm::class, ['modelOrArray' => 1]);
     }
+
+    public function testValueFunctions()
+    {
+        $view = new class() extends FormView {
+            public function inputs(): void
+            {
+                $this->addDecimal('decimal_input');
+            }
+        };
+        $view->inputs();
+
+        $view->setValue('decimal_input', 1.23);
+        $this->assertEquals(1.23, $view->getValue('decimal_input'));
+        $this->assertEquals(1.23, $view->getRawValue('decimal_input'));
+        $view->setValue('decimal_input', '4,56 €');
+        $this->assertEquals(4.56, $view->getValue('decimal_input'));
+        $this->assertEquals('4,56 €', $view->getRawValue('decimal_input'));
+    }
 }

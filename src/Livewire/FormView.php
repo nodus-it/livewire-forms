@@ -64,6 +64,13 @@ abstract class FormView extends Component
     public array $values = [];
 
     /**
+     * Array of cast input values
+     *
+     * @var array|null
+     */
+    private ?array $castedValues = null;
+
+    /**
      * Array of registered inputs
      *
      * @var FormInput[]
@@ -247,7 +254,24 @@ abstract class FormView extends Component
      *
      * @return array|ArrayAccess|mixed
      */
-    public function getValue(string $key, $default = null)
+    public function getValue(string $key, $default = null): mixed
+    {
+        if ($this->castedValues === null) {
+            $this->castedValues = $this->getValidatedValues();
+        }
+
+        return Arr::get($this->castedValues, $key, $default);
+    }
+
+    /**
+     * Returns the raw value for the given key using the "dot" notation (no mutations/casts applied)
+     *
+     * @param string $key
+     * @param null $default
+     *
+     * @return array|ArrayAccess|mixed
+     */
+    public function getRawValue(string $key, $default = null): mixed
     {
         return Arr::get($this->values, $key, $default);
     }
@@ -262,6 +286,8 @@ abstract class FormView extends Component
      */
     public function setValue(string $key, mixed $value): array
     {
+        $this->castedValues = null;
+
         return Arr::set($this->values, $key, $value);
     }
 
@@ -417,7 +443,7 @@ abstract class FormView extends Component
 
             // Define for the array validations for each item in the value a custom attribute label
             if (in_array(FormBuilder\Traits\SupportsArrayValidations::class, class_uses($input))) {
-                $value = $this->getValue($input->getId());
+                $value = $this->getRawValue($input->getId());
 
                 if (!is_array($value)) {
                     continue;
@@ -632,7 +658,7 @@ abstract class FormView extends Component
             $key = $input->getId();
 
             if (method_exists($input, 'preRenderMutator')) {
-                $this->setValue($key, $input->preRenderMutator($this->getValue($key)));
+                $this->setValue($key, $input->preRenderMutator($this->getRawValue($key)));
             }
         }
     }
@@ -797,7 +823,7 @@ abstract class FormView extends Component
             }
 
             if (in_array(SupportsDefaultValue::class, $inputTraits)) {
-                $this->setValue($key, $input->getValue($this->getValue($key)));
+                $this->setValue($key, $input->getValue($this->getRawValue($key)));
             }
         }
 
