@@ -25,7 +25,7 @@ class TestCase extends BaseTestCase
             $this->cleanUp();
         });
 
-        $this->loadMigrationsFrom(__DIR__ . '/../data/database/migrations');
+
         $this->withFactories(__DIR__ . '/../data/database/factories');
 
         /**
@@ -39,12 +39,17 @@ class TestCase extends BaseTestCase
         )->name('users.details');
     }
 
-    public function cleanUp()
+    protected function defineDatabaseMigrations(): void
+    {
+        $this->loadMigrationsFrom(__DIR__ . '/../data/database/migrations');
+    }
+
+    public function cleanUp(): void
     {
         Artisan::call('view:clear');
     }
 
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
         return [
             LivewireServiceProvider::class,
@@ -52,9 +57,9 @@ class TestCase extends BaseTestCase
         ];
     }
 
-    protected function getEnvironmentSetUp($app)
+    protected function getEnvironmentSetUp($app): void
     {
-        $app[ 'config' ]->set(
+        $app['config']->set(
             'view.paths',
             [
                 __DIR__ . '/views',
@@ -62,11 +67,11 @@ class TestCase extends BaseTestCase
             ]
         );
 
-        $app[ 'config' ]->set('app.key', 'base64:Hupx3yAySikrM2/edkZQNQHslgDWYfiBfCuSThJ5SK8=');
-        $app[ 'config' ]->set('app.locale', 'en');
-        $app[ 'config' ]->set('app.fallback_locale', 'de');
-        $app[ 'config' ]->set('database.default', 'sqlite');
-        $app[ 'config' ]->set(
+        $app['config']->set('app.key', 'base64:Hupx3yAySikrM2/edkZQNQHslgDWYfiBfCuSThJ5SK8=');
+        $app['config']->set('app.locale', 'en');
+        $app['config']->set('app.fallback_locale', 'de');
+        $app['config']->set('database.default', 'sqlite');
+        $app['config']->set(
             'database.connections.sqlite',
             [
                 'driver' => 'sqlite',
