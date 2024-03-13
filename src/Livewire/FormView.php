@@ -82,7 +82,9 @@ abstract class FormView extends Component
      *
      * @var array
      */
-    protected array $rules = [];
+    protected array $rules = [
+        'values' => 'array',
+    ];
 
     /**
      * Custom validation messages (prefixed with the field name e.g "first_name.required")
