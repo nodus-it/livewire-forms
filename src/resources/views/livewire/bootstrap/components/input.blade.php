@@ -7,6 +7,7 @@
                @if($input->getStep() !== null) step="{{ $input->getStep() }}" @endif
            @endif
            @if($input::supports('placeholder') && $input->hasPlaceholder()) placeholder="{{ $input->getPlaceholder() }}" @endif
+           @if($input::supports('disabling') && $input->isDisabled()) disabled @endif
            @if($input::supports('inputMode') && $input->getInputMode() !== null) inputmode="{{ $input->getInputMode() }}" @endif
            class="form-control @if(isset($errors) && $errors->hasAny($input->getErrorKeys())) is-invalid @endif"
            wire:model.{{config('livewire-forms.update_mode')}}="{{ $input->getViewId() }}">

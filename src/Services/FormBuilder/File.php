@@ -4,6 +4,7 @@ namespace Nodus\Packages\LivewireForms\Services\FormBuilder;
 
 use Livewire\TemporaryUploadedFile;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsArrayValidations;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDisabling;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsHint;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsMultiple;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsSize;
@@ -21,6 +22,7 @@ class File extends FormInput
     use SupportsArrayValidations;
     use SupportsSize;
     use SupportsHint;
+    use SupportsDisabling;
 
     /**
      * Accepted file formats

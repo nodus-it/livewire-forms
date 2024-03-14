@@ -121,4 +121,10 @@ class DecimalInputTest extends TestCase
 
         $this->assertSame(Currency::Euro, $input->getUnit());
     }
+
+    public function testSupports()
+    {
+        $this->assertTrue(CurrencyInput::supports('disabling'));
+        $this->assertTrue(Decimal::supports('disabling'));
+    }
 }

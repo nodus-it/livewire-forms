@@ -10,6 +10,7 @@
                 data-select-all-text="{{ $input->getSelectAllText() }}"
                 data-none-selected-text="{{ $input->getNoneSelectedText() }}"
                 data-none-results-text="{{ $input->getNoneResultsText() }}"
+                @if($input::supports('disabling') && $input->isDisabled()) disabled @endif
                 wire:model="{{ $input->getViewId() }}">
             @foreach($input->getOptions() as $key => $option)
                 <option value="{{ $key }}" data-icon="{{ $option['icon'] }}">{{ $option['label'] }}</option>

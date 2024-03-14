@@ -21,6 +21,7 @@ use Nodus\Packages\LivewireForms\Services\FormBuilder;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\FormInput;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsArrayValidations;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDefaultValue;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDisabling;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsValidations;
 use Throwable;
 
@@ -814,6 +815,9 @@ abstract class FormView extends Component
 
             $inputTraits = class_uses($input);
 
+            // TODO
+            // - extra addRuleForInput($input) method?
+            // - check if input supports disabling, is disabled and only add rules if not
             if (in_array(SupportsValidations::class, $inputTraits)) {
                 /** @var SupportsValidations|FormInput $input */
                 $this->rules[$input->getViewId()] = $input->rewriteValidationRules($model);

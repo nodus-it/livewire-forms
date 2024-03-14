@@ -4,6 +4,7 @@
                name="{{ $input->getName() }}"
                class="custom-control-input"
                id="{{ $input->getId(true) }}"
+               @if($input::supports('disabling') && $input->isDisabled()) disabled @endif
                wire:model.{{config('livewire-forms.update_mode')}}="{{ $input->getViewId() }}">
         <label class="custom-control-label nodus-form-label-right" for="{{ $input->getId(true) }}">
             @if($input->getLabelPosition() === \Nodus\Packages\LivewireForms\Services\FormBuilder\Support\LabelPosition::Right)
