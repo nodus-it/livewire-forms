@@ -35,12 +35,14 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Nodus\\Packages\\LivewireForms\\Tests\\": "tests/"
+      "Nodus\\Packages\\LivewireForms\\Tests\\": "tests/",
+      "Nodus\\Packages\\LivewireCore\\Tests\\": "vendor/nodus-it/livewire-core/tests/"
     }
   },
   "scripts": {
     "test": "vendor/bin/pest",
-    "test-coverage": "XDEBUG_MODE=coverage vendor/bin/pest --coverage --coverage-html coverage"
+    "test-coverage": "XDEBUG_MODE=coverage vendor/bin/pest --coverage --coverage-html coverage",
+    "server": "php vendor/nodus-it/livewire-core/tests/environment/artisan serve"
   },
   "extra": {
     "laravel": {
