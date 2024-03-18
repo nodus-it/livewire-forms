@@ -19,7 +19,7 @@
   ],
   "require": {
     "php": "^8.1",
-    "nodus-it/livewire-core": "dev-standalone-test-environment",
+    "nodus-it/livewire-core": "~0.2",
     "ext-intl": "*"
   },
   "require-dev": {
