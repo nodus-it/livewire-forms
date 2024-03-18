@@ -3,6 +3,7 @@
 namespace Nodus\Packages\LivewireForms\Services\FormBuilder;
 
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDefaultValue;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDisabling;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsHint;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsMinMax;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsPlaceholder;
@@ -22,4 +23,5 @@ class Number extends FormInput
     use SupportsHint;
     use SupportsPlaceholder;
     use SupportsMinMax;
+    use SupportsDisabling;
 }

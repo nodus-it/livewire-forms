@@ -204,7 +204,15 @@ abstract class FormInput
      */
     public static function supports(string $feature): bool
     {
-        $traits = collect(class_uses(static::class))
+        $checkClasses = array_values(class_parents(static::class));
+        $checkClasses[] = static::class;
+
+        $traits = [];
+        foreach ($checkClasses as $class) {
+            $traits = array_merge($traits, class_uses($class));
+        }
+
+        $traits = collect($traits)
             ->map(fn ($value) => Str::of($value)
                 ->classBasename()
                 ->lower()

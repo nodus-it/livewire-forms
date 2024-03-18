@@ -5,6 +5,7 @@ namespace Nodus\Packages\LivewireForms\Services\FormBuilder;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Support\Currency;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Support\InputMode;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDefaultValue;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDisabling;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsHint;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsInputMode;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsPlaceholder;
@@ -25,6 +26,7 @@ class Decimal extends FormInput
     use SupportsHint;
     use SupportsPlaceholder;
     use SupportsInputMode;
+    use SupportsDisabling;
 
     /**
      * Number of decimals to be shown of the decimal value

@@ -2,10 +2,12 @@
     <div class="input-group">
         <input type="date"
                name="{{ $input->getName() }}_date"
+               @if($input::supports('disabling') && $input->isDisabled()) disabled @endif
                class="form-control @if(isset($errors) && $errors->hasAny($input->getErrorKeys())) is-invalid @endif"
                wire:model.{{config('livewire-forms.update_mode')}}="{{ $input->getViewId() }}.date">
         <input type="time"
                name="{{ $input->getName() }}_time"
+               @if($input::supports('disabling') && $input->isDisabled()) disabled @endif
                class="form-control @if(isset($errors) && $errors->hasAny($input->getErrorKeys())) is-invalid @endif"
                wire:model.{{config('livewire-forms.update_mode')}}="{{ $input->getViewId() }}.time">
     </div>

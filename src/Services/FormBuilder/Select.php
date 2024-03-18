@@ -5,6 +5,7 @@ namespace Nodus\Packages\LivewireForms\Services\FormBuilder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDefaultValue;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDisabling;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsHint;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsMultiple;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsOptions;
@@ -38,6 +39,7 @@ class Select extends FormInput
     }
     use SupportsHint;
     use SupportsTranslations;
+    use SupportsDisabling;
     use SupportsOptions {
         getOptions as parentGetOptions;
         setOptions as parentSetOptions;

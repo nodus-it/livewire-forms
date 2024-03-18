@@ -35,6 +35,9 @@ class InputTestForm extends FormView
             ->setValidations('required');
         $this->addText('min_input')
             ->setValidations('required|min:5');
+        $this->addText('disabled_input')
+            ->setValidations('required|min:5')
+            ->setDisabled();
     }
 
     public function submit(array $values): void

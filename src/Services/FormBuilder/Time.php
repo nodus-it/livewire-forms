@@ -4,6 +4,7 @@ namespace Nodus\Packages\LivewireForms\Services\FormBuilder;
 
 use Illuminate\Support\Carbon;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDefaultValue;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDisabling;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsHint;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsMinMax;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsSize;
@@ -21,6 +22,7 @@ class Time extends FormInput
     use SupportsSize;
     use SupportsHint;
     use SupportsMinMax;
+    use SupportsDisabling;
 
     /**
      * Post validation mutator handler

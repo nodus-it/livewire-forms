@@ -21,6 +21,7 @@ use Nodus\Packages\LivewireForms\Services\FormBuilder;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\FormInput;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsArrayValidations;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDefaultValue;
+use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDisabling;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsValidations;
 use Throwable;
 
@@ -394,6 +395,41 @@ abstract class FormView extends Component
     }
 
     /**
+     * Returns whether validation rules are defined for the given input
+     *
+     * @param string $key
+     *
+     * @return bool
+     */
+    protected function hasRule(string $key): bool
+    {
+        return isset($this->rules[$key]) && !empty($this->rules[$key]);
+    }
+
+    /**
+     * Sets the validation rules for the given input
+     *
+     * @param FormInput    $input
+     * @param string|array $rules
+     * @param bool         $arrayRules
+     *
+     * @return $this
+     */
+    protected function setRules(FormInput $input, string|array $rules, bool $arrayRules = false): static
+    {
+        $key = $arrayRules ? $input->getViewId() . '.*' : $input->getViewId();
+
+        /** @var SupportsDisabling|FormInput $input */
+        if ($input::supports('disabling') && $input->isDisabled()) {
+            $this->rules[$key] = [];
+        } else {
+            $this->rules[$key] = $rules;
+        }
+
+        return $this;
+    }
+
+    /**
      * On input change handler
      *
      * @param $propertyName
@@ -407,7 +443,7 @@ abstract class FormView extends Component
         $this->validateOnly($propertyName, null, [], $this->getCustomValidationAttributes());
 
         // In case we have added array validations, we check them here separately
-        if (isset($this->rules[$propertyName . '.*']) && !empty($this->rules[$propertyName . '.*'])) {
+        if ($this->hasRule($propertyName . '.*')) {
             $this->validateOnly($propertyName . '.*', null, [], $this->getCustomValidationAttributes());
         }
     }
@@ -816,14 +852,14 @@ abstract class FormView extends Component
 
             if (in_array(SupportsValidations::class, $inputTraits)) {
                 /** @var SupportsValidations|FormInput $input */
-                $this->rules[$input->getViewId()] = $input->rewriteValidationRules($model);
+                $this->setRules($input, $input->rewriteValidationRules($model));
             } else {
-                $this->rules[$input->getViewId()] = [];
+                $this->setRules($input, []);
             }
 
             if (in_array(SupportsArrayValidations::class, $inputTraits)) {
                 /** @var SupportsArrayValidations|FormInput $input */
-                $this->rules[$input->getViewId() . '.*'] = $input->getArrayValidations();
+                $this->setRules($input, $input->getArrayValidations(), true);
             }
 
             if (in_array(SupportsDefaultValue::class, $inputTraits)) {
@@ -846,6 +882,11 @@ abstract class FormView extends Component
 
         foreach ($this->inputs as $input) {
             if ($input instanceof FormBuilder\Html) {
+                continue;
+            }
+
+            /** @var SupportsDisabling|FormInput $input */
+            if ($input::supports('disabling') && $input->isDisabled()) {
                 continue;
             }
 
