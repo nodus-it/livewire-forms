@@ -3,3 +3,4 @@ coverage
 vendor
 .phpunit.result.cache
 composer.lock
+tests/Data/ManualInputTestForm.php

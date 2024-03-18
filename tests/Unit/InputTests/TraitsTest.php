@@ -178,6 +178,14 @@ class TraitsTest extends TestCase
         $this->assertInstanceOf(Checkbox::class, $input->setLabelTop());
         $this->assertSame(LabelPosition::Top, $input->getLabelPosition());
     }
+
+    public function testSupportDisabling()
+    {
+        $input = new Text('text_input');
+        $this->assertSame(false, $input->isDisabled());
+        $this->assertInstanceOf(Text::class, $input->setDisabled());
+        $this->assertSame(true, $input->isDisabled());
+    }
 }
 
 class TestModel extends Model

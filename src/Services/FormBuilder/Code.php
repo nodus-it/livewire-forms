@@ -19,7 +19,6 @@ class Code extends FormInput
     use SupportsValidations;
     use SupportsSize;
     use SupportsHint;
-    use SupportsDisabling;
 
     /**
      * Syntax Highlight mode
