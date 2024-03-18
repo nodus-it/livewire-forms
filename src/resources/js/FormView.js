@@ -135,7 +135,18 @@ Nodus.FormView = class {
         const input = document.querySelector('#' + id + '_text');
 
         const editor = new Quill(element, {
-            theme: 'snow'
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    ['blockquote', 'code-block', { 'color': [] },{ 'align': [] }],
+                    ['link', 'image'],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }],
+                    [{ 'indent': '-1'}, { 'indent': '+1' }],
+                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                    ['clean']
+                ]
+            },
         });
 
         editor.on('text-change', function() {
