@@ -19,27 +19,26 @@ class FormViewTest extends TestCase
     {
         $component = Livewire::test(InputTestForm::class);
 
-        $component->runAction('render');
+        $component->runAction('onSubmit');
+        $values = $component->getData();
 
-        $this->assertArrayHasKey('text_input', $component->payload['serverMemo']['data']['values']);
-        $this->assertNull($component->payload['serverMemo']['data']['values']['text_input']);
-        $this->assertArrayHasKey('select_input', $component->payload['serverMemo']['data']['values']);
-        $this->assertNull($component->payload['serverMemo']['data']['values']['select_input']);
-        $this->assertArrayNotHasKey('select_input2', $component->payload['serverMemo']['data']['values']);
+        $this->assertArrayHasKey('text_input', $values['values']);
+        $this->assertNull($values['values']['text_input']);
+        $this->assertArrayHasKey('select_input', $values['values']);
+        $this->assertNull($values['values']['select_input']);
+        $this->assertArrayNotHasKey('select_input2', $values['values']);
     }
 
     public function testDefaultValues()
     {
         Livewire::test(InputTestForm::class)
-            ->runAction('render')
-            ->assertSet('values.default_input', 'Thats the default')
-            ->assertPayloadSet('values.default_input', 'Thats the default');
+            ->runAction('onSubmit')
+            ->assertSet('values.default_input', 'Thats the default');
     }
 
     public function testValidationMessages()
     {
         Livewire::test(InputTestForm::class)
-            ->runAction('render')
             ->set('values.required_input', '')
             ->assertHasErrors(['values.required_input' => 'required'])
             ->set('values.required_input', 'test')

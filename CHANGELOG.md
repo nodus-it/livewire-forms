@@ -2,7 +2,11 @@
 
 All notable changes to `livewire-forms` will be documented in this file
 
-## 0.9.0 - 2024-03-XX
+## 1.0.0-alpha-1 - 2024-03-XX
+
+- Updated the package to Livewire v3
+
+## 0.9.0 - 2024-03-18
 
 - Added more options for the rich-textarea input
 - Added a new form input trait ``SupportsDisabling`` (for inputs that support the ``disabled`` property)
@@ -12,6 +16,7 @@ All notable changes to `livewire-forms` will be documented in this file
 
 ## 0.8.0 - 2024-03-13
 
+- Added support for PHP v8.3
 - Changed the minimum PHP version to v8.1
 - Added ``addNewLine`` shortcut to the form builder
 - Label positions, currencies and input modes are now represented by enums
