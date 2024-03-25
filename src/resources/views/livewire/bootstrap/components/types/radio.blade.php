@@ -7,7 +7,7 @@
                        name="start"
                        value="{{$key}}"
                        @if($input::supports('disabling') && $input->isDisabled()) disabled @endif
-                       wire:model="{{ $input->getViewId() }}"
+                       wire:model.{{config('livewire-forms.update_mode')}}="{{ $input->getViewId() }}"
                        autocomplete="off" >
                 {{$option['label']}}
             </label>

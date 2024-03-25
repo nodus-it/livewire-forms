@@ -604,6 +604,7 @@ abstract class FormView extends Component
      */
     protected function registerSubmitValidationExceptionHandler(): void
     {
+        // todo
         Livewire::listen('failed-validation', function (Validator $validator) {
             $this->submitValidationExceptionHandler($validator);
         });
