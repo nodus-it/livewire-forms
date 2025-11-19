@@ -20,25 +20,25 @@ Nodus.FormView = class {
         console.log('INIT FORM');
 
         // Initial render form initializing
-        document.addEventListener('livewire:load', function() {
+        document.addEventListener('livewire:init', function() {
             this.initInputs();
         }.bind(this));
 
         // On livewire update -> reinitializing the inputs
         // ToDo: for dynamically added/removed forms we need to unbind the event listener
-        Livewire.hook('message.processed', function() {
+        Livewire.hook('morphed', () => {
             this.initInputs();
-        }.bind(this));
+        });
 
         // On livewire DOM update destroy bootstrap selects
-        Livewire.hook('element.updating', (fromEl, toEl, component) => {
-            if (!fromEl.classList.contains('nodus-form-control-select')) {
+        Livewire.hook('morph.updating', ({el}) => {
+            if (!el.classList.contains('nodus-form-control-select')) {
                 return;
             }
 
-            const select = fromEl.querySelector('select');
+            const select = el.querySelector('select');
 
-            if (select === null || fromEl.getAttribute('data-init') !== 'true') {
+            if (select === null || el.getAttribute('data-init') !== 'true') {
                 return;
             }
 
@@ -61,7 +61,7 @@ Nodus.FormView = class {
         this.livewireId = this.form.getAttribute('wire:id');
 
         try {
-            this.livewire = window.livewire.find(this.livewireId);
+            this.livewire = window.Livewire.find(this.livewireId);
         } catch (e) {
             console.warn('Could not find livewire component', this.livewireId);
             return;
@@ -156,7 +156,7 @@ Nodus.FormView = class {
             }));
         });
 
-        editor.on('selection-change', function(range, oldRange, source) {
+        editor.on('selection-change', function(range, oldRange) {
             if ((range === null && oldRange !== null) || (range === null && oldRange === undefined)) {
                 this.livewire.set('values.' + id, editor.root.innerHTML);
             }
