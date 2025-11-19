@@ -14,7 +14,6 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Validator;
 use Livewire\Component;
-use Livewire\Livewire;
 use Nodus\Packages\LivewireCore\Services\SupportsTranslationsByModel;
 use Nodus\Packages\LivewireCore\SupportsAdditionalViewParameters;
 use Nodus\Packages\LivewireForms\Services\FormBuilder;
@@ -88,7 +87,7 @@ abstract class FormView extends Component
     ];
 
     /**
-     * Custom validation messages (prefixed with the field name e.g "first_name.required")
+     * Custom validation messages (prefixed with the field name e.g. "first_name.required")
      *
      * @var array
      */
@@ -123,7 +122,7 @@ abstract class FormView extends Component
     protected ?Model $modelInstance = null;
 
     /**
-     * Post handling mode (create or update)
+     * POST-handling mode (create or update)
      *
      * @var string
      */
@@ -358,7 +357,7 @@ abstract class FormView extends Component
     {
         $this->model = get_class($model);
 
-        // load relation collections as ID arrays for multiple selects
+        // load relation collections as ID arrays for multiple-selects
         foreach ($model->getRelations() as $key => $relation) {
             if (!$relation instanceof Collection) {
                 continue;
@@ -525,7 +524,7 @@ abstract class FormView extends Component
      */
     protected function getValidatedValues(): array
     {
-        // The pre validation mutators are already called in the prepareForValidation method (see validate call)
+        // The pre-validation mutators are already called in the prepareForValidation method (see validate call)
         return $this->applyPostValidationMutators(
             $this->validate(null, [], $this->getCustomValidationAttributes())['values']
         );
@@ -542,8 +541,6 @@ abstract class FormView extends Component
         $this->prepareInputs();
 
         $values = $this->getValidatedValues();
-
-        $this->registerSubmitValidationExceptionHandler();
 
         // Custom post handling
         if (method_exists($this, 'submitCreate') && $this->isCreateMode()) {
@@ -602,12 +599,11 @@ abstract class FormView extends Component
      *
      * @return void
      */
-    protected function registerSubmitValidationExceptionHandler(): void
+    public function exception($e)
     {
-        // todo
-        Livewire::listen('failed-validation', function (Validator $validator) {
-            $this->submitValidationExceptionHandler($validator);
-        });
+        if ($e instanceof ValidationException) {
+            $this->submitValidationExceptionHandler($e->validator);
+        }
     }
 
     /**
@@ -639,7 +635,7 @@ abstract class FormView extends Component
     }
 
     /**
-     * Applies the pre validation mutator handlers if such are defined
+     * Applies the pre-validation mutator handlers if any are defined
      *
      * @param array $values
      *
@@ -666,7 +662,7 @@ abstract class FormView extends Component
     }
 
     /**
-     * Applies the post validation mutator handlers if such are defined
+     * Applies the post-validation mutator handlers if any are defined
      *
      * @param array $values
      *
@@ -689,7 +685,7 @@ abstract class FormView extends Component
     }
 
     /**
-     * Applies the pre render mutator handlers if such are defined
+     * Applies the pre-render mutators if any are defined
      */
     private function applyPreRenderMutators(): void
     {
@@ -873,7 +869,7 @@ abstract class FormView extends Component
     }
 
     /**
-     * Returns the array with all registered real inputs (excludes html)
+     * Returns the array with all registered real inputs (excludes HTML)
      *
      * @return array|FormInput[]
      */
