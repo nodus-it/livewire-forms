@@ -268,12 +268,12 @@ abstract class FormView extends Component
     /**
      * Returns the raw value for the given key using the "dot" notation (no mutations/casts applied)
      *
-     * @param string $key
-     * @param null $default
+     * @param string     $key
+     * @param mixed|null $default
      *
      * @return array|ArrayAccess|mixed
      */
-    public function getRawValue(string $key, $default = null): mixed
+    public function getRawValue(string $key, mixed $default = null): mixed
     {
         return Arr::get($this->values, $key, $default);
     }
