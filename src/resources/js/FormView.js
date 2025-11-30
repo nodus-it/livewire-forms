@@ -20,7 +20,7 @@ Nodus.FormView = class {
         console.log('INIT FORM');
 
         // Initial render form initializing
-        document.addEventListener('livewire:init', function() {
+        document.addEventListener('livewire:initialized', function() {
             this.initInputs();
         }.bind(this));
 
