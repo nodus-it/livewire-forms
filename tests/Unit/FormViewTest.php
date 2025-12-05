@@ -70,7 +70,7 @@ class FormViewTest extends TestCase
     {
         FormView::macro(
             'addNewCustomInput',
-            function (string $name, string $label = null) {
+            function (string $name, ?string $label = null) {
                 /** @var FormView $this */
                 return $this->addInput(Text::class, $name, $label);
             }
