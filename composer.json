@@ -19,7 +19,7 @@
   ],
   "require": {
     "php": "^8.3",
-    "nodus-it/livewire-core": "~0.6",
+    "nodus-it/livewire-core": "~0.7",
     "ext-intl": "*"
   },
   "require-dev": {
