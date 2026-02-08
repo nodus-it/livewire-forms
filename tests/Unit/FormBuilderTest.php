@@ -22,6 +22,8 @@ use Nodus\Packages\LivewireForms\Services\FormBuilder\Textarea;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Time;
 use Nodus\Packages\LivewireForms\Tests\TestCase;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+
 use function PHPUnit\Framework\assertInstanceOf;
 
 class FormBuilderTest extends TestCase
@@ -51,9 +53,7 @@ class FormBuilderTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider validInputs
-     */
+    #[DataProvider('validInputs')]
     public function testReturnTypes($expected, $method)
     {
         $view = new class() extends FormView {

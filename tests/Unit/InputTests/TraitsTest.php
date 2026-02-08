@@ -14,6 +14,7 @@ use Nodus\Packages\LivewireForms\Services\FormBuilder\Support\InputMode;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Support\LabelPosition;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Text;
 use Nodus\Packages\LivewireForms\Tests\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class TraitsTest extends TestCase
 {
@@ -87,9 +88,7 @@ class TraitsTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider validTranslations
-     */
+    #[DataProvider('validTranslations')]
     public function testSupportsTranslations($method, $trans)
     {
         $input = Select::create('select_input');

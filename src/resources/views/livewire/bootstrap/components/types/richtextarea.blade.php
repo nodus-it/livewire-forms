@@ -7,7 +7,7 @@
     <textarea name="{{ $input->getId() }}"
               id="{{ $input->getId(true) }}_text"
               class="d-none"
-              wire:model.defer="{{ $input->getViewId() }}"
+              wire:model="{{ $input->getViewId() }}"
     >{!! $this->getRawValue($input->getId()) !!}</textarea>
     @include('nodus.packages.livewire-forms::livewire.'.config('livewire-forms.theme').'.components.validation')
 </div>

@@ -16,6 +16,7 @@ use Nodus\Packages\LivewireForms\Services\FormBuilder\Text;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Textarea;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Time;
 use Nodus\Packages\LivewireForms\Tests\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class FormInputTest extends TestCase
 {
@@ -50,10 +51,8 @@ class FormInputTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider validInputs
-     */
-    public function testFormInputStandaloneRender($class)
+    #[DataProvider('validInputs')]
+    public function testFormInputStandaloneRender(string $class, string $method)
     {
         $input = new $class('test_input', 'test');
 
