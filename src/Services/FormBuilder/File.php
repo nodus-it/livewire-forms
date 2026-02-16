@@ -65,7 +65,7 @@ class File extends FormInput
      *
      * @return TemporaryUploadedFile|null|TemporaryUploadedFile[]
      */
-    public function preRenderMutator($value)
+    public function preRenderMutator(mixed $value)
     {
         if ($this->getMultiple() === true) {
             if (!is_array($value)) {

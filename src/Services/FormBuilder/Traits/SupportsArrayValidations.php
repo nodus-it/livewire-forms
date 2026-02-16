@@ -3,7 +3,7 @@
 namespace Nodus\Packages\LivewireForms\Services\FormBuilder\Traits;
 
 /**
- * Supports array validations form input trait
+ * Supports array validations form-input trait
  *
  * @package Nodus\Packages\LivewireForms\Services\FormBuilder\Traits
  */

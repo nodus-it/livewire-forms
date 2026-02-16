@@ -5,7 +5,7 @@ namespace Nodus\Packages\LivewireForms\Services\FormBuilder\Traits;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Support\InputMode;
 
 /**
- * Supports input mode form input trait
+ * Supports input mode form-input trait
  *
  * @package Nodus\Packages\LivewireForms\Services\FormBuilder\Traits
  */
@@ -21,7 +21,7 @@ trait SupportsInputMode
     /**
      * Returns the input mode
      *
-     * @return string|null
+     * @return InputMode|null
      */
     public function getInputMode(): ?InputMode
     {
@@ -31,7 +31,7 @@ trait SupportsInputMode
     /**
      * Sets the input mode
      *
-     * @param string|null $inputMode
+     * @param InputMode|string|null $inputMode
      *
      * @return $this
      */

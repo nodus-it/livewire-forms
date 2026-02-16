@@ -14,7 +14,7 @@ use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsTranslation
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsValidations;
 
 /**
- * Select input class
+ * Select Input class
  *
  * @package Nodus\Packages\LivewireForms\Services\FormBuilder
  *
@@ -48,8 +48,8 @@ class Select extends FormInput
     /**
      * Special option value constants
      */
-    public const FORCE_OPTION = -100;
-    public const NULL_OPTION = -101;
+    public const int FORCE_OPTION = -100;
+    public const int NULL_OPTION = -101;
 
     /**
      * Flag that determines whether an additional option will be added that is invalid,
@@ -215,7 +215,7 @@ class Select extends FormInput
     }
 
     /**
-     * Pre validation mutator for a single given option
+     * Pre-validation mutator for a single given option
      *
      * @param string|int|null $option
      *
@@ -274,7 +274,7 @@ class Select extends FormInput
      *
      * @return string
      */
-    public function rewriteValidationRules($model = null): string
+    public function rewriteValidationRules(?Model $model = null): string
     {
         if ($this->getForceOption() === true) {
             if (empty($this->validations)) {

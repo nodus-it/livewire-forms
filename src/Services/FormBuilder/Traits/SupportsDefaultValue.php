@@ -7,7 +7,7 @@ use Nodus\Packages\LivewireForms\Services\FormBuilder\Date;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Time;
 
 /**
- * Supports default value form input trait
+ * Supports default value form-input trait
  *
  * @package Nodus\Packages\LivewireForms\Services\FormBuilder\Traits
  */

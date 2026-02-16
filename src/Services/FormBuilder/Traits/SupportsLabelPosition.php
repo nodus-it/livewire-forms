@@ -5,7 +5,7 @@ namespace Nodus\Packages\LivewireForms\Services\FormBuilder\Traits;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Support\LabelPosition;
 
 /**
- * Supports label position form input trait
+ * Supports label position form-input trait
  *
  * @package Nodus\Packages\LivewireForms\Services\FormBuilder\Traits
  */
@@ -14,7 +14,7 @@ trait SupportsLabelPosition
     /**
      * Label position
      *
-     * @var string
+     * @var LabelPosition
      */
     protected LabelPosition $labelPosition = LabelPosition::Top;
 

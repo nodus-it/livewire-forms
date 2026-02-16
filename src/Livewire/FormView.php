@@ -42,8 +42,8 @@ abstract class FormView extends Component
     /**
      * Post mode constants
      */
-    public const POST_MODE_CREATE = 'create';
-    public const POST_MODE_UPDATE = 'update';
+    public const string POST_MODE_CREATE = 'create';
+    public const string POST_MODE_UPDATE = 'update';
 
     /**
      * ID of the form
@@ -165,7 +165,7 @@ abstract class FormView extends Component
      * @throws Exception
      * @return void
      */
-    public function mount(Model|array|null $modelOrArray = null, string $postMode = null): void
+    public function mount(Model|array|null $modelOrArray = null, ?string $postMode = null): void
     {
         $this->formId = $this->generateFormId();
         $this->initialRender = true;
@@ -256,7 +256,7 @@ abstract class FormView extends Component
      *
      * @return array|ArrayAccess|mixed
      */
-    public function getValue(string $key, $default = null): mixed
+    public function getValue(string $key, mixed $default = null): mixed
     {
         if ($this->castedValues === null) {
             $this->castedValues = $this->getValidatedValues();

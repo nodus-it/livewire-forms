@@ -47,7 +47,7 @@ class DateTime extends FormInput
      *
      * @return array
      */
-    public function getArrayValue($value = null): array
+    public function getArrayValue(mixed $value = null): array
     {
         if (empty($value)) {
             $value = $this->getDefaultValue();
@@ -93,7 +93,7 @@ class DateTime extends FormInput
      *
      * @return string|null
      */
-    public function getDateValue($value = null): ?string
+    public function getDateValue(mixed $value = null): ?string
     {
         if ($value === null) {
             return null;
@@ -109,7 +109,7 @@ class DateTime extends FormInput
      *
      * @return string|null
      */
-    public function getTimeValue($value = null): ?string
+    public function getTimeValue(mixed $value = null): ?string
     {
         if ($value === null) {
             return null;
