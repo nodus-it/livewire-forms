@@ -3,7 +3,7 @@
 namespace Nodus\Packages\LivewireForms\Services\FormBuilder\Traits;
 
 /**
- * Supports placeholder form input trait
+ * Supports placeholder form-input trait
  *
  * @package Nodus\Packages\LivewireForms\Services\FormBuilder\Traits
  */

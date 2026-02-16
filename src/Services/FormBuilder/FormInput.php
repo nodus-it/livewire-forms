@@ -3,6 +3,7 @@
 namespace Nodus\Packages\LivewireForms\Services\FormBuilder;
 
 use Illuminate\Support\Str;
+use Throwable;
 
 /**
  * Form input base class
@@ -67,6 +68,8 @@ abstract class FormInput
 
     /**
      * To string function
+     *
+     * @throws Throwable
      */
     public function __toString()
     {
@@ -94,6 +97,7 @@ abstract class FormInput
      *
      * @param bool $initialRender
      *
+     * @throws Throwable
      * @return string
      */
     public function render(bool $initialRender = false): string
@@ -196,7 +200,7 @@ abstract class FormInput
     }
 
     /**
-     * Returns if the current input support a given feature (traits)
+     * Returns if the current input supports a given feature (traits)
      *
      * @param string $feature
      *

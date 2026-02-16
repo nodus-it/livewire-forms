@@ -3,7 +3,7 @@
 namespace Nodus\Packages\LivewireForms\Services\FormBuilder\Traits;
 
 /**
- * Supports multiple form input trait
+ * Supports multiple form-input trait
  *
  * @package Nodus\Packages\LivewireForms\Services\FormBuilder\Traits
  */

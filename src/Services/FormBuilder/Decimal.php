@@ -168,7 +168,7 @@ class Decimal extends FormInput
      *
      * @return float
      */
-    public function preValidationMutator($decimal): float
+    public function preValidationMutator(mixed $decimal): float
     {
         return $this->parseValue($decimal);
     }

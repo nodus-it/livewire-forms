@@ -38,7 +38,7 @@ trait FormBuilder
      *
      * @return Text
      */
-    public function addText(string $name, string $label = null): Text
+    public function addText(string $name, ?string $label = null): Text
     {
         return $this->addInput(Text::class, $name, $label);
     }
@@ -51,7 +51,7 @@ trait FormBuilder
      *
      * @return Color
      */
-    public function addColor(string $name, string $label = null): Color
+    public function addColor(string $name, ?string $label = null): Color
     {
         return $this->addInput(Color::class, $name, $label);
     }
@@ -64,7 +64,7 @@ trait FormBuilder
      *
      * @return Password
      */
-    public function addPassword(string $name, string $label = null): Password
+    public function addPassword(string $name, ?string $label = null): Password
     {
         return $this->addInput(Password::class, $name, $label);
     }
@@ -77,7 +77,7 @@ trait FormBuilder
      *
      * @return File
      */
-    public function addFile(string $name, string $label = null): File
+    public function addFile(string $name, ?string $label = null): File
     {
         return $this->addInput(File::class, $name, $label);
     }
@@ -90,7 +90,7 @@ trait FormBuilder
      *
      * @return Number
      */
-    public function addNumber(string $name, string $label = null): Number
+    public function addNumber(string $name, ?string $label = null): Number
     {
         return $this->addInput(Number::class, $name, $label);
     }
@@ -103,7 +103,7 @@ trait FormBuilder
      *
      * @return Textarea
      */
-    public function addTextarea(string $name, string $label = null): Textarea
+    public function addTextarea(string $name, ?string $label = null): Textarea
     {
         return $this->addInput(Textarea::class, $name, $label);
     }
@@ -116,7 +116,7 @@ trait FormBuilder
      *
      * @return Date
      */
-    public function addDate(string $name, string $label = null): Date
+    public function addDate(string $name, ?string $label = null): Date
     {
         return $this->addInput(Date::class, $name, $label);
     }
@@ -129,7 +129,7 @@ trait FormBuilder
      *
      * @return Time
      */
-    public function addTime(string $name, string $label = null): Time
+    public function addTime(string $name, ?string $label = null): Time
     {
         return $this->addInput(Time::class, $name, $label);
     }
@@ -142,7 +142,7 @@ trait FormBuilder
      *
      * @return DateTime
      */
-    public function addDateTime(string $name, string $label = null): DateTime
+    public function addDateTime(string $name, ?string $label = null): DateTime
     {
         return $this->addInput(DateTime::class, $name, $label);
     }
@@ -155,7 +155,7 @@ trait FormBuilder
      *
      * @return Decimal
      */
-    public function addDecimal(string $name, string $label = null): Decimal
+    public function addDecimal(string $name, ?string $label = null): Decimal
     {
         return $this->addInput(Decimal::class, $name, $label);
     }
@@ -168,7 +168,7 @@ trait FormBuilder
      *
      * @return Currency
      */
-    public function addCurrency(string $name, string $label = null): Currency
+    public function addCurrency(string $name, ?string $label = null): Currency
     {
         return $this->addInput(Currency::class, $name, $label);
     }
@@ -181,7 +181,7 @@ trait FormBuilder
      *
      * @return Select
      */
-    public function addSelect(string $name, string $label = null): Select
+    public function addSelect(string $name, ?string $label = null): Select
     {
         return $this->addInput(Select::class, $name, $label);
     }
@@ -194,7 +194,7 @@ trait FormBuilder
      *
      * @return Checkbox
      */
-    public function addCheckbox(string $name, string $label = null): Checkbox
+    public function addCheckbox(string $name, ?string $label = null): Checkbox
     {
         return $this->addInput(Checkbox::class, $name, $label);
     }
@@ -207,7 +207,7 @@ trait FormBuilder
      *
      * @return Radio
      */
-    public function addRadio(string $name, string $label = null): Radio
+    public function addRadio(string $name, ?string $label = null): Radio
     {
         return $this->addInput(Radio::class, $name, $label);
     }
@@ -220,7 +220,7 @@ trait FormBuilder
      *
      * @return RichTextarea
      */
-    public function addRichTextarea(string $name, string $label = null): RichTextarea
+    public function addRichTextarea(string $name, ?string $label = null): RichTextarea
     {
         return $this->addInput(RichTextarea::class, $name, $label);
     }
@@ -233,13 +233,13 @@ trait FormBuilder
      *
      * @return Code
      */
-    public function addCode(string $name, string $label = null): Code
+    public function addCode(string $name, ?string $label = null): Code
     {
         return $this->addInput(Code::class, $name, $label);
     }
 
     /**
-     * Adds an hidden input
+     * Adds a hidden input
      *
      * @param string $name
      * @param string $value
@@ -256,7 +256,7 @@ trait FormBuilder
     }
 
     /**
-     * Adds a Section delimiter with headline
+     * Adds a Section delimiter with a headline
      *
      * @param string      $label
      * @param string|null $id
@@ -269,7 +269,7 @@ trait FormBuilder
     }
 
     /**
-     * Adds an Html block
+     * Adds an HTML block
      *
      * @param string      $content
      * @param string|null $id

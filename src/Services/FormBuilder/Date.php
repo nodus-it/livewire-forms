@@ -64,7 +64,7 @@ class Date extends FormInput
      *
      * @return string|null
      */
-    public function preRenderMutator($date)
+    public function preRenderMutator(mixed $date)
     {
         if (empty($date)) {
             return null;

@@ -34,7 +34,7 @@ class Hidden extends FormInput
      *
      * @return static
      */
-    public static function create(string $name, string $value = null): static
+    public static function create(string $name, ?string $value = null): static
     {
         return new static($name, $value);
     }

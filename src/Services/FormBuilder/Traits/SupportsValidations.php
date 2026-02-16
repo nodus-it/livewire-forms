@@ -5,7 +5,7 @@ namespace Nodus\Packages\LivewireForms\Services\FormBuilder\Traits;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Supports validations form input trait
+ * Supports validations form-input trait
  *
  * @package Nodus\Packages\LivewireForms\Services\FormBuilder\Traits
  */
@@ -49,7 +49,7 @@ trait SupportsValidations
      *
      * @return string
      */
-    public function rewriteValidationRules(Model $model = null): string
+    public function rewriteValidationRules(?Model $model = null): string
     {
         $rules = explode('|', $this->validations);
 

@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 use InvalidArgumentException;
 
 /**
- * Supports translations form input trait
+ * Supports translations form-input trait
  *
  * @package Nodus\Packages\LivewireForms\Services\FormBuilder\Traits
  * @property array $translations

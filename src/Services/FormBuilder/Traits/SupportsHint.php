@@ -3,7 +3,7 @@
 namespace Nodus\Packages\LivewireForms\Services\FormBuilder\Traits;
 
 /**
- * Supports hint form input trait
+ * Supports hint form-input trait
  *
  * @package Nodus\Packages\LivewireForms\Services\FormBuilder\Traits
  */
