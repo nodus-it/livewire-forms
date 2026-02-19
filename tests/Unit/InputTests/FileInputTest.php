@@ -2,7 +2,7 @@
 
 namespace Nodus\Packages\LivewireForms\Tests\Unit\InputTests;
 
-use Livewire\TemporaryUploadedFile;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\File;
 use Nodus\Packages\LivewireForms\Tests\TestCase;
 
