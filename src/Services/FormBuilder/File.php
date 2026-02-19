@@ -2,7 +2,7 @@
 
 namespace Nodus\Packages\LivewireForms\Services\FormBuilder;
 
-use Livewire\TemporaryUploadedFile;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsArrayValidations;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsDisabling;
 use Nodus\Packages\LivewireForms\Services\FormBuilder\Traits\SupportsHint;
